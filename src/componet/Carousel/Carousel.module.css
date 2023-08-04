@@ -1,0 +1,63 @@
+.Carousel{
+    /* box-sizing: border-box;
+    padding: 0px 20px 20px 20px; */
+}
+
+.Carousel .content{
+    display: flex;
+    border-radius: 5px;
+    background-color: rgba(118, 110, 110, 0.9);
+    width: 100%;
+    height: 400px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px;
+    background-image: url("../../Asset/Cor1.jpg");
+    background-size: contain;
+}
+
+.Carousel .content .detail{
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+.Carousel .content .detail input{
+    width: 60%;
+    height: 30px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid gray;
+    cursor: pointer;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.Carousel .content .detail input:hover{
+    background-color: rgb(33, 188, 33);  
+    color: white;
+}
+
+.productSlider{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+}
+
+
+.productSlider img{
+    height: 150px;
+}
+
+
+/*  */
+
+.slideStyles {
+    width: "100%";
+    height: "100%";
+    border-radius: "10px";
+    background-size: "cover";
+    background-position: "center";
+}

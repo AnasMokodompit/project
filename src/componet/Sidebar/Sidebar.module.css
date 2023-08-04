@@ -1,0 +1,35 @@
+.sidebar{
+    border-right: 1px solid black;
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+}
+
+.jdlSidebar{
+    /* border: 1px solid black; */
+    font-family: 'Poppins', sans-serif;
+    padding: 7px;
+    padding-right: 40px;
+}
+
+.contentSidebar{
+    text-align: right;
+}
+
+
+.contentSidebar li{
+    padding: 7px;
+    padding-right: 40px;
+    cursor: pointer;
+}
+
+.contentSidebar li:hover{
+    color: rgb(51, 220, 25);
+}
+
+.contentSidebar li a{
+    font-family: 'Noticia Text', serif;
+   font-size: 17px;
+    text-decoration: none;
+    color: black;
+}

@@ -1,0 +1,91 @@
+.navbar{
+    /* border: 1px solid black; */
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9rem 5rem;
+
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: .4s;
+}
+
+.navbar .ImgNavbar{
+    width: 2.3rem;
+    height: 2.3rem;
+}
+
+.navbarContent{
+    position: relative;
+    display: flex;
+    align-items: center;
+    /* border:1px solid black; */
+    list-style: none;
+    display: flex;
+    /* width: 20%; */
+    justify-content: space-between;
+}
+
+.navbarContent li{
+    padding: 0 2.3rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.activeNavbar{
+    border-bottom: 4px solid greenyellow;
+    /* border: 1px solid black; */
+
+}
+
+.navbarContent li a{
+    text-decoration: none;
+    color: black;
+}
+
+.navbarContent li a:hover{
+    color: rgb(51, 220, 25);
+}
+
+.main{
+    display: flex;
+}
+
+.main span{
+    padding: 0 1rem;
+}
+
+.main .Orderan{
+    display: flex;
+}
+
+.jumlah{
+    right: 65px;
+    top: 10px;
+    position: absolute;
+    background-color: aqua;
+    border-radius: 9px;
+}
+
+.navbar.fixed {
+    background-color: black;
+    transition: .3s ease-in-out;
+}
+
+.icon{
+    cursor: pointer;
+}
+
+.navbar.nonFixed{
+    position: relative;
+}
+
+.navbar.fixed .navbarContent li a,
+.navbar.fixed .main .icon {
+    color: white;
+}

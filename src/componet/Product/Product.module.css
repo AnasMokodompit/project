@@ -1,0 +1,221 @@
+.contentCard{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100%;
+    /* border: 1px solid black; */
+    gap: 30px;
+    justify-content: center;
+    padding: 20px;
+}
+
+
+.contentCard .card{
+    width: 23%;
+    border-radius: 3px;
+    box-shadow: 0 0 3px rgba(20, 20, 20, .8);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 5px;
+    /* height: 200px; */
+    box-sizing: border-box;
+    /* border: 1px solid black; */
+}
+
+.contentCard .card .popup{
+    list-style: none;
+    position: absolute;
+    background-color: white;
+}
+
+.contentCard .card .popup li{
+    padding: 7px 7px;
+}
+
+.contentCard .card .popup li a{
+    color: black;
+}
+
+.contentCard .card .popup li:hover{
+    background-color: rgb(33, 188, 33);
+}
+
+.contentCard .card .popup li:hover a{
+    color: white;
+}
+
+.contentCard .card img{
+    height: 250px;
+}
+
+.contentCard .card .cardCategori{
+    font-family: 'Alata', sans-serif;
+    color: gray;
+    padding: 7px 3px 3px 0px;
+}
+
+.contentCard .card .cardJdl{
+    padding-top: 5px;
+    font-family: 'Lora', serif;
+}
+
+.cardHarga{
+    padding: 5px 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+/* Read Product */
+
+.ReadProductDetail{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    background-color: rgba(100, 100, 100, .8);
+}
+
+.ReadProductDetail .popup{
+    margin: auto;
+    margin-top: 100px;
+    width: 60%;
+    height: max-content;
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 0 2px 2px rgba(100, 100, 100, .8);
+}
+
+.ReadProductDetail .popup .top{
+    display: flex;
+    justify-content: right;
+    padding: 5px 10px;
+}
+
+.ReadProductDetail .popup .top i{
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.ReadProductDetail .popup .content{
+    display: flex;
+    padding: 20px;
+}
+
+.ReadProductDetail .popup img{
+    width: 300px;
+}
+
+.ReadProductDetail .popup .detail{
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid black; */
+    width: 100%;
+    text-align: left;
+}
+
+.cardCategori{
+    color: gray;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 5px;
+}
+
+.cardJdl{
+    margin-bottom: 3px;
+}
+
+.subData{
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.cardHarga{
+    margin-top: 20px;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+
+/* Input Nilai Order */
+
+
+.ContainerFormOrder{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    background-color: rgba(100, 100, 100, .8);
+}
+
+.ContainerFormOrder .formOrder{
+    margin: auto;
+    margin-top: 100px;
+    width: 40%;
+    height: max-content;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 0 2px 2px rgba(100, 100, 100, .8);
+    padding: 15px;
+    text-align: right;
+}
+
+.ContainerFormOrder .formOrder .top{
+    display: flex;
+    justify-content: right;
+    padding: 5px 10px;
+}
+
+.ContainerFormOrder .formOrder .top i{
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.ContainerFormOrder .formOrder h4{
+    text-align: left;
+    /* border: 1px solid black; */
+    margin: 0px 6px 20px 6px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+.ContainerFormOrder .formOrder .form{
+    margin: 6px;
+}
+
+.ContainerFormOrder .formOrder .form .formItem{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    /* border: 1px solid black; */
+    margin-top: 5px;
+}
+
+.ContainerFormOrder .formOrder .form .formItem label{
+    margin-bottom: 5px;
+}
+
+.ContainerFormOrder .formOrder .form .formItem input{
+    height: 30px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid rgba(109, 106, 106, 0.9);
+    padding-left: 10px;
+}
+
+.ContainerFormOrder .formOrder .form .formItem input:focus{
+    box-shadow: 0 0 1px 1px rgb(40, 40, 150);
+}
+
+.ContainerFormOrder .formOrder .button{
+    outline: none;
+    width: 80px;
+    height: 30px;
+    cursor: pointer;
+    margin: 6px;
+}
