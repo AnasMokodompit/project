@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux'
 import {dataOrder} from './OrderReducers'
+import userReducer from './UserRefucers'
 
 const rootReducer = combineReducers({
-    project: dataOrder,
+    CvTalangkaJaya: dataOrder, userReducer
 })
 
 export default rootReducer

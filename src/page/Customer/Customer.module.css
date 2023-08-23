@@ -1,0 +1,119 @@
+.container{
+    /* border: 1px solid black; */
+}
+
+.content{
+    width: 80%;
+    margin: auto;
+    /* border: 1px solid black; */
+}
+
+.content h4{
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.content .contentProfile{
+    display: flex;
+    box-shadow: 0 0 2px gray;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    align-items: center;
+}
+
+
+.content .contentProfile input{
+    width: 50px;
+    height: 30px;
+}
+
+.content .contentProfile img{
+    width: 80px;
+    height: 70px;
+    margin-right: 15px;
+    border-radius: 10px;
+    background-size: cover;
+}
+
+.content .contentProfile .contentProfileItem{
+    display: flex;
+    justify-content: space-between;
+    /* border: 1px solid black; */
+}
+
+.content .contentProfile .contentProfileItem h5{
+    font-size: 17px;
+}
+
+.contentItem{
+    margin-top: 20px;
+    display: flex;
+    /* border: 1px solid black; */
+}
+
+.contentItem .itemCategori{
+    box-shadow: 0 0 2px gray;
+    border-radius: 5px;
+    margin-right: 20px;
+    padding: 20px;
+    width: 25%;
+}
+
+.contentItem .itemCategori h5{
+    font-size: 17px;
+}
+
+.contentItem .itemCategori .item{
+    display: flex;
+    padding: 10px 0px;
+    /* justify-content: space-between; */
+    border-bottom: 1px solid gray;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.contentItem .itemCategori .item div{
+    display: flex;
+    align-items: center;
+}
+
+.icon{
+    /* border: 1px solid black; */
+    margin-right: 10px;
+}
+
+.contentItem .itemCategori .item span:nth-child(3){
+    border: 1px solid black;
+}
+
+.contentItem .itemCategori .item:hover{
+    color: rgb(60, 169, 60);
+}
+
+.itemProduct{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 10px;
+    /* border: 1px solid black; */
+}
+
+.itemProduct .item{
+    box-shadow: 0px 0px 2px gray;
+    display: flex;
+    width: 24%;
+    padding: 10px;
+    border-radius: 5px;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.itemProduct .item img{
+    width: 100%;
+    height: 150px;
+    border-radius: 3px;
+}

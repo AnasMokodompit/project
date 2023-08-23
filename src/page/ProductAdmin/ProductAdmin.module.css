@@ -1,0 +1,196 @@
+.container{
+    display: flex;
+}
+
+.kanan{
+    width: 100%;
+    padding: 5px 15px 20px 15px;
+    margin-top: 20px;
+}
+
+.buttonCreate{
+    /* border: 1px solid black; */
+    display: flex;
+    justify-content: right;
+    padding: 10px 0;
+    /* border: 1px solid black; */
+}
+
+
+.buttonCreate .userAddButton{
+    text-decoration: none;
+    background-color: rgb(41, 171, 65);
+    color: rgb(11, 11, 11);
+    padding: 6px 7px;
+    font-size: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 3px rgba(81, 75, 75, 0.2);
+}
+
+.buttonCreate .userAddButton:hover{
+    /* background-color: var(--primary-100); */
+    background-color: rgb(70, 148, 84);
+}
+
+.buttonSearchAndRow{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    color: var(--text-100);
+    /* border: 1px solid black; */
+}
+
+.buttonSearchAndRow .entitas{
+    /* border: 1px solid black; */
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    font-size: 15px;
+}
+
+.buttonSearchAndRow .entitas select{
+    /* border: 1px solid black; */
+    margin: 0 7px;
+    border-radius: 5px;
+    padding: 3px;
+    outline: none;
+    border: 1px solid rgba(112, 111, 111, .5);
+}
+
+.category{
+    margin-left: 40px;
+}
+
+
+/* Start Search */
+.navbarHome{
+    display: flex;
+    align-items: center;
+    width: 20%;
+}
+
+.navbarHome .item{
+    display: flex;
+    /* border: 1px solid black; */
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+
+.navbarHome .item input{
+    /* border: 1px solid black; */
+    height: 30px;
+    width: 100%;
+    border: none;
+    outline: none;
+    font-family: 'Roboto', sans-serif;
+    background-color: #F0F0F0;
+    padding: 5px 45px 5px 7px;
+    font-size: 14px;
+    border-radius: 5px;
+	transition: all .3s ease;
+}
+
+.search span{
+    position: absolute;
+    right: 5px;
+    border-radius: 50%;
+    font-size: 20px;
+    padding: 3px;
+    /* border: 1px solid black; */
+}
+
+.navbarHome .search span:hover{
+    color: var(--primary-200);
+}
+
+.navbarHome .item input:focus {
+    box-shadow: 0 0 0 1px var(--primary-200);
+}
+
+.contentProduct{
+    /* border: 1px solid black; */
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100%;
+    gap: 20px;
+    /* justify-content: space-between; */
+    padding: 10px;
+}
+
+
+.card{
+    width: 18%;
+    border-radius: 3px;
+    box-shadow: 0 0 3px rgba(20, 20, 20, .8);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 5px;
+    /* height: 200px; */
+    box-sizing: border-box;
+    /* border: 1px solid black; */
+}
+
+.card .popup{
+    list-style: none;
+    position: absolute;
+    background-color: white;
+}
+
+.card .popup li{
+    padding: 7px 7px;
+}
+
+.card .popup li a{
+    color: black;
+}
+
+.card .popup li:hover{
+    background-color: rgb(33, 188, 33);
+}
+
+.card .popup li:hover a{
+    color: white;
+}
+
+.card img{
+    height: 180px;
+}
+
+.card .cardCategori{
+    font-family: 'Alata', sans-serif;
+    color: gray;
+    padding: 7px 3px 3px 0px;
+}
+
+.card .cardJdl{
+    padding-top: 5px;
+    font-family: 'Lora', serif;
+}
+
+.cardHarga{
+    padding: 5px 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.optionCard{
+    display: flex;
+    align-items: center;
+    /* border: 1px solid gray; */
+}
+
+.optionCard span{
+    text-align: center;
+    border: 1px solid gray;
+    width: 50%;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.optionCard span:hover{
+    background-color: greenyellow;
+}
