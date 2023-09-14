@@ -3,7 +3,9 @@ import {Link, useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import LinkScroll  from 'react-scroll'
 import jwt from 'jwt-decode'
+import {UserLogOut} from '../../config/actions/UserAction'
 
 function Sidebar({nameSdiber}) {
     const {dataLogin} = useSelector(tes => tes.userReducer)
@@ -21,16 +23,19 @@ function Sidebar({nameSdiber}) {
     }
 
     const hendleAccesRoleUser = () => {
+        console.log(dataLogin)
         if (dataLogin?.dataLogin?.token) {       
             const decode = jwt(dataLogin.dataLogin.token)
             setId(decode.rolesId) 
-            // console.log(decode)
+        }else{
+            setId('')
         }
-        // console.log(dataLogin, id)
+        console.log(dataLogin, id)
     }
 
     const hendleLogout = () => {
         setId('')
+        UserLogOut()
         localStorage.clear()
         setTimeout(() => {
             navigate('/')
@@ -94,11 +99,15 @@ function Sidebar({nameSdiber}) {
                     <div id= 'hero' className={style.sidebar}>
                         <ul className={style.contentSidebar}>
                             <h4 className={style.jdlSidebar}>CATEGORIES</h4>
-                            <li onClick={() => nameSdiber()}>All Products</li>
+                            <li>
+                                <LinkScroll.Link to="product" spy={true} smooth={true} offset={-215} duration={500} onClick={() => nameSdiber()}>All Products</LinkScroll.Link>
+                            </li>
                             {dataCategories.length !== 0 && (
                                 dataCategories.map((data, key) => {
                                     return (
-                                        <li key={key} onClick={() => nameSdiber(data.id)} >{data.name}</li>
+                                        <li key={key} >
+                                            <LinkScroll.Link to="product" spy={true} smooth={true} offset={-215} duration={500} onClick={() => nameSdiber(data.id)}>{data.name}</LinkScroll.Link>
+                                        </li>
                                     )
                                 })
                             )}

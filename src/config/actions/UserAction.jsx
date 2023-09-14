@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const UserLogin = (email, password) => {
+export const UserLogin = (email, password) => {
     let login = {email, password}
 
     console.log(login)
@@ -17,4 +17,8 @@ const UserLogin = (email, password) => {
     }
 }
 
-export default UserLogin
+export const UserLogOut = () => {
+    return (dispatch) => {
+        dispatch({ type: "HAPUS_DATA_LOGIN"})
+    }
+}

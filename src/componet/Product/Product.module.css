@@ -11,13 +11,14 @@
 
 
 .contentCard .card{
-    width: 23%;
-    border-radius: 3px;
+    width: 22%;
+    border-radius: 10px;
     box-shadow: 0 0 3px rgba(20, 20, 20, .8);
     display: flex;
     flex-direction: column;
     text-align: left;
-    padding: 5px;
+    padding: 10px;
+    /* height: 300px; */
     /* height: 200px; */
     box-sizing: border-box;
     /* border: 1px solid black; */
@@ -27,10 +28,13 @@
     list-style: none;
     position: absolute;
     background-color: white;
+    /* border: 1px solid black; */
+    /* border-radius: 10px; */
 }
 
 .contentCard .card .popup li{
     padding: 7px 7px;
+    cursor: pointer;
 }
 
 .contentCard .card .popup li a{
@@ -46,23 +50,29 @@
 }
 
 .contentCard .card img{
-    height: 250px;
+    width: 100%;
+    border-radius: 10px;
+    height: 240px;
+    /* border: 1px solid black; */
 }
 
 .contentCard .card .cardCategori{
     font-family: 'Alata', sans-serif;
     color: gray;
-    padding: 7px 3px 3px 0px;
+    font-size: 15px;
+    padding: 10px 0px 0px 5px;
 }
 
 .contentCard .card .cardJdl{
-    padding-top: 5px;
+    padding-left: 5px;
     font-family: 'Lora', serif;
 }
 
 .cardHarga{
-    padding: 5px 0;
+    padding: 5px 0px 0px 5px; 
+    font-size: 15px;
     font-family: 'Poppins', sans-serif;
+    font-weight: bold;
 }
 
 
@@ -79,33 +89,56 @@
 }
 
 .ReadProductDetail .popup{
+    border: 1px solid black;
     margin: auto;
     margin-top: 100px;
     width: 60%;
-    height: max-content;
+    height: 500px;
+    overflow-y: scroll;
     background-color: white;
     border-radius: 3px;
     box-shadow: 0 0 2px 2px rgba(100, 100, 100, .8);
 }
 
 .ReadProductDetail .popup .top{
+    /* border: 1px solid black; */
     display: flex;
     justify-content: right;
     padding: 5px 10px;
 }
 
-.ReadProductDetail .popup .top i{
-    font-size: 22px;
+.ReadProductDetail .popup .top span{
     cursor: pointer;
 }
 
 .ReadProductDetail .popup .content{
     display: flex;
-    padding: 20px;
+    padding: 0px 20px 20px 20px;
+    /* border: 1px solid black; */
 }
 
-.ReadProductDetail .popup img{
-    width: 300px;
+.ReadProductDetail .popup .content .image{
+    /* border: 1px solid black; */
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.ReadProductDetail .popup .content .image .itemImage{
+    display: flex;
+    /* border: 1px solid black; */
+    padding: 5px;
+    margin: auto;
+    gap: 5px;
+    margin-top: 5px;
+    box-shadow: 0 0 2px 1px rgba(100, 100, 100, .8);
+
+}
+
+.ReadProductDetail .popup .content .image .itemImage img{
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
 }
 
 .ReadProductDetail .popup .detail{
@@ -114,28 +147,91 @@
     flex-direction: column;
     /* border: 1px solid black; */
     width: 100%;
+    font-family: 'Outfit', sans-serif;
     text-align: left;
 }
 
-.cardCategori{
-    color: gray;
-    font-family: 'Poppins', sans-serif;
-    margin-bottom: 5px;
+.ReadProductDetail .popup .detail .cardCategori{
 }
 
-.cardJdl{
-    margin-bottom: 3px;
+.ReadProductDetail .popup .detail .cardJdl{
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.ReadProductDetail .popup .detail .ukuran{
+    margin-top: 10px;
+    /* border: 1px solid black; */
+}
+
+.ReadProductDetail .popup .detail .ukuran p{
+    margin: 0;
+}
+
+.ReadProductDetail .popup .detail .deskripsi{
+    margin-top: 10px;
+    /* border: 1px solid black; */
+}
+
+.ReadProductDetail .popup .detail .deskripsi p{
+    margin: 0;
+}
+
+.ReadProductDetail .popup .detail .cardHarga{
+    margin-top: 20px;
+    padding: 0;
+}
+
+.ReadProductDetail .popup .detail .rantingStart{
+    display: flex;
+    align-items: center;
+}
+
+.ReadProductDetail .popup .detail .rantingStart .total{
+    margin-left: 10px;
+}
+
+.ReadProductDetail .popup .content img{
+    width: 100%;
+    height: 350px;
+    /* border: 1px solid black; */
+}
+
+.ReadProductDetail .popup .detail .contentReview{
+    border-top: 1px solid rgba(100, 100, 100, .3);
+    padding: 5px 0px;
+}
+
+.ReadProductDetail .popup .detail .contentReview h6{
+    margin-bottom: 7px;
+}
+
+.ReadProductDetail .popup .detail .contentReview .itemReview{
+    display: flex;
+}
+
+
+.ReadProductDetail .popup .detail .contentReview .itemReview .profile{
+    width: 65px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: gray;
+}
+
+.ReadProductDetail .popup .detail .contentReview .itemReview img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.ReadProductDetail .popup .detail .contentReview .itemReview .dataReview{
+    font-size: 14px;
+    margin-left: 10px;
 }
 
 .subData{
     font-family: 'Poppins', sans-serif;
     font-size: 15px;
-    font-weight: bold;
-}
-
-.cardHarga{
-    margin-top: 20px;
-    font-size: 17px;
     font-weight: bold;
 }
 

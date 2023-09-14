@@ -3,7 +3,7 @@ import style from './Login.module.css'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import UserLogin from "../../config/actions/UserAction"
+import {UserLogin} from "../../config/actions/UserAction"
 import jwt from 'jwt-decode'
 
 
@@ -30,7 +30,8 @@ function Login() {
             dispatch(UserLogin(email, password))
             
             setTimeout(() => {
-                // console.log(jwt(res.data.data.token))     
+                // console.log(jwt(res.data.data.token)) 
+                    // document.cookie = "REFRESH_TOKEN=" + res.data.data.token
                     const decode = jwt(res.data.data.token)
                     if (decode.rolesId === 1) {
                         navigate("/beranda")

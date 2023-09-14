@@ -9,6 +9,11 @@ const userReducer = (state = initialstate, action) => {
                 ...state,
                 dataLogin: action.payload
             };
+        case 'HAPUS_DATA_LOGIN':
+            return {
+                ...state,
+                dataLogin: null
+            };
         default:
             return state
     }

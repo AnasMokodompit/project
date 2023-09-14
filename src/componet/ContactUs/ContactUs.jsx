@@ -1,7 +1,34 @@
+import { useState } from 'react'
 import style from './ContactUs.module.css'
+import axios from 'axios'
 
 
 function Contact() {
+    const [namaLengkap, setNamaLengkap] = useState('')
+    const [email, setEmail] = useState('')
+    const [pesan, setPesan] = useState('')
+
+    const hendleSumbitContactUs = (e) => {
+        // e.preventDefault()
+        
+        const data = {
+            namaLengkap: namaLengkap,
+            email: email,
+            pesan: pesan
+        }
+
+        axios.post(`${process.env.REACT_APP_BASE_API}/contactUs`, data)
+        .then(() => {
+            setNamaLengkap('')
+            setEmail('')
+            setPesan('')
+
+        }).catch((err) => {
+            console.log(err)
+        })
+        
+    }
+
     return (
         <div id='contactus' className={style.containerContact}>
             <h2>Contact Us</h2>
@@ -31,27 +58,27 @@ function Contact() {
                     </div>
                 </div>
                 <div className={style.contactForm}>
-                    <form action="" id={style.contactForm}>
+                    {/* <form action="" id={style.contactForm} onSubmit={hendleSumbitContactUs}> */}
                         <h3>Kirim Pesan</h3>
                         <div className={style.inputBox}>
-                        <input type="text" required="true" name=""/>
-                        <span>Nama Lengkap</span>
+                            <input type="text" required="true" name="" value={namaLengkap} onChange={(e) => setNamaLengkap(e.target.value)}/>
+                            <span>Nama Lengkap</span>
                         </div>
                         
                         <div className={style.inputBox}>
-                        <input type="email" required="true" name=""/>
-                        <span>Email</span>
+                            <input type="text" required="true" name="" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                            <span>Email</span>
                         </div>
                         
                         <div className={style.inputBox}>
-                        <textarea required="true" name=""></textarea>
-                        <span>Pesan...</span>
+                            <textarea required="true" name="" value={pesan} onChange={(e) => setPesan(e.target.value)}></textarea>
+                            <span>Pesan...</span>
                         </div>
                         
                         <div className={style.inputBox}>
-                        <input type="submit" value="Send" name=""/>
+                            <input type="submit" value="Send" onClick={() => hendleSumbitContactUs()}/>
                         </div>
-                    </form>
+                    {/* </form> */}
                 </div>
             </div>
         </div>

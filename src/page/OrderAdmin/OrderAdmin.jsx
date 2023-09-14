@@ -2,27 +2,60 @@ import axios from "axios"
 import Sidebar from "../../componet/Sidebar/Sidebar"
 import style from './OrderAdmin.module.css'
 import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+import jwt from "jwt-decode"
 
 function OrderAdmin() {
+    const {dataLogin} = useSelector(tes => tes.userReducer)
     const [dataOrder, setDataOrder] = useState([])
+    const [statusOrderProduct, setStatusOrderProduct] = useState()
+    const [id, setid] = useState()
+
+    //
+    const [status, setStatus] = useState()
+
 
     const hendleGetAllOrder = () => {
-        axios.get(`http://localhost:3000/api/v1.0/orders`)
+        const decode = jwt(dataLogin.dataLogin.token)
+
+        axios.get(`http://localhost:3000/api/v1.0/productOrder`, { headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}`}})
         .then((res) => {
-            setDataOrder(res.data.data)
             console.log(res.data.data)
+            setDataOrder(res.data.data)
         }).catch((err) => {
             console.log(err)
         })
+        
+        // axios.get(`http://localhost:3000/api/v1.0/orders`)
+        // .then((res) => {
+        //     setDataOrder(res.data.data)
+        //     console.log(res.data.data)
+        // }).catch((err) => {
+        //     console.log(err)
+        // })
     }
 
-    const hendleDeleteOrder = (id) => {
-        axios.delete(`http://localhost:3000/api/v1.0/orders/${id}`)
+    const hendleDeleteOrder = (idProductOrder) => {
+        axios.delete(`http://localhost:3000/api/v1.0/orders/${idProductOrder}`)
         .then((res) => {
             hendleGetAllOrder()
         }).catch((err) => [
             console.log(err)
         ])
+    }
+
+    const hendleSubmintPembaruanStatus = () => {
+        
+        axios.patch(`http://localhost:3000/api/v1.0/productOrder/${id}`,{status: status}, { headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}`}})
+        .then((res) => {
+            console.log(res.data.data)
+            hendleGetAllOrder()
+        }).catch((err) => {
+            console.log(err)
+        })
+
+
+        statusOrderProduct()
     }
 
     useEffect(() => {
@@ -66,7 +99,7 @@ function OrderAdmin() {
                             <tr>
                                 <th>No</th>
                                 <th>Nama Pemesan</th>
-                                <th>Nomor HP</th>
+                                <th>Nama Produk</th>
                                 <th>Alamat</th>
                                 <th>Jumlah</th>
                                 <th>Harga</th>
@@ -81,14 +114,22 @@ function OrderAdmin() {
                                     return (
                                         <tr key={key}>
                                             <td>{key += 1}</td>
-                                            <td>{data.nama_pemesan}</td>
-                                            <td>{data.no_hp}</td>
-                                            <td>{data.alamat}</td>
+                                            <td>{data.users.name}</td>
+                                            <td>{data.products.name}</td>
+                                            <td>{data.users.alamat}</td>
                                             <td>{data.jumlah}</td>
                                             <td>{new Intl.NumberFormat("id-ID", {style: "currency", currency: "IDR"}).format(data.Price)}</td>
-                                            <td>Pesanan</td>
+                                            {data.status === 2 && (
+                                                <td>Pesanan Diterima</td>
+                                            )}
+                                            {data.status === 1 && (
+                                                <td>Pesanan Ditolak</td>
+                                            )}
+                                            {data.status === 0 && (
+                                                <td>Pesanan</td>
+                                            )}
                                             <td className={style.options}>
-                                                <span class={`material-symbols-outlined ${style.iconOptions}`}>edit</span>
+                                                <span class={`material-symbols-outlined ${style.iconOptions}`} onClick={() => `${setStatusOrderProduct(true)} ${setid(data.id)} ${setStatus(data.status)}`}>edit</span>
                                                 <span className={`material-symbols-outlined ${style.iconOptions}`} onClick={() => hendleDeleteOrder(data.id)}>delete</span>
                                                 <span className={`material-symbols-outlined ${style.iconOptions}`}>visibility</span>
                                             </td>
@@ -96,25 +137,6 @@ function OrderAdmin() {
                                     )
                                 })
                             )}
-                            {/* {dataPengguna.length !== 0 && (
-                                dataPengguna.map((data, key) => {
-                                    return (
-                                        <tr key={key}>
-                                            <td>{data?.id}</td>
-                                            <td>{data?.name}</td>
-                                            <td>{data?.email}</td>
-                                            <td>{data?.jurusan?.name}</td>
-                                            <td>{data?.prodi?.name}</td>
-                                            <td>{data?.nomor_tlp}</td>
-                                            <td>{data?.role?.name}</td>
-                                            <td>
-                                                <span className={`${style.iconOptions} material-symbols-outlined`} onClick={() => `${setPopupAddDataPengguna("1")} ${hendleEditDataPengguna(data.id)} ${setPopupDataPengguna("EditDataPengguna")}`}>edit</span> 
-                                                <span className={`${style.iconOptions} material-symbols-outlined`} onClick={() => hendleDeleteDataPengguna(data.id)}>delete</span>
-                                            </td>
-                                        </tr>
-                                    )
-                                })
-                            )} */}
                         </tbody>
                     </table>
                     <div className={style.pagenation}>
@@ -126,53 +148,29 @@ function OrderAdmin() {
                         </div>
                     </div>
                 </div>
-                {/* {popupAddDataPengguna === "1" && (
-                    <div className={style.containerPopUp}>
-                        <div className={style.contentTitle}>
-                            <p>Tambah Akun</p>
-                            <span className={`material-symbols-outlined`} onClick={() => `${setPopupAddDataPengguna("0")} ${hendleCloseDataPengguna()}`}>close</span>
-                        </div>
-                        <div className={style.itemPopUp}>
-                            <label htmlFor="">Username</label>
-                            <input type="text" value={username} onChange={(e) => setUserName(e.target.value)}/>
-                        </div>
-                        <div className={style.itemPopUp}>
-                            <label htmlFor="">Name</label>
-                            <input type="text" value={name} onChange={(e) => setName(e.target.value)}/>
-                        </div>
-                        <div className={style.itemPopUp}>
-                            <label htmlFor="">Role User</label>
-                            <select name="" id="" value={role} onChange={(e) => setRole(e.target.value)}>
-                                <option>-- Pilih Role User --</option>
-                                <option value="1">Admin</option>
-                                <option value="2">Reviewer</option>
-                                <option value="3">Dosen</option>
-                                <option value="4">Mahasiswa</option>
-                            </select>
-                        </div>
-                        <div className={style.itemPopUp}>
-                            <label htmlFor="">Email</label>
-                            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                        </div>
-                        <div className={style.itemPopUp}>
-                            <label htmlFor="">Password</label>
-                            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                        </div>
-                        {role == 3 && (
-                            console.log(jabatanKampus),
-                            <div className={style.itemPopUp}>
-                                <label htmlFor="">Jabatan Kampus</label>
-                                <select name="" id="" value={jabatanKampus} onChange={(e) => setJabatanKampus(e.target.value)}>
-                                    <option value="Kepala Jurusan">Kajur</option>
-                                    <option value="Kepala Program Studi">Kaprodi</option>
-                                </select>
+                {statusOrderProduct === true && (
+                    <div className={style.containerPopUpStatus}>
+                        <div className={style.contentStatus}>
+                            <p><span onClick={() => `${setStatusOrderProduct()}`} className="material-symbols-outlined">close</span></p>
+                            <span className={style.judul}>Pembaruan status pesanan produk</span>
+                            <div className={style.item}>
+                                <input id="terima" type="checkbox" checked={status === 2 ? true : false} onChange={() => setStatus(2)}/>
+                                <div>
+                                    <label htmlFor="terima">Pesanan diterima</label>
+                                    <span>Tersetidanya semua kebutuhan dalam pembuatan</span>
+                                </div>
                             </div>
-                        )}
-                        <div className={style.conSubmit}>
-                            <input type="button" value="Submit"/>
+                            <div className={style.item}>
+                                <input id="ditolak" type="checkbox" checked={status === 1 ? true : false} onChange={() => setStatus(1)}/>
+                                <div>
+                                    <label htmlFor="ditolak">Pesanan ditolak</label>
+                                    <span>Terdapat kendala dalam membuat pesanan, antara lain, bahan, keguangan dll</span>
+                                </div>
+                            </div>
+                            <input className={style.button} type="button" value="Simpan" onClick={() => hendleSubmintPembaruanStatus()} />
                         </div>
                     </div>
-                )} */}
+                )}
             </div>
         </div>
         </>

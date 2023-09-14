@@ -9,7 +9,7 @@ function Carousel() {
 
     return (
         // <div className={style.Carousel}>
-          <div id="carouselExampleIndicators" className="carousel slide" data-interval="2000" data-ride="carousel">
+          <div id="carouselExampleIndicators" className="carousel slide" data-interval="5000" data-ride="carousel">
             <ol className="carousel-indicators">
               <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
               <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
