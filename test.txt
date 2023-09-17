@@ -1,0 +1,97 @@
+i have this data,
+
+"nama_akun_transaksi_dalam_jenis_transaksi": [
+            {
+                "nama_akun_transaksi": {
+                    "id": 19,
+                    "kode": "5-1000",
+                    "nama": "Biaya Bahan Baku"
+                }
+            },
+            {
+                "nama_akun_transaksi": {
+                    "id": 20,
+                    "kode": "5-2000",
+                    "nama": "Upah Pekerja"
+                }
+            },
+            {
+                "nama_akun_transaksi": {
+                    "id": 21,
+                    "kode": "5-3000",
+                    "nama": "Biaya Bahan Pembantu"
+                }
+            },
+            {
+                "nama_akun_transaksi": {
+                    "id": 11,
+                    "kode": "1-1900",
+                    "nama": "Peralatan"
+                }
+            },
+            {
+                "nama_akun_transaksi": {
+                    "id": 9,
+                    "kode": "1-1800",
+                    "nama": "Mesin"
+                }
+            },
+            {
+                "nama_akun_transaksi": {
+                    "id": 7,
+                    "kode": "1-1700",
+                    "nama": "Gedung"
+                }
+            },
+            {
+                "nama_akun_transaksi": {
+                    "id": 13,
+                    "kode": "1-2000",
+                    "nama": "Kendaraan"
+                }
+            },
+            {
+                "nama_akun_transaksi": {
+                    "id": 23,
+                    "kode": "6-2000",
+                    "nama": "Biaya Gaji Pegawai"
+                }
+            },
+            {
+                "nama_akun_transaksi": {
+                    "id": 28,
+                    "kode": "6-7000",
+                    "nama": "Biaya ATM/ATK"
+                }
+            },
+            {
+                "nama_akun_transaksi": {
+                    "id": 24,
+                    "kode": "6-3000",
+                    "nama": "Biaya Perlengkapan"
+                }
+            },
+            {
+                "nama_akun_transaksi": {
+                    "id": 27,
+                    "kode": "6-6000",
+                    "nama": "Biaya Listrik"
+                }
+            },
+            {
+                "nama_akun_transaksi": {
+                    "id": 22,
+                    "kode": "6-1000",
+                    "nama": "Biaya Transport"
+                }
+            },
+            {
+                "nama_akun_transaksi": {
+                    "id": 29,
+                    "kode": "6-8000",
+                    "nama": "Biaya Lain-Lain"
+                }
+            }
+        ]
+
+How to extarct the "id" and "nama" from that data, and make as one Array, using JavaScript

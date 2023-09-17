@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1,
+        "JENIS_PRODUK": "Meja Kerja",
+        "TIPE": "Meja Pimpinan",
+        "Ukuran":  "Panjang = 190 cm, Lebar = 95 cm, Tinggi = 75 cm",
+        "Harga": "Rp. 8.000.000",
+        "Deskripsi_produk": "Bahan : kayu kelas 2 (cempaka), block board 18 mm, kaca rayban 5 mm, kunci + engsel.Finishing : cat kayu (Impra)"
+    },
+    {
+        "id": 2,
+        "JENIS_PRODUK": "Meja Kerja",
+        "TIPE": "Meja ½ Biro",
+        "Ukuran": "Panjang = 120 cm, Lebar = 95 cm, Tinggi = 60 cm, Tinggi = 70 cm",
+        "Harga": "Rp. 8.000.000",
+        "Deskripsi_produk": "Bahan : kayu kelas 2 (cempaka), block board 18 mm, kunci + engsel.Finishing : cat kayu (water base), clear dof Impra"
+    },
+    {
+        "id": 3,
+        "JENIS_PRODUK": "Kitcen Set",
+        "TIPE": "Meja ½ Biro",
+        "Ukuran":  "Dimensi Produk : (menyesuaikan)",
+        "Harga": "Rp. 2.000.000",
+        "Deskripsi_produk": "Bahan : kayu kelas 2 (cempaka), block board 18 mm, kunci + engsel.Finishing : cat ducco/HPL"
+    },
+    {
+        "id": 4,
+        "JENIS_PRODUK": "Pintu",
+        "TIPE": "Meja ½ Biro",
+        "Ukuran":  "Dimensi Produk : 80x200 cm",
+        "Harga": "Rp. 5.000.000",
+        "Deskripsi_produk": "Bahan : kayu kelas 1 (lingua)"
+    },
+    {
+        "id": 4,
+        "JENIS_PRODUK": "Kosen",
+        "TIPE": "Meja ½ Biro",
+        "Ukuran":  "Dimensi Produk : 100 cm",
+        "Harga": "Rp. 250.000",
+        "Deskripsi_produk": "Bahan : kayu kelas 1 (kayu besi)"
+    },
+    {
+        "id": 5,
+        "JENIS_PRODUK": "Partisi Ruangan",
+        "TIPE": "Meja ½ Biro",
+        "Ukuran":  "Dimensi Produk : (menyesuaikan)",
+        "Harga": "Rp. 2.000.000 ",
+        "Deskripsi_produk": "Bahan : kayu kelas 2 (cempaka), block board 18 mm, kaca rayban 5 mm, kunci + engsel.Finishing : cat ducco/HPL"
+    }
+]

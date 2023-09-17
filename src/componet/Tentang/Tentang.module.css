@@ -1,0 +1,55 @@
+.containerTentang{
+    margin-bottom: 40px;
+}
+
+.containerTentang h2{
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.containerTentang img{
+    width: 30%;
+    height: 300px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .8);
+}
+
+.containerTentang .contentTentang{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.contentTextTentang{
+    font-family: 'Poppins', sans-serif;
+    /* border: 1px solid black; */
+    width: 40%;
+    text-align: left;
+    margin-left: 20px;
+    margin-top: 20px;
+    /* font-size: 14.3px; */
+    font-size: 1rem;
+}
+
+.contentTextTentang p:nth-child(2){
+    margin-top: 13px;
+}
+
+.contentTextTentang input{
+    margin-top: 20px;
+    width: 120px;
+    height: 30px;
+    cursor: pointer;
+    background-color: rgb(26, 176, 176);
+    outline: none;
+    border: none;
+    color: white;
+    transition: all .4s ease-in-out;
+}
+
+.contentTextTentang input:hover{
+    background-color: white;
+    color: black;
+    border: 1px solid rgb(26, 176, 176);
+}

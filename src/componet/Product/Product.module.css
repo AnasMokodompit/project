@@ -1,0 +1,317 @@
+.contentCard{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100%;
+    /* border: 1px solid black; */
+    gap: 30px;
+    justify-content: center;
+    padding: 20px;
+}
+
+
+.contentCard .card{
+    width: 22%;
+    border-radius: 10px;
+    box-shadow: 0 0 3px rgba(20, 20, 20, .8);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding: 10px;
+    /* height: 300px; */
+    /* height: 200px; */
+    box-sizing: border-box;
+    /* border: 1px solid black; */
+}
+
+.contentCard .card .popup{
+    list-style: none;
+    position: absolute;
+    background-color: white;
+    /* border: 1px solid black; */
+    /* border-radius: 10px; */
+}
+
+.contentCard .card .popup li{
+    padding: 7px 7px;
+    cursor: pointer;
+}
+
+.contentCard .card .popup li a{
+    color: black;
+}
+
+.contentCard .card .popup li:hover{
+    background-color: rgb(33, 188, 33);
+}
+
+.contentCard .card .popup li:hover a{
+    color: white;
+}
+
+.contentCard .card img{
+    width: 100%;
+    border-radius: 10px;
+    height: 240px;
+    /* border: 1px solid black; */
+}
+
+.contentCard .card .cardCategori{
+    font-family: 'Alata', sans-serif;
+    color: gray;
+    font-size: 15px;
+    padding: 10px 0px 0px 5px;
+}
+
+.contentCard .card .cardJdl{
+    padding-left: 5px;
+    font-family: 'Lora', serif;
+}
+
+.cardHarga{
+    padding: 5px 0px 0px 5px; 
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+}
+
+
+/* Read Product */
+
+.ReadProductDetail{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    background-color: rgba(100, 100, 100, .8);
+}
+
+.ReadProductDetail .popup{
+    border: 1px solid black;
+    margin: auto;
+    margin-top: 100px;
+    width: 60%;
+    height: 500px;
+    overflow-y: scroll;
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 0 2px 2px rgba(100, 100, 100, .8);
+}
+
+.ReadProductDetail .popup .top{
+    /* border: 1px solid black; */
+    display: flex;
+    justify-content: right;
+    padding: 5px 10px;
+}
+
+.ReadProductDetail .popup .top span{
+    cursor: pointer;
+}
+
+.ReadProductDetail .popup .content{
+    display: flex;
+    padding: 0px 20px 20px 20px;
+    /* border: 1px solid black; */
+}
+
+.ReadProductDetail .popup .content .image{
+    /* border: 1px solid black; */
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.ReadProductDetail .popup .content .image .itemImage{
+    display: flex;
+    /* border: 1px solid black; */
+    padding: 5px;
+    margin: auto;
+    gap: 5px;
+    margin-top: 5px;
+    box-shadow: 0 0 2px 1px rgba(100, 100, 100, .8);
+
+}
+
+.ReadProductDetail .popup .content .image .itemImage img{
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+}
+
+.ReadProductDetail .popup .detail{
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid black; */
+    width: 100%;
+    font-family: 'Outfit', sans-serif;
+    text-align: left;
+}
+
+.ReadProductDetail .popup .detail .cardCategori{
+}
+
+.ReadProductDetail .popup .detail .cardJdl{
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.ReadProductDetail .popup .detail .ukuran{
+    margin-top: 10px;
+    /* border: 1px solid black; */
+}
+
+.ReadProductDetail .popup .detail .ukuran p{
+    margin: 0;
+}
+
+.ReadProductDetail .popup .detail .deskripsi{
+    margin-top: 10px;
+    /* border: 1px solid black; */
+}
+
+.ReadProductDetail .popup .detail .deskripsi p{
+    margin: 0;
+}
+
+.ReadProductDetail .popup .detail .cardHarga{
+    margin-top: 20px;
+    padding: 0;
+}
+
+.ReadProductDetail .popup .detail .rantingStart{
+    display: flex;
+    align-items: center;
+}
+
+.ReadProductDetail .popup .detail .rantingStart .total{
+    margin-left: 10px;
+}
+
+.ReadProductDetail .popup .content img{
+    width: 100%;
+    height: 350px;
+    /* border: 1px solid black; */
+}
+
+.ReadProductDetail .popup .detail .contentReview{
+    border-top: 1px solid rgba(100, 100, 100, .3);
+    padding: 5px 0px;
+}
+
+.ReadProductDetail .popup .detail .contentReview h6{
+    margin-bottom: 7px;
+}
+
+.ReadProductDetail .popup .detail .contentReview .itemReview{
+    display: flex;
+}
+
+
+.ReadProductDetail .popup .detail .contentReview .itemReview .profile{
+    width: 65px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: gray;
+}
+
+.ReadProductDetail .popup .detail .contentReview .itemReview img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.ReadProductDetail .popup .detail .contentReview .itemReview .dataReview{
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.subData{
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+
+/* Input Nilai Order */
+
+
+.ContainerFormOrder{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    background-color: rgba(100, 100, 100, .8);
+}
+
+.ContainerFormOrder .formOrder{
+    margin: auto;
+    margin-top: 100px;
+    width: 40%;
+    height: max-content;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 0 2px 2px rgba(100, 100, 100, .8);
+    padding: 15px;
+    text-align: right;
+}
+
+.ContainerFormOrder .formOrder .top{
+    display: flex;
+    justify-content: right;
+    padding: 5px 10px;
+}
+
+.ContainerFormOrder .formOrder .top i{
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.ContainerFormOrder .formOrder h4{
+    text-align: left;
+    /* border: 1px solid black; */
+    margin: 0px 6px 20px 6px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+.ContainerFormOrder .formOrder .form{
+    margin: 6px;
+}
+
+.ContainerFormOrder .formOrder .form .formItem{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    /* border: 1px solid black; */
+    margin-top: 5px;
+}
+
+.ContainerFormOrder .formOrder .form .formItem label{
+    margin-bottom: 5px;
+}
+
+.ContainerFormOrder .formOrder .form .formItem input{
+    height: 30px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid rgba(109, 106, 106, 0.9);
+    padding-left: 10px;
+}
+
+.ContainerFormOrder .formOrder .form .formItem input:focus{
+    box-shadow: 0 0 1px 1px rgb(40, 40, 150);
+}
+
+.ContainerFormOrder .formOrder .button{
+    outline: none;
+    width: 80px;
+    height: 30px;
+    cursor: pointer;
+    margin: 6px;
+}
