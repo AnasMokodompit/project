@@ -80,12 +80,20 @@ function OrderAdmin() {
         })
     }
 
-    const hendleTransaksi = () => {
+    const hendleTransaksi = (statusTransaksi) => {
+
         const data = {
             id_jenis_transaksi: 1,
-            id_nama_akun_transaksi: 10,
+            id_nama_akun_transaksi: 18,
             keterangan: keterangan,
-            jumlah: jumlah
+        }
+        
+        if (statusTransaksi == true) {
+            data.id_nama_akun_transaksi = 18
+            data.jumlah = jumlah
+        }else{
+            data.id_nama_akun_transaksi = 36
+            data.jumlah = 0.3 * jumlah
         }
 
         // console.log(data)
@@ -284,9 +292,9 @@ function OrderAdmin() {
                                             return (
                                                 <div key={key}>
                                                     {data.statusTransaksi === true ?
-                                                    <p>Bukti Bayar Lunas <span><input type="checkbox" onClick={() => hendleTransaksi()} /></span></p>
+                                                    <p>Bukti Bayar Lunas <span><input type="checkbox" onClick={() => hendleTransaksi(dataBuktiBayar?.buktiBayar[0]?.statusTransaksi)} /></span></p>
                                                     :
-                                                    <p>Bukti Bayar 30% <span><input type="checkbox" onClick={() => hendleTransaksi()} /></span></p>
+                                                    <p>Bukti Bayar 30% <span><input type="checkbox" onClick={() => hendleTransaksi(dataBuktiBayar?.buktiBayar[0]?.statusTransaksi)} /></span></p>
                                                     }
                                                     <img src={data.picture_bukti_bayar} alt="" />
                                                 </div>

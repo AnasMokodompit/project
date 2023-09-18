@@ -13,26 +13,52 @@ function Tentang() {
         <div className="flex flex-col justify-center gap-4">
           <div className="flex flex-col gap-2">
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit dignissimos
-              accusamus laborum alias inventore voluptatibus numquam nostrum aut, optio provident
-              deserunt, quidem id asperiores temporibus Lorem ipsum dolor, sit amet consectetur
-              adipisicing elit. Molestias dignissimos corporis quasi? Itaque numquam quibusdam earum
-              ducimus! Dolorem sequi optio aperiam ea nihil enim eaque natus libero molestiae harum,
-              accusantium cumque sit voluptatem impedit dolores reprehenderit consequatur at
-              delectus repudiandae!
+              CV. Talongka Jaya berlokasi di Desa Leilem Kecamatan Sonder Kabupaten Minahasa yang
+              dikenal dengan Desa Sentra Industri dan berpengalaman memproduksi furniture. CV.
+              Talongka Jaya berdiri sekitar tahun 1980 dan masih termasuk kategori industri kecil.
+              Usaha CV Talongka Jaya berawal dari orderan kerabat dekat, antara lain saudara dan
+              kenalan untuk membuat perabot rumah tangga. Perabot yang dipesan dikerjakan sendiri
+              oleh pemilik usaha.
             </p>
             <p>
-              quis velit ea excepturi sint blanditiis necessitatibus nulla, cumque molestias!
-              Facilis beatae id, repellat corrupti quas magni quam vitae vel assumenda, delectus
-              provident ratione expedita explicabo dolorem placeat modi reiciendis accusamus, optio
-              nostrum perspiciatis minima!
+              Keahlian dalam pembuatan mebel ini diwariskan dari pemilik usaha ke anaknya yang
+              kemudian meneruskan pengelolaan bisnis tersebut sekaligus berganti manajemen baru di
+              tahun 2010. Sejak saat itu, banyak penawaran datang dari berbagai macam instansi baik
+              swasta maupun pemerintah sehingga usaha pembuatan furniture CV. Talongka Jaya semakin
+              berkembang dan dikenal. Tempat produksi yang terbatas tidak cukup lagi menampung
+              jumlah orderan dan permintaan konsumen yang terus meningkat sehingga pada tahun 2017
+              pemilik usaha akhirnya menambah lahan untuk memperluas area produksi. Penambahan area
+              produksi tersebut selesai pada tahun 2020 sekaligus pendridian CV yang diberi nama
+              “Talongka Jaya” dan bertindak sebagai Direktur adalah Bapak Michael Stanley Kilis.
+              Perusahaan ini didirikan atas dasar beragamnya kebutuhan dan keinginan konsumen
+              sehingga dalam pengerjaan desain disesuaikan dengan selera konsumen.
             </p>
+            <p>
+              Jenis-jenis furniture yang ditawarkan untuk diproduksi CV Talongka Jaya, antara lain:
+            </p>
+            <ol>
+              <li className="list-inside list-decimal">
+                Berbagai jenis furniture (kostum model) untuk kebutuhan perkantoran, rumah tangga,
+                dan sekolah.
+              </li>
+              <li className="list-inside list-decimal">
+                Kusen pintu dan kusen jendela serta pintu dan jendela.
+              </li>
+              <li className="list-inside list-decimal">Pekerjaan untuk interior ruangan.</li>
+              <li className="list-inside list-decimal">
+                Pekerjaan untuk kebutuhan booth pameran, counter, pajangan, dll
+              </li>
+              <li className="list-inside list-decimal">
+                Finishing furniture : Cat Kayu (Waterbased, Laminating HPL, Cat Duko, dan Cat Semi
+                Duko) Untuk harga disesuaikan dengan bahan dan model
+              </li>
+            </ol>
           </div>
-          <input
+          {/* <input
             className="rounded-lg bg-amber-300 p-2 text-base"
             type="button"
             value="Selengkapnya"
-          />
+          /> */}
         </div>
       </div>
     </div>

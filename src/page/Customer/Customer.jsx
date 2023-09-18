@@ -37,7 +37,7 @@ function Customer() {
     const decode = jwt(dataLogin.dataLogin.token);
 
     axios
-      .get(`http://localhost:3000/api/v1.0/productOrder`, {
+      .get(`http://localhost:3000/api/v1.0/productOrder/customers`, {
         headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
       })
       .then((res) => {

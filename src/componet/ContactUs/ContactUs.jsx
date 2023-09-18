@@ -40,11 +40,8 @@ function Contact() {
       </div>
       <div>
         <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id magni deleniti similique
-          enim, asperiores cumque quidem neque in velit quis. Dolorum, in dolorem. Reprehenderit
-          adipisci voluptas expedita repellat ex reiciendis deleniti veniam, atque minima quis
-          aliquid, facilis iusto cum aperiam temporibus culpa ipsa sapiente cupiditate quos
-          assumenda delectus accusantium asperiores!
+          Anda dapat menghubungi kami disetiap saat, untuk mendapatkan informasi - informasi yagn
+          dibutuhkan. Staf kami akan memberi bantuan sesuai dengan yang anda butuhkan.
         </p>
       </div>
       <div className="grid grid-cols-3 items-center justify-center gap-8 px-32">
@@ -53,21 +50,21 @@ function Contact() {
             <MarkerPin01 className="text-xl" />
             <div>
               <p className="font-bold">Alamat</p>
-              <p>Jl. Raya Politeknik, Kota Manado</p>
+              <p>Jl. Raya Leilem Kabupaten Minahasa</p>
             </div>
           </div>
           <div className="flex items-center gap-4">
             <Phone className="text-xl" />
             <div>
               <p className="font-bold">Telepon</p>
-              <p>+62 856 962 413 63</p>
+              <p>+6281340096717</p>
             </div>
           </div>
           <div className="flex items-center gap-4">
             <Mail01 className="text-xl" />
             <div>
               <p className="font-bold">E-Mail</p>
-              <p>cs@talangkajaya.com</p>
+              <p>deisy@gmail.com</p>
             </div>
           </div>
         </div>
