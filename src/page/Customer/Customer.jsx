@@ -16,8 +16,12 @@ function Customer() {
     const [dataProductById, setDataProductById] = useState([])
     const [dataImageClick, setDataImageClick] = useState(false)
     const [dataImageBuktiBayar, setDataImageBuktiBayar] = useState(false)
-    const [buktibayarr, setBuktiBayar] = useState()
+    const [dataBuktiBayar, setDataBuktiBayar] = useState([])
+    const [buktibayarGambar, setBuktiBayarGambar] = useState()
     const [pembayaran, setPembayaran] = useState('')
+    const [id, setId] = useState()
+    const [isPembayaranDP, setIsPembayaranDP] = useState(false)
+    const [isPembayaranLunas, setIsPembayaranLunas] = useState(false)
 
   const hendleCekUser = () => {
     const decode = jwt(dataLogin.dataLogin.token);
@@ -49,17 +53,43 @@ function Customer() {
       });
   };
 
+  const hendleCekOrderProductById = (idProdutOrder) => {
+
+    setId(idProdutOrder)
+
+    axios
+        .get(`http://localhost:3000/api/v1.0/productOrder/customers/${idProdutOrder}`, {
+            headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
+        })
+        .then((res) => {
+            console.log(res.data.data);
+            // setDataBuktiBayar(res.data.data?.orders?.buktiBayar)
+            setDataProductById(res.data.data)
+
+            setIsPembayaranDP(res.data.data.orders.IsPembayaranDP)
+            setIsPembayaranLunas(res.data.data.orders.IsPembayaranLunas)
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+  }
+
   const hendleUploadBuktiBayar = (id_orders) => {
       const formData = new FormData()
           
-      formData.append('gambarBuktiBayar', buktibayarr)
+      formData.append('gambarBuktiBayar', buktibayarGambar)
       formData.append('statusTransaksi', pembayaran)
       formData.append('id_orders', id_orders)
 
       axios.post(`http://localhost:3000/api/v1.0/buktiBayar`, formData, { headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}`}})
       .then((res) => {
-          hendleOrderByCustemers()
+            alert(`Gambar Berhasil DI Kirim`)
+            hendleOrderByCustemers()
+            hendleCekOrderProductById(id)
       }).catch((err) => {
+        if (err.response.data) {
+            alert(`${err.response.data.message}`)
+        }
           console.log(err)
       })
   }
@@ -128,14 +158,17 @@ function Customer() {
                         {dataProduct.length !== 0 && (
                             dataProduct.map((data,key) => {
                                 return (
-                                    console.log(data),
+                                    // console.log(data),
                                     // <div key={key} className={style.item} onClick={() => `${setPopUpInformasiPesanan('Active')} ${(data?.orders?.status == false || data?.orders?.status == true) ? setPembayaran(data?.orders?.status) : setPembayaran('')} ${setDataProductById(data)} ${data?.picture_bukti_bayar ? setDataImageBuktiBayar(data?.picture_bukti_bayar) : setDataImageBuktiBayar(false)}`}>
-                                    <div key={key} className={style.item} onClick={() => `${setPopUpInformasiPesanan('Active')} ${setDataProductById(data)} ${data?.picture_bukti_bayar ? setDataImageBuktiBayar(data?.picture_bukti_bayar) : setDataImageBuktiBayar(false)}`}>
+                                    <div key={key} className={style.item} onClick={() => `${setPopUpInformasiPesanan('Active')} ${hendleCekOrderProductById(data.id)} ${data?.picture_bukti_bayar ? setDataImageBuktiBayar(data?.picture_bukti_bayar) : setDataImageBuktiBayar(false)}`}>
                                         <img src={data.products.product_images[0].url_image} alt="" />
                                         <span>{data.products.name}</span>
                                         <span>{data.products.categories.name}</span>
-                                        <span>{data.jumlah} Product</span>
-                                        <span>Total Harga : {new Intl.NumberFormat("id-ID", {style: "currency", currency: "IDR"}).format(data.Price)}</span>
+                                        <span>
+                                            {data.jumlah}
+                                            {data?.products?.name?.toLowerCase() == "kitcen set" || data?.products?.name?.toLowerCase() == "set kamar tidur" || data?.products?.name?.toLowerCase() == "backdrop / partisi ruangan / mini bar"  ? " meter jalan" : " Product"}
+                                        </span>
+                                        <span>Total Harga : {new Intl.NumberFormat("id-ID", {style: "currency", currency: "IDR"}).format(data.Price).replace(/(\.|,)00$/g, "")}</span>
                                     </div>
                                 )
                             })
@@ -149,7 +182,7 @@ function Customer() {
                                     <span onClick={() => `${setPopUpInformasiPesanan("")} ${hendleClose()}`} className="material-symbols-outlined">close</span>
                                 </div>
                                 <div className={style.content}>
-                                    {console.log(dataProductById)}
+                                    {/* {console.log(dataProductById)} */}
                                     <div className={style.image}>
                                         <img src={dataImageClick == false ? dataProductById?.products?.product_images[0]?.url_image : dataImageClick} alt="" />
                                         <div className={style.itemImage}>
@@ -170,28 +203,59 @@ function Customer() {
                                             {dataProductById?.products?.ukuran}
                                         </span>
                                         <span className={style.deskripsi}><p className={style.subData}>Deskripsi</p>{dataProductById?.products?.Deskripsi_produk}</span>
-                                        <span className={style.cardHarga}>{new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" }).format(dataProductById?.products?.harga)}</span>
+                                        <span className={style.cardHarga}>
+                                            {new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" }).format(dataProductById?.products?.harga).replace(/(\.|,)00$/g, "")}
+                                            {dataProductById?.products?.name.toLowerCase() == "kitcen set" ? " /meter jalan" : ""}
+                                            {dataProductById?.products?.name.toLowerCase() == "set kamar tidur" ? " /meter jalan" : ""}
+                                            {dataProductById?.products?.name.toLowerCase() == "backdrop / partisi ruangan / mini bar" ? " /meter jalan" : ""}
+                                        </span>
                                         <p className={style.judulDetailPesanan}>Detail Pesanan</p>
-                                        <span>{dataProductById?.jumlah} Product</span>
-                                        <span>Total Harga : {new Intl.NumberFormat("id-ID", {style: "currency", currency: "IDR"}).format(dataProductById?.Price)}</span>
+                                        <span>
+                                            {dataProductById?.jumlah} 
+                                            {dataProductById?.products?.name?.toLowerCase() == "kitcen set" || dataProductById?.products?.name?.toLowerCase() == "set kamar tidur" || dataProductById?.products?.name?.toLowerCase() == "backdrop / partisi ruangan / mini bar"  ? " meter jalan" : " Product"}
+                                        </span>
+                                        <span>Total Harga : {new Intl.NumberFormat("id-ID", {style: "currency", currency: "IDR"}).format(dataProductById?.Price).replace(/(\.|,)00$/g, "")}</span>
+                                        <span className={style.judulDetailPesanan}>Total yang dibayar</span>
+                                        <span>Harga : {new Intl.NumberFormat("id-ID", {style: "currency", currency: "IDR"}).format(dataProductById?.orders?.Price).replace(/(\.|,)00$/g, "")}</span>
+                                        {console.log(dataProductById)}
                                         {dataProductById.status === 2 && (
                                             <div className={style.contentBuktiBayar}>
-                                                <p>Upload Bukti Pembayaran :</p>
-                                                <div className={style.pembayaran}>
-                                                    {console.log(pembayaran)}
-                                                    <select name="" id="" value={pembayaran} onChange={(e) => setPembayaran(e.target.value)}>
-                                                        <option value="">Pilih Pembayaran</option>
-                                                        <option value="false">Uang Muka 30%</option>
-                                                        <option value="true">Lunas</option>
-                                                    </select>
-                                                </div>
-                                                {pembayaran.length !== 0 && (
-                                                    <div className={style.itemBuktiBayar}>
-                                                        <img className={style.imgBuktiBayar} src={dataImageBuktiBayar == false ? buktiBayar : dataImageBuktiBayar} alt="" />
-                                                        <input type="file" onChange={(e) => `${setDataImageBuktiBayar(URL.createObjectURL(e.target.files[0]))} ${setBuktiBayar(e.target.files[0])}`} />
-                                                    </div>
+                                                {dataProductById?.orders?.buktiBayar.length !== 0 && (
+                                                    <>
+                                                        <p className={style.judulDetailPesanan}>Bukti Bayar</p>
+                                                        {dataProductById?.orders?.buktiBayar.map((data, key) => {
+                                                            return (
+                                                                <div key={key}>
+                                                                    <p>{data.statusTransaksi == true ? "Bayar Lunas" : "Bayar Uang Muka 30%"}</p>
+                                                                    <img style={{width: "100px", height: "100px"}} src={data.picture_bukti_bayar} alt="" />
+                                                                </div>
+                                                            )
+                                                        })}
+                                                    </>
                                                 )}
-                                                <input className={style.button} type="button" value="Kirim Bukti Bayar" onClick={() => hendleUploadBuktiBayar(dataProductById.id_orders)} />
+                                                {(isPembayaranLunas !== true) && (
+                                                    <>
+                                                        <p className={style.judulDetailPesanan}>Upload Bukti Pembayaran</p>
+                                                        <div className={style.pembayaran}>
+                                                            {console.log(pembayaran, dataProductById)}
+                                                            <select name="" id="" value={pembayaran} onChange={(e) => setPembayaran(e.target.value)}>
+                                                                <option value="">Pilih Pembayaran</option>
+                                                                {console.log(isPembayaranDP, isPembayaranLunas)}
+                                                                {isPembayaranDP !== true && (
+                                                                    <option value="false">Uang Muka 30%</option>
+                                                                )}
+                                                                <option value="true">Lunas</option>
+                                                            </select>
+                                                        </div>
+                                                        {pembayaran.length !== 0 && (
+                                                            <div className={style.itemBuktiBayar}>
+                                                                <img className={style.imgBuktiBayar} src={dataImageBuktiBayar == false ? buktiBayar : dataImageBuktiBayar} alt="" />
+                                                                <input type="file" onChange={(e) => `${setDataImageBuktiBayar(URL.createObjectURL(e.target.files[0]))} ${setBuktiBayarGambar(e.target.files[0])}`} />
+                                                            </div>
+                                                        )}
+                                                        <input className={style.button} type="button" value="Kirim Bukti Bayar" onClick={() => hendleUploadBuktiBayar(dataProductById.id_orders)} />
+                                                    </>
+                                                )}
                                             </div>
                                         )}
                                         {dataProductById.status === 0 && (

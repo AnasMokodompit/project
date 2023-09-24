@@ -240,7 +240,11 @@ function Product({ product }) {
                 <span className={style.cardHarga}>
                   {new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" }).format(
                     dataById?.harga,
-                  )}
+                  ).replace(/(\.|,)00$/g, "")} 
+                  {dataById?.name.toLowerCase() == "kitcen set" ? " /meter jalan" : ""}
+                  {dataById?.name.toLowerCase() == "set kamar tidur" ? " /meter jalan" : ""}
+                  {dataById?.name.toLowerCase() == "backdrop / partisi ruangan / mini bar" ? " /meter jalan" : ""}
+                  {/* {console.log(dataById?.name.toLowerCase().search("backdrop"))} */}
                 </span>
                 <span className={style.rantingStart}>
                   <ReactStars

@@ -10,6 +10,8 @@ import Register from "./page/register/Register";
 import Customer from "./page/Customer/Customer";
 import { Transaksi } from "./page/transaksi";
 import { Jurnal } from "./page/jurnal";
+import PesananCustom from "./page/PesananCustom/PesananCustom";
+import PersediaanBahanBaku from "./page/BahanBaku/PersediaanBahanBaku";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
         <Route path="/transaksi" element={<Transaksi />} />
         <Route path="/jurnal" element={<Jurnal />} />
         <Route path="/customer" element={<Customer />} />
+        <Route path="/order/custom" element={<PesananCustom />} />
+        <Route path="/bahan-baku" element={<PersediaanBahanBaku />} />
       </Routes>
     </BrowserRouter>
   );

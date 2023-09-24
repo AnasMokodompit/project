@@ -127,6 +127,8 @@
 .ReadProductDetail .popup .content .image .itemImage{
     display: flex;
     /* border: 1px solid black; */
+    overflow: hidden;
+    overflow-x: scroll;
     padding: 5px;
     margin: auto;
     gap: 5px;
@@ -149,9 +151,6 @@
     width: 100%;
     font-family: 'Outfit', sans-serif;
     text-align: left;
-}
-
-.ReadProductDetail .popup .detail .cardCategori{
 }
 
 .ReadProductDetail .popup .detail .cardJdl{

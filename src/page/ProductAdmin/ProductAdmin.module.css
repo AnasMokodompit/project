@@ -131,52 +131,35 @@
     text-align: left;
     padding: 5px;
     /* height: 200px; */
+    justify-content: space-between;
     box-sizing: border-box;
     /* border: 1px solid black; */
 }
 
-.card{
+.card .contentCard{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     /* border: 1px solid black; */
 }
 
-.card .popup{
-    list-style: none;
-    position: absolute;
-    background-color: white;
-}
-
-.card .popup li{
-    padding: 7px 7px;
-}
-
-.card .popup li a{
-    color: black;
-}
-
-.card .popup li:hover{
-    background-color: rgb(33, 188, 33);
-}
-
-.card .popup li:hover a{
-    color: white;
-}
-
-.card img{
+.card .contentCard img{
+    width: 100%;
     height: 180px;
 }
 
-.card .cardCategori{
+.card .contentCard .cardCategori{
     font-family: 'Alata', sans-serif;
     color: gray;
     padding: 7px 3px 3px 0px;
 }
 
-.card .cardJdl{
+.card .contentCard .cardJdl{
     padding-top: 5px;
     font-family: 'Lora', serif;
 }
 
-.cardHarga{
+.card .contentCard .cardHarga{
     padding: 5px 0;
     font-family: 'Poppins', sans-serif;
 }
@@ -268,6 +251,7 @@
     font-size: 15px;
     height: 35px;
     padding-left: 10px;
+    border: 1px solid gray;
 }
 
 .contrainerPopUpProduct .contentPopUpProduct .body .item textarea{
@@ -277,6 +261,7 @@
     outline: none;
     height: 100px;
     padding-left: 10px;
+    border: 1px solid gray;
 }
 
 .contrainerPopUpProduct .contentPopUpProduct .body .gambarProduct label:nth-child(2){

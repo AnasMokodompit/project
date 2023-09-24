@@ -338,6 +338,7 @@
     box-shadow: 0 0 2px 2px rgba(100, 100, 100, .8);
     padding: 15px 30px;
     font-family: 'Poppins', sans-serif;
+    /* border: 1px solid black; */
 }
 
 .containerPopUpStatus .contentStatus p:nth-child(1){
@@ -410,7 +411,7 @@
     top: 20px;
     left: 30%;
     position: absolute;
-    /* border: 1px solid black; */
+    border: 1px solid black;
     background-color: white;
     /* color: white; */
     border-radius: 5px;
@@ -420,7 +421,7 @@
 }
 
 .dataOrder .top{
-    /* border: 1px solid black; */
+    border-bottom: 2px solid rgb(177, 171, 171);
     display: flex;
     justify-content: right;
     padding: 5px 10px;
@@ -433,22 +434,23 @@
 
 .dataOrder .content{
     display: flex;
-    /* flex-direction: column; */
-    /* text-align: left; */
-    padding: 10px;
+    padding: 10px 10px 0px 10px;
+    justify-content: space-between;
     /* border: 1px solid black; */
-    /* border-bottom: 1px solid black; */
+    border-bottom: 2px solid rgb(177, 171, 171);
 }
 
 .dataOrder .contentCenter{
     display: flex;
     width: 100%;
-    padding: 0px 5px;
-    justify-content: space-between;
+    padding: 0px 10px;
+    /* justify-content: space-between; */
+    gap: 10px;
     /* border: 1px solid black; */
 }
 
 .contentCenterItem{
+    /* border: 1px solid black; */
     font-size: 15px;
     display: flex;
     flex-direction: column;  
@@ -492,9 +494,11 @@
 
 
 .imgOrder img{
-    width: 150px;
+    width: 180px;
     height: 150px;
     border-radius: 3px;
+    box-shadow: 0 0 2px 1px rgb(77, 75, 75);
+    /* border: 1px solid black; */
 }
 
 .keterangan{
@@ -519,6 +523,7 @@
 }
 
 .formOrder h6{
+    font-size: 15px;
     margin-top: 10px;
     text-align: left;
     font-family: 'Poppins', sans-serif;
@@ -558,20 +563,30 @@
     margin: 6px;
 }
 
-.formOrder div{
+.formOrder .contentBuktiPembayaran{
     /* border: 1px solid black; */
     margin: 10px 0px;
 }
 
-.formOrder div p {
+.formOrder .contentBuktiPembayaran .contentItem{
+    display: flex;
+    /* align-content: center; */
     font-size: 16px;
     padding: 0;
     width: max-content;
+    /* border: 1px solid black; */
+    margin-bottom: 5px;
+}
+
+.formOrder .contentBuktiPembayaran .contentItem span{
     border-bottom: 2px solid gray;
 }
 
-.formOrder div p span{
-    margin-left: 20px;
+.formOrder .contentBuktiPembayaran .contentItem .item p,
+.formOrder .contentBuktiPembayaran .contentItem .item input{
+    margin-left: 10px;
+    font-weight: bold;
+    font-style: italic;
 }
 
 .formOrder img{

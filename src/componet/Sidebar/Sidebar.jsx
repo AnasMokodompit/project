@@ -85,6 +85,12 @@ function Sidebar({ nameSdiber }) {
                     <p>Order</p>
                   </div>
                 </Link>
+                <Link to="/order/custom">
+                  <div className="flex items-center gap-2">
+                    <ShoppingCart02 className="text-xl" />
+                    <p>Order Custom</p>
+                  </div>
+                </Link>
                 <Link to="/transaksi">
                   <div className="flex items-center gap-2">
                     <CoinSwap02 className="text-xl" />
@@ -95,6 +101,12 @@ function Sidebar({ nameSdiber }) {
                   <div className="flex items-center gap-2">
                     <Table className="text-xl" />
                     <p>Jurnal</p>
+                  </div>
+                </Link>
+                <Link to="/bahan-baku">
+                  <div className="flex items-center gap-2">
+                    <Table className="text-xl" />
+                    <p>Persediaan Bahan Baku</p>
                   </div>
                 </Link>
                 {/* <Link>

@@ -42,6 +42,7 @@ function ProductAdmin() {
         })
     }
 
+
     const hendleCreateProduct = () => {
 
     }
@@ -172,10 +173,17 @@ function ProductAdmin() {
                             dataProduct.map((data, key) => {
                                 return (
                                     <div className={style.card}>
-                                        <img src={data.product_images[0]?.url_image} alt="" />
-                                        <span className={style.cardCategori}>{data.categories?.name}</span>
-                                        <span className={style.cardJdl}>{data?.name}</span>
-                                        <span className={style.cardHarga}>{new Intl.NumberFormat("id-ID", {style: "currency", currency: "IDR"}).format(data.harga)}</span>
+                                        <div className={style.contentCard}>
+                                            <img src={data.product_images[0]?.url_image} alt="" />
+                                            <span className={style.cardCategori}>{data.categories?.name}</span>
+                                            <span className={style.cardJdl}>{data?.name}</span>
+                                            <span className={style.cardHarga}>
+                                                {new Intl.NumberFormat("id-ID", {style: "currency", currency: "IDR"}).format(data.harga).replace(/(\.|,)00$/g, "")}
+                                                {data?.name.toLowerCase() == "kitcen set" ? " /meter jalan" : ""}
+                                                {data?.name.toLowerCase() == "set kamar tidur" ? " /meter jalan" : ""}
+                                                {data?.name.toLowerCase() == "backdrop / partisi ruangan / mini bar" ? " /meter jalan" : ""}
+                                            </span>
+                                        </div>
                                         <div className={style.optionCard}>
                                             <span class="material-symbols-outlined" onClick={() => `${hendleEditProduct(data.id)} ${setPopUpProduct(true)} ${setAksi('EditProduct')}`}>edit</span>
                                             <span class="material-symbols-outlined" onClick={() => hendleDeleteProduct(data.id)}>delete</span>
@@ -189,7 +197,12 @@ function ProductAdmin() {
                     <div className={style.contrainerPopUpProduct}>
                         <div className={style.contentPopUpProduct}>
                             <div className={style.top}>
-                                <h5>Tambahkan Product</h5>
+                                {aksi == "EditProduct" && (
+                                    <h5>Edit Product</h5>
+                                )}
+                                {aksi == "TambahProduct" && (
+                                    <h5>Tambahkan Product</h5>
+                                )}
                                 <span onClick={() => `${setPopUpProduct(false)} ${hendleClosePoUp()}`} className="material-symbols-outlined">close</span>
                             </div>
                             <div className={style.body}>
@@ -247,6 +260,18 @@ function ProductAdmin() {
                                                 )
                                             })
                                         )}
+                                    </div>
+                                </div>
+                                <div className={style.item}>
+                                    <label htmlFor="">Keperluan Bahan Baku</label>
+                                    <div>
+                                        <select name="" id="">
+                                            <option value="">Bahan Baku</option>
+                                        </select>
+                                        <select name="" id="">
+                                            <option value="">Satuan</option>
+                                        </select>
+                                        <input type="text" name="" id="" placeholder='Jumlah' />
                                     </div>
                                 </div>
                             </div>

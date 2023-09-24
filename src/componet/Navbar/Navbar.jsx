@@ -399,6 +399,9 @@ function Navbar() {
                                       })
                                         .format(data.jumlahHarga)
                                         .replace(/(\.|,)00$/g, "")}
+                                          {data?.name.toLowerCase() == "kitcen set" ? " /meter jalan" : ""}
+                                          {data?.name.toLowerCase() == "set kamar tidur" ? " /meter jalan" : ""}
+                                          {data?.name.toLowerCase() == "backdrop / partisi ruangan / mini bar" ? " /meter jalan" : ""}
                                     </p>
                                     <div className="flex w-max border-collapse items-center justify-between gap-3 rounded-lg">
                                       <button
