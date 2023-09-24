@@ -20,7 +20,11 @@ import {
   FormMessage,
 } from "../../componet/form";
 import { Input } from "../../componet/input";
-import { Popover, PopoverContent, PopoverTrigger } from "../../componet/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "../../componet/popover";
 
 export const Akun = () => {
   const form = useForm({
@@ -50,7 +54,10 @@ export const Akun = () => {
 
   const { mutate: createNamaAkunTransaksi } = useMutation({
     mutationFn: async (data) => {
-      await axios.post(`${process.env.REACT_APP_BASE_API}/namaAkunTransaksi`, data);
+      await axios.post(
+        `${process.env.REACT_APP_BASE_API}/namaAkunTransaksi`,
+        data,
+      );
     },
     onSuccess: () => {
       refetch();
@@ -134,7 +141,9 @@ export const Akun = () => {
                     name="nama"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="font-archivo">Nama Akun Transaksi</FormLabel>
+                        <FormLabel className="font-archivo">
+                          Nama Akun Transaksi
+                        </FormLabel>
                         <FormControl>
                           <Input {...field} />
                         </FormControl>
@@ -158,7 +167,9 @@ export const Akun = () => {
             <tr className="border-b-2 border-neutral-500 bg-amber-300">
               <th className="w-0 px-4 py-3 text-center font-semibold">No.</th>
               <th className="px-4 py-3 text-center font-semibold">Kode</th>
-              <th className="px-4 py-3 text-center font-semibold">Nama Akun Transaksi</th>
+              <th className="px-4 py-3 text-center font-semibold">
+                Nama Akun Transaksi
+              </th>
               <th className="px-4 py-2 text-center font-semibold"></th>
             </tr>
           </thead>
@@ -189,7 +200,9 @@ export const Akun = () => {
                                   name="kode"
                                   render={({ field }) => (
                                     <FormItem>
-                                      <FormLabel className="font-archivo">Kode</FormLabel>
+                                      <FormLabel className="font-archivo">
+                                        Kode
+                                      </FormLabel>
                                       <FormControl>
                                         <Input {...field} />
                                       </FormControl>

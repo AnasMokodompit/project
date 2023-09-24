@@ -119,7 +119,9 @@ function Product({ product }) {
         ? dataProduct.map((data, key) => {
             // console.log(data)
             return (
-              <div key={key} className="flex flex-col gap-2 rounded-lg shadow-lg">
+              <div
+                key={key}
+                className="flex flex-col gap-2 rounded-lg shadow-lg">
                 {/* <ul className={style.popup}>
                                 <li onClick={() => `${hendleSimpanOrderan(data.id)}`}><i className="fa-solid fa-cart-shopping"></i></li>
                                 <li onClick={() => `${setValuePopUpRead("1")} ${hendleCekDataProduct(data.id)}`}><i className="fa-regular fa-eye"></i></li>
@@ -133,7 +135,9 @@ function Product({ product }) {
                   <div className="flex flex-col gap-2">
                     <div>
                       <p className="truncate text-xl">{data?.name}</p>
-                      <p className="text-sm font-light leading-none">{data?.categories?.name}</p>
+                      <p className="text-sm font-light leading-none">
+                        {data?.categories?.name}
+                      </p>
                     </div>
                     <p className="text-lg font-normal">
                       {new Intl.NumberFormat("id-ID", {
@@ -154,7 +158,11 @@ function Product({ product }) {
                       </sup>
                     </button>
                     <button
-                      onClick={() => `${setValuePopUpRead("1")} ${hendleCekDataProduct(data.id)}`}
+                      onClick={() =>
+                        `${setValuePopUpRead("1")} ${hendleCekDataProduct(
+                          data.id,
+                        )}`
+                      }
                       className="flex w-full items-center justify-center gap-2 rounded-lg bg-amber-300 px-6 py-2 text-black">
                       Lihat Produk
                     </button>
@@ -171,15 +179,25 @@ function Product({ product }) {
                   <li onClick={() => `${hendleSimpanOrderan(data.id)}`}>
                     <i className="fa-solid fa-cart-shopping"></i>
                   </li>
-                  <li onClick={() => `${setValuePopUpRead("1")} ${hendleCekDataProduct(data.id)}`}>
+                  <li
+                    onClick={() =>
+                      `${setValuePopUpRead("1")} ${hendleCekDataProduct(
+                        data.id,
+                      )}`
+                    }>
                     <i className="fa-regular fa-eye"></i>
                   </li>
                 </ul>
                 <img src={data?.product_images[0]?.url_image} alt="" />
-                <span className={style.cardCategori}>{data?.categories?.name}</span>
+                <span className={style.cardCategori}>
+                  {data?.categories?.name}
+                </span>
                 <span className={style.cardJdl}>{data?.name}</span>
                 <span className={style.cardHarga}>
-                  {new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" })
+                  {new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  })
                     .format(data.harga)
                     .replace(/(\.|,)00$/g, "")}
                 </span>
@@ -227,7 +245,9 @@ function Product({ product }) {
                 </div>
               </div>
               <div className={style.detail}>
-                <span className={style.cardCategori}>{dataById?.categories?.name}</span>
+                <span className={style.cardCategori}>
+                  {dataById?.categories?.name}
+                </span>
                 <span className={style.cardJdl}>{dataById?.name}</span>
                 <span className={style.ukuran}>
                   <p className={style.subData}>Ukuran</p>
@@ -238,9 +258,23 @@ function Product({ product }) {
                   {dataById?.Deskripsi_produk}
                 </span>
                 <span className={style.cardHarga}>
-                  {new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR" }).format(
-                    dataById?.harga,
-                  )}
+                  {new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  })
+                    .format(dataById?.harga)
+                    .replace(/(\.|,)00$/g, "")}
+                  {dataById?.name.toLowerCase() == "kitcen set"
+                    ? " /meter jalan"
+                    : ""}
+                  {dataById?.name.toLowerCase() == "set kamar tidur"
+                    ? " /meter jalan"
+                    : ""}
+                  {dataById?.name.toLowerCase() ==
+                  "backdrop / partisi ruangan / mini bar"
+                    ? " /meter jalan"
+                    : ""}
+                  {/* {console.log(dataById?.name.toLowerCase().search("backdrop"))} */}
                 </span>
                 <span className={style.rantingStart}>
                   <ReactStars
@@ -248,12 +282,18 @@ function Product({ product }) {
                     edit={false}
                     count={5}
                     size={24}
-                    value={jumlahStart ? jumlahStart / dataById.reviewevUserProduct.length : 0}
+                    value={
+                      jumlahStart
+                        ? jumlahStart / dataById.reviewevUserProduct.length
+                        : 0
+                    }
                     isHalf={true}
                     activeColor="#ffd700"
                   />
                   {console.log()}
-                  <span className={style.total}>{dataById.reviewevUserProduct.length} Penilai</span>
+                  <span className={style.total}>
+                    {dataById.reviewevUserProduct.length} Penilai
+                  </span>
                 </span>
                 <div className={style.contentReview}>
                   <h6>Penilaian Produk</h6>
@@ -265,7 +305,9 @@ function Product({ product }) {
                           {/* <img className={style.profile} src={img1} alt="" /> */}
                           <span className={style.profile}></span>
                           <div className={style.dataReview}>
-                            <span className={style.nama}>{data.users.name}</span>
+                            <span className={style.nama}>
+                              {data.users.name}
+                            </span>
                             <ReactStars
                               onChange={ratingChanged}
                               edit={false}

@@ -6,8 +6,7 @@ const SvgMessageCheckCircle = ({ title, titleId, ...props }) => (
     fill="none"
     viewBox="0 0 24 24"
     aria-labelledby={titleId}
-    {...props}
-  >
+    {...props}>
     {title ? <title id={titleId}>{title}</title> : null}
     <path
       stroke="currentColor"

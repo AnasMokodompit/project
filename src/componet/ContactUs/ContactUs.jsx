@@ -40,8 +40,9 @@ function Contact() {
       </div>
       <div>
         <p>
-          Anda dapat menghubungi kami disetiap saat, untuk mendapatkan informasi - informasi yagn
-          dibutuhkan. Staf kami akan memberi bantuan sesuai dengan yang anda butuhkan.
+          Anda dapat menghubungi kami disetiap saat, untuk mendapatkan informasi
+          - informasi yagn dibutuhkan. Staf kami akan memberi bantuan sesuai
+          dengan yang anda butuhkan.
         </p>
       </div>
       <div className="grid grid-cols-3 items-center justify-center gap-8 px-32">
@@ -106,7 +107,11 @@ function Contact() {
           </div>
 
           <div className="flex items-center justify-center rounded-lg bg-amber-300 p-2 text-lg">
-            <input type="submit" value="Kirim" onClick={() => hendleSumbitContactUs()} />
+            <input
+              type="submit"
+              value="Kirim"
+              onClick={() => hendleSumbitContactUs()}
+            />
           </div>
           {/* </form> */}
         </div>

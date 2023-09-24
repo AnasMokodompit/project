@@ -8,6 +8,8 @@ import OrderAdmin from "./page/OrderAdmin/OrderAdmin";
 import ProductAdmin from "./page/ProductAdmin/ProductAdmin";
 import Register from "./page/register/Register";
 import Customer from "./page/Customer/Customer";
+import PesananCustom from "./page/PesananCustom/PesananCustom";
+import PersediaanBahanBaku from "./page/BahanBaku/PersediaanBahanBaku";
 import { Transaksi } from "./page/transaksi";
 import { Jurnal } from "./page/jurnal";
 import { JenisTransaksi } from "./page/jenis-transaksi";
@@ -32,6 +34,8 @@ function App() {
           <Route path="/akun" element={<Akun />} />
           <Route path="/jurnal" element={<Jurnal />} />
           <Route path="/transaksi" element={<Transaksi />} />
+          <Route path="/order/custom" element={<PesananCustom />} />
+          <Route path="/bahan-baku" element={<PersediaanBahanBaku />} />
         </Route>
       </Routes>
     </BrowserRouter>

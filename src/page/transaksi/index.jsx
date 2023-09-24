@@ -26,7 +26,11 @@ import {
   FormMessage,
 } from "../../componet/form";
 import { Input } from "../../componet/input";
-import { Popover, PopoverContent, PopoverTrigger } from "../../componet/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "../../componet/popover";
 import { Textarea } from "../../componet/textarea";
 
 import Check from "../../Asset/icons/untitled-ui-icons/line/components/Check";
@@ -120,15 +124,16 @@ export const Transaksi = () => {
 
   const restrictAlphabet = (event) => {
     const allowedKeys = [
-      8, 9, 13, 33, 34, 35, 36, 37, 38, 39, 40, 46, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 96, 97,
-      98, 99, 100, 101, 102, 103, 104, 105,
+      8, 9, 13, 33, 34, 35, 36, 37, 38, 39, 40, 46, 48, 49, 50, 51, 52, 53, 54,
+      55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105,
     ];
     const key = event.which || event.keyCode;
     const isCtrlPressed = event.ctrlKey || event.metaKey; // Check if Ctrl key is pressed
 
     // Check for allowed keys and Ctrl key combinations, except Ctrl + V
     const isAllowed =
-      allowedKeys.includes(key) || (isCtrlPressed && (key === 65 || key === 67 || key === 88));
+      allowedKeys.includes(key) ||
+      (isCtrlPressed && (key === 65 || key === 67 || key === 88));
 
     if (!isAllowed) {
       event.preventDefault();
@@ -166,7 +171,9 @@ export const Transaksi = () => {
                           // aria-expanded={open}
                           className="w-6/12 justify-between px-3 py-4">
                           {field.value
-                            ? jenisTransaksiData.find((data) => data.id === field.value)?.nama
+                            ? jenisTransaksiData.find(
+                                (data) => data.id === field.value,
+                              )?.nama
                             : "Pilih Jenis Transaksi..."}
                           <ChevronSelectorVertical className="ml-2 h-4 w-4 shrink-0 text-right opacity-50" />
                         </Button>
@@ -174,7 +181,9 @@ export const Transaksi = () => {
                       <PopoverContent className="w-[200px] p-0">
                         <Command>
                           <CommandInput placeholder="Cari Jenis Transaksi..." />
-                          <CommandEmpty>Jenis Transaksi tidak tersedia.</CommandEmpty>
+                          <CommandEmpty>
+                            Jenis Transaksi tidak tersedia.
+                          </CommandEmpty>
                           <CommandGroup>
                             {!!jenisTransaksiData &&
                               jenisTransaksiData.map((data) => (
@@ -182,16 +191,25 @@ export const Transaksi = () => {
                                   key={data.id}
                                   value={data.id}
                                   onSelect={(value) => {
-                                    form.setValue("id_jenis_transaksi", data.id, {
-                                      shouldValidate: true,
-                                    });
-                                    form.setValue("id_nama_akun_transaksi", null);
+                                    form.setValue(
+                                      "id_jenis_transaksi",
+                                      data.id,
+                                      {
+                                        shouldValidate: true,
+                                      },
+                                    );
+                                    form.setValue(
+                                      "id_nama_akun_transaksi",
+                                      null,
+                                    );
                                     setIdJenisTransaksi(data.id);
                                   }}>
                                   <Check
                                     className={cn(
                                       "mr-2 h-4 w-4",
-                                      data.id === field.value ? "opacity-100" : "opacity-0",
+                                      data.id === field.value
+                                        ? "opacity-100"
+                                        : "opacity-0",
                                     )}
                                   />
                                   {data.nama}
@@ -220,7 +238,9 @@ export const Transaksi = () => {
                           // aria-expanded={open}
                           className="w-6/12 justify-between px-3 py-4">
                           {field.value
-                            ? namaAkunTransaksiData.find((data) => data.id === field.value)?.nama
+                            ? namaAkunTransaksiData.find(
+                                (data) => data.id === field.value,
+                              )?.nama
                             : "Pilih Akun Transaksi..."}
                           <ChevronSelectorVertical className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
@@ -228,7 +248,9 @@ export const Transaksi = () => {
                       <PopoverContent className="w-[200px] p-0">
                         <Command>
                           <CommandInput placeholder="Cari Akun..." />
-                          <CommandEmpty>Akun Transaksi tidak tersedia.</CommandEmpty>
+                          <CommandEmpty>
+                            Akun Transaksi tidak tersedia.
+                          </CommandEmpty>
                           <CommandGroup>
                             {!!namaAkunTransaksiData &&
                               namaAkunTransaksiData.map((data) => (
@@ -237,14 +259,20 @@ export const Transaksi = () => {
                                   key={data.id}
                                   value={data.id}
                                   onSelect={(value) => {
-                                    form.setValue("id_nama_akun_transaksi", data.id, {
-                                      shouldValidate: true,
-                                    });
+                                    form.setValue(
+                                      "id_nama_akun_transaksi",
+                                      data.id,
+                                      {
+                                        shouldValidate: true,
+                                      },
+                                    );
                                   }}>
                                   <Check
                                     className={cn(
                                       "mr-2 h-4 w-4",
-                                      data.id === field.value ? "opacity-100" : "opacity-0",
+                                      data.id === field.value
+                                        ? "opacity-100"
+                                        : "opacity-0",
                                     )}
                                   />
                                   {data.nama}
@@ -292,7 +320,9 @@ export const Transaksi = () => {
                           // }}
                           onKeyDown={restrictAlphabet}
                         />
-                        <p className="absolute left-4 top-0 translate-y-1/2">Rp.</p>
+                        <p className="absolute left-4 top-0 translate-y-1/2">
+                          Rp.
+                        </p>
                       </div>
                     </FormControl>
                     <FormMessage />

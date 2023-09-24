@@ -4,7 +4,10 @@ function Footer() {
   return (
     <div className="flex flex-col items-center gap-2 bg-neutral-400 p-5 text-white">
       <h3>CV Talongka Jaya</h3>
-      <p>Menyediakan Bebagai Product, dan Pebeli Bisa Melakukan Pesanan sesuai dengan keiginan</p>
+      <p>
+        Menyediakan Bebagai Product, dan Pebeli Bisa Melakukan Pesanan sesuai
+        dengan keiginan
+      </p>
       <ul className="flex gap-4">
         <li>
           <a href="https://www.facebook.com/">

@@ -40,7 +40,12 @@ import {
   SheetTrigger,
 } from "../../componet/sheet";
 import { ScrollArea } from "../../componet/scroll-area";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../componet/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../../componet/tooltip";
 
 function Navbar() {
   const location = useLocation();
@@ -325,7 +330,9 @@ function Navbar() {
         <div>
           <NavLink to="/" className="flex items-center gap-4">
             <Hurricane02 className="text-2xl" />
-            <p className="font-archivo text-2xl font-bold uppercase">Talongka Jaya</p>
+            <p className="font-archivo text-2xl font-bold uppercase">
+              Talongka Jaya
+            </p>
           </NavLink>
         </div>
         <div>
@@ -395,7 +402,9 @@ function Navbar() {
                     <div className="flex flex-col gap-12">
                       {dataOrder?.length !== 0 && (
                         <div className="flex flex-col gap-4">
-                          <p className="font-archivo text-lg font-extrabold">Keranjang</p>
+                          <p className="font-archivo text-lg font-extrabold">
+                            Keranjang
+                          </p>
                           <div className="flex flex-col gap-4">
                             {dataOrder?.map((data, index) => {
                               return (
@@ -410,8 +419,12 @@ function Navbar() {
                                   <div className="col-span-2 pr-4">
                                     <div className="flex flex-col gap-2">
                                       <div>
-                                        <p className="truncate text-base">{data.name}</p>
-                                        <p className="text-xs font-bold">Tipe: {data.tipe}</p>
+                                        <p className="truncate text-base">
+                                          {data.name}
+                                        </p>
+                                        <p className="text-xs font-bold">
+                                          Tipe: {data.tipe}
+                                        </p>
                                       </div>
                                       <p className={style.cardHarga}>
                                         {new Intl.NumberFormat("id-ID", {
@@ -420,17 +433,41 @@ function Navbar() {
                                         })
                                           .format(data.jumlahHarga)
                                           .replace(/(\.|,)00$/g, "")}
+                                        {data?.name.toLowerCase() ==
+                                        "kitcen set"
+                                          ? " /meter jalan"
+                                          : ""}
+                                        {data?.name.toLowerCase() ==
+                                        "set kamar tidur"
+                                          ? " /meter jalan"
+                                          : ""}
+                                        {data?.name.toLowerCase() ==
+                                        "backdrop / partisi ruangan / mini bar"
+                                          ? " /meter jalan"
+                                          : ""}
                                       </p>
                                       <div className="flex w-max border-collapse items-center justify-between gap-3 rounded-lg">
                                         <button
                                           className="flex h-8 w-8 items-center justify-center rounded-md border-2 border-neutral-500 transition-colors hover:border-amber-300 hover:bg-amber-300"
-                                          onClick={() => hendleKurangOrder(data.id, data.harga)}>
+                                          onClick={() =>
+                                            hendleKurangOrder(
+                                              data.id,
+                                              data.harga,
+                                            )
+                                          }>
                                           <Minus className="text-base" />
                                         </button>
-                                        <p className="w-4 text-center">{data.jumlah}</p>
+                                        <p className="w-4 text-center">
+                                          {data.jumlah}
+                                        </p>
                                         <button
                                           className="flex h-8 w-8 items-center justify-center rounded-md border-2 border-neutral-500 transition-colors hover:border-amber-300 hover:bg-amber-300"
-                                          onClick={() => hendleTambahOrder(data.id, data.harga)}>
+                                          onClick={() =>
+                                            hendleTambahOrder(
+                                              data.id,
+                                              data.harga,
+                                            )
+                                          }>
                                           <Plus className="text-base" />
                                         </button>
                                       </div>
@@ -495,7 +532,9 @@ function Navbar() {
                               cols="30"
                               rows="7"
                               value={alamat}
-                              onChange={(e) => setAlamat(e.target.value)}></textarea>
+                              onChange={(e) =>
+                                setAlamat(e.target.value)
+                              }></textarea>
                           </div>
                         </div>
                         <input

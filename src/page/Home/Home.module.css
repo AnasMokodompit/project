@@ -1,13 +1,13 @@
-.container{
-    text-align: center;
+.container {
+  text-align: center;
 }
 
-.menu{
-    display: flex;
-    /* border: 1px solid black; */
+.menu {
+  display: flex;
+  /* border: 1px solid black; */
 }
-  
-.content{
-    flex: 6;
-    /* width: 100%; */
+
+.content {
+  flex: 6;
+  /* width: 100%; */
 }

@@ -1,0 +1,131 @@
+.container {
+  display: flex;
+}
+
+.content {
+  display: flex;
+  /* border: 1px solid black; */
+  gap: 40px;
+}
+
+.content .contentItem {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  /* border: 1px solid black; */
+  gap: 5px;
+}
+
+.itemContentOrderCustom {
+  /* width: 40%; */
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid black; */
+}
+
+.itemContentOrderCustom label {
+  margin-top: 10px;
+}
+
+.itemContentOrderCustom .inputWrapper {
+  height: 40px;
+  border: none;
+  border: 1px solid rgba(118, 115, 115, 0.5);
+  border-radius: 10px;
+  padding: 0 15px;
+  box-shadow: 0px 0px 8px #ddd;
+  background-color: white;
+  display: flex;
+  align-items: center;
+}
+
+.itemContentOrderCustom .inputWrapper input {
+  background-color: transparent;
+  border: none;
+  height: 100%;
+  font-size: 15px;
+  width: 100%;
+  margin-left: 15px;
+  /* border: 1px solid gray; */
+}
+
+.itemContentOrderCustom .inputWrapper input:focus {
+  outline: none;
+}
+
+.itemContentOrderCustom .inputWrapper #searchIcon {
+  color: rgb(97, 97, 231);
+  /* border: 1px solid black; */
+}
+
+.itemContentOrderCustom .resultsList {
+  /* border: 1px solid black; */
+  width: 100%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0px 8px #ddd;
+  border-radius: 10px;
+  margin-top: 1rem;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.itemContentOrderCustom .resultsList .searchResult {
+  padding: 7px 15px;
+}
+
+.itemContentOrderCustom .resultsList .searchResult:hover {
+  background-color: #efefef;
+}
+
+.itemContentOrderCustom #input {
+  border-radius: 10px;
+  height: 40px;
+  outline: none;
+  border: 1px solid rgba(118, 115, 115, 0.5);
+  padding: 0px 10px;
+}
+
+.itemContentOrderCustom #textarea {
+  padding: 3px 10px;
+  height: 100px;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid rgba(118, 115, 115, 0.5);
+}
+
+.content .contentItem .input {
+  padding: 3px 10px;
+  height: 40px;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid rgba(118, 115, 115, 0.5);
+}
+
+.content .contentItem .textarea {
+  padding: 3px 10px;
+  height: 80px;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid rgba(118, 115, 115, 0.5);
+}
+
+.content .contentItem .buttonCheckOut {
+  cursor: pointer;
+}
+
+.content .contentItem .ButtonSimpanPesanan {
+  margin: 10px auto;
+  padding: 5px 10px;
+  width: max-content;
+  border-radius: 10px;
+  border: none;
+  background-color: aqua;
+  cursor: pointer;
+  /* border: 1px solid black; */
+}
+
+.content .contentItem .ButtonSimpanPesanan:hover {
+  background-color: rgb(50, 217, 217);
+}

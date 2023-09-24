@@ -77,9 +77,15 @@ function DataOrder({ tampilOrderan }) {
                       <span className={style.subData}>Tipe : {data.tipe}</span>
                     </span>
                     <div className={style.average}>
-                      <span onClick={() => hendleKurangOrder(data.id, data.harga)}>-</span>
+                      <span
+                        onClick={() => hendleKurangOrder(data.id, data.harga)}>
+                        -
+                      </span>
                       <span>{data.jumlah}</span>
-                      <span onClick={() => hendleTambahOrder(data.id, data.harga)}>+</span>
+                      <span
+                        onClick={() => hendleTambahOrder(data.id, data.harga)}>
+                        +
+                      </span>
                     </div>
                   </div>
                   <div className={style.contentCenterItem}>

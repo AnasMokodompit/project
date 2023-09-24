@@ -83,36 +83,52 @@ export const Jurnal = () => {
                     <React.Fragment key={id}>
                       <tr>
                         <td
-                          rowSpan={namaAkunTransaksi === "Pendapatan DP" ? 4 : 2}
+                          rowSpan={
+                            namaAkunTransaksi === "Pendapatan DP" ? 4 : 2
+                          }
                           className="border border-black px-4 py-1 text-left">
                           {tanggalWITA}
                         </td>
                         <td
-                          rowSpan={namaAkunTransaksi === "Pendapatan DP" ? 4 : 2}
+                          rowSpan={
+                            namaAkunTransaksi === "Pendapatan DP" ? 4 : 2
+                          }
                           className="border border-black px-4 py-1 text-left">
                           {jenisTransaksi}
                         </td>
                         <td
-                          rowSpan={namaAkunTransaksi === "Pendapatan DP" ? 4 : 2}
+                          rowSpan={
+                            namaAkunTransaksi === "Pendapatan DP" ? 4 : 2
+                          }
                           className="border border-black px-4 py-1 text-left">
                           {namaAkunTransaksi}
                         </td>
                         <td
-                          rowSpan={namaAkunTransaksi === "Pendapatan DP" ? 4 : 2}
+                          rowSpan={
+                            namaAkunTransaksi === "Pendapatan DP" ? 4 : 2
+                          }
                           className="border border-black px-4 py-1 text-left">
                           {keterangan}
                         </td>
-                        <td rowSpan={2} className="border border-black px-4 py-1 text-right">
+                        <td
+                          rowSpan={2}
+                          className="border border-black px-4 py-1 text-right">
                           {jumlahIDR}
                         </td>
-                        <td rowSpan={1} className="border border-black px-4 py-1 text-left">
-                          {jenisTransaksi === "Pemasukan" && namaAkunTransaksi === "Pendapatan"
+                        <td
+                          rowSpan={1}
+                          className="border border-black px-4 py-1 text-left">
+                          {jenisTransaksi === "Pemasukan" &&
+                          namaAkunTransaksi === "Pendapatan"
                             ? "Kas"
                             : null}
-                          {jenisTransaksi === "Pemasukan" && namaAkunTransaksi === "Pendapatan DP"
+                          {jenisTransaksi === "Pemasukan" &&
+                          namaAkunTransaksi === "Pendapatan DP"
                             ? "Piutang"
                             : null}
-                          {jenisTransaksi !== "Pemasukan" ? `${namaAkunTransaksi}` : null}
+                          {jenisTransaksi !== "Pemasukan"
+                            ? `${namaAkunTransaksi}`
+                            : null}
                         </td>
                         <td
                           rowSpan={1}
@@ -124,11 +140,20 @@ export const Jurnal = () => {
                           className="border border-black px-4 py-1 text-left align-bottom"></td>
                       </tr>
                       <tr>
-                        <td rowSpan={1} className="border border-black px-4 py-1 text-left">
-                          {jenisTransaksi === "Pemasukan" ? "Pendapatan" : "Kas"}
-                          {!namaAkunTransaksi === "Pendapatan" && "Pendapatan DP" ? "Kas" : null}
+                        <td
+                          rowSpan={1}
+                          className="border border-black px-4 py-1 text-left">
+                          {jenisTransaksi === "Pemasukan"
+                            ? "Pendapatan"
+                            : "Kas"}
+                          {!namaAkunTransaksi === "Pendapatan" &&
+                          "Pendapatan DP"
+                            ? "Kas"
+                            : null}
                         </td>
-                        <td rowSpan={1} className="border border-black px-4 py-1 text-left"></td>
+                        <td
+                          rowSpan={1}
+                          className="border border-black px-4 py-1 text-left"></td>
                         <td
                           rowSpan={1}
                           className="border border-black px-4 py-1 text-right align-bottom">
@@ -143,14 +168,18 @@ export const Jurnal = () => {
                               className="border border-black px-4 py-1 text-right align-middle">
                               {jumlahDPIDR}
                             </td>
-                            <td className="border border-black px-4 py-1 align-top">Kas</td>
+                            <td className="border border-black px-4 py-1 align-top">
+                              Kas
+                            </td>
                             <td className="border border-black px-4 py-1 text-right align-top">
                               {jumlahDPIDR}
                             </td>
                             <td className="border border-black px-4 py-1 text-right align-top"></td>
                           </tr>
                           <tr>
-                            <td className="border border-black px-4 py-1 align-top">Piutang</td>
+                            <td className="border border-black px-4 py-1 align-top">
+                              Piutang
+                            </td>
                             <td className="border border-black px-4 py-1 text-right align-top"></td>
                             <td className="border border-black px-4 py-1 text-right align-top">
                               {jumlahDPIDR}

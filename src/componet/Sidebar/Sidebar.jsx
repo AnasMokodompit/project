@@ -163,13 +163,15 @@ function Sidebar({ nameSdiber }) {
                     className="transition-colors hover:text-amber-300 hover:no-underline">
                     <div className="flex items-center gap-3">
                       <CreditCardPlus className="flex-shrink-0 text-2xl" />
-                      <p>Pemesanan</p>
+                      <p>Pesanan</p>
                     </div>
                   </NavLink>
-                  <NavLink className="transition-colors hover:text-amber-300 hover:no-underline">
+                  <NavLink
+                    to="/order/custom"
+                    className="transition-colors hover:text-amber-300 hover:no-underline">
                     <div className="flex items-center gap-3">
                       <CreditCardEdit className="flex-shrink-0 text-2xl" />
-                      <p>Pemesanan Custom</p>
+                      <p>Pesanan Custom</p>
                     </div>
                   </NavLink>
                 </ul>
@@ -184,7 +186,9 @@ function Sidebar({ nameSdiber }) {
               </AccordionTrigger>
               <AccordionContent>
                 <ul className="flex w-full flex-col gap-4">
-                  <NavLink className="transition-colors hover:text-amber-300 hover:no-underline">
+                  <NavLink
+                    to="/bahan-baku"
+                    className="transition-colors hover:text-amber-300 hover:no-underline">
                     <div className="flex items-center gap-3">
                       <Server01 className="flex-shrink-0 text-2xl" />
                       <p>Persediaan Bahan Baku</p>

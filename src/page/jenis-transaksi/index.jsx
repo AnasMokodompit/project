@@ -20,7 +20,11 @@ import {
   FormMessage,
 } from "../../componet/form";
 import { Input } from "../../componet/input";
-import { Popover, PopoverContent, PopoverTrigger } from "../../componet/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "../../componet/popover";
 
 export const JenisTransaksi = () => {
   const form = useForm({
@@ -50,7 +54,10 @@ export const JenisTransaksi = () => {
 
   const { mutate: createJenisTransaksi } = useMutation({
     mutationFn: async (data) => {
-      await axios.post(`${process.env.REACT_APP_BASE_API}/jenisTransaksi`, data);
+      await axios.post(
+        `${process.env.REACT_APP_BASE_API}/jenisTransaksi`,
+        data,
+      );
     },
     onSuccess: () => {
       refetch();
@@ -62,7 +69,9 @@ export const JenisTransaksi = () => {
 
   const { mutate: deleteJenisTransaksi } = useMutation({
     mutationFn: async () => {
-      await axios.delete(`${process.env.REACT_APP_BASE_API}/jenisTransaksi/${jenisTransaksiID}`);
+      await axios.delete(
+        `${process.env.REACT_APP_BASE_API}/jenisTransaksi/${jenisTransaksiID}`,
+      );
     },
     onSuccess: () => {
       refetch();
@@ -119,7 +128,9 @@ export const JenisTransaksi = () => {
                     name="nama"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="font-archivo">Nama Jenis Transaksi</FormLabel>
+                        <FormLabel className="font-archivo">
+                          Nama Jenis Transaksi
+                        </FormLabel>
                         <FormControl>
                           <Input {...field} />
                         </FormControl>
@@ -142,7 +153,9 @@ export const JenisTransaksi = () => {
           <thead>
             <tr className="border-b-2 border-neutral-500 bg-amber-300">
               <th className="w-0 px-4 py-3 text-center font-semibold">No.</th>
-              <th className="px-4 py-3 text-center font-semibold">Nama Jenis Transaksi</th>
+              <th className="px-4 py-3 text-center font-semibold">
+                Nama Jenis Transaksi
+              </th>
               <th className="px-4 py-2 text-center font-semibold"></th>
             </tr>
           </thead>
