@@ -4,5 +4,6 @@
   "printWidth": 100,
   "bracketSpacing": true,
   "bracketSameLine": true,
-  "arrowParens": "always"
+  "arrowParens": "always",
+  "tabWidth": 2
 }

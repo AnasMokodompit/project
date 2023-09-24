@@ -38,23 +38,22 @@ export const Jurnal = () => {
 
   return (
     <section className="flex font-archivo">
-      <Sidebar />
-      <div className="flex w-full flex-col gap-8 p-4 font-archivo">
+      <div className="flex w-full flex-col gap-8 font-archivo">
         <div>
           <p className="text-2xl font-bold">Jurnal</p>
         </div>
         <div>
-          <table className="w-full border-collapse border border-black">
+          <table className="w-full border-collapse overflow-hidden rounded-lg border-black">
             <thead>
-              <tr>
-                <th className="border border-black px-4 py-3 text-center">Tanggal</th>
-                <th className="border border-black px-4 py-3 text-center">Transaksi</th>
-                <th className="border border-black px-4 py-3 text-center">Nama Akun</th>
-                <th className="border border-black px-4 py-3 text-center">Keterangan</th>
-                <th className="border border-black px-4 py-3 text-center">Jumlah</th>
-                <th className="border border-black px-4 py-3 text-center">Akun</th>
-                <th className="border border-black px-4 py-3 text-center">Debet</th>
-                <th className="border border-black px-4 py-3 text-center">Kredit</th>
+              <tr className="border-b-2 border-neutral-500 bg-amber-300">
+                <th className="px-4 py-3 text-center">Tanggal</th>
+                <th className="px-4 py-3 text-center">Transaksi</th>
+                <th className="px-4 py-3 text-center">Nama Akun</th>
+                <th className="px-4 py-3 text-center">Keterangan</th>
+                <th className="px-4 py-3 text-center">Jumlah</th>
+                <th className="px-4 py-3 text-center">Akun</th>
+                <th className="px-4 py-3 text-center">Debet</th>
+                <th className="px-4 py-3 text-center">Kredit</th>
               </tr>
             </thead>
             <tbody>
@@ -72,19 +71,35 @@ export const Jurnal = () => {
 
                   const tanggalWITA = formatterTime.format(new Date(tanggal));
                   const jumlahIDR = formatterCurrency.format(jumlah);
+
+                  let jumlahDPIDR;
+
+                  if (namaAkunTransaksi === "Pendapatan DP") {
+                    jumlahDPIDR = jumlah * 0.3;
+                    jumlahDPIDR = formatterCurrency.format(jumlahDPIDR);
+                  }
+
                   return (
                     <React.Fragment key={id}>
                       <tr>
-                        <td rowSpan={2} className="border border-black px-4 py-1 text-left">
+                        <td
+                          rowSpan={namaAkunTransaksi === "Pendapatan DP" ? 4 : 2}
+                          className="border border-black px-4 py-1 text-left">
                           {tanggalWITA}
                         </td>
-                        <td rowSpan={2} className="border border-black px-4 py-1 text-left">
+                        <td
+                          rowSpan={namaAkunTransaksi === "Pendapatan DP" ? 4 : 2}
+                          className="border border-black px-4 py-1 text-left">
                           {jenisTransaksi}
                         </td>
-                        <td rowSpan={2} className="border border-black px-4 py-1 text-left">
+                        <td
+                          rowSpan={namaAkunTransaksi === "Pendapatan DP" ? 4 : 2}
+                          className="border border-black px-4 py-1 text-left">
                           {namaAkunTransaksi}
                         </td>
-                        <td rowSpan={2} className="border border-black px-4 py-1 text-left">
+                        <td
+                          rowSpan={namaAkunTransaksi === "Pendapatan DP" ? 4 : 2}
+                          className="border border-black px-4 py-1 text-left">
                           {keterangan}
                         </td>
                         <td rowSpan={2} className="border border-black px-4 py-1 text-right">
@@ -120,6 +135,29 @@ export const Jurnal = () => {
                           {jumlahIDR}
                         </td>
                       </tr>
+                      {namaAkunTransaksi === "Pendapatan DP" && (
+                        <>
+                          <tr>
+                            <td
+                              rowSpan={2}
+                              className="border border-black px-4 py-1 text-right align-middle">
+                              {jumlahDPIDR}
+                            </td>
+                            <td className="border border-black px-4 py-1 align-top">Kas</td>
+                            <td className="border border-black px-4 py-1 text-right align-top">
+                              {jumlahDPIDR}
+                            </td>
+                            <td className="border border-black px-4 py-1 text-right align-top"></td>
+                          </tr>
+                          <tr>
+                            <td className="border border-black px-4 py-1 align-top">Piutang</td>
+                            <td className="border border-black px-4 py-1 text-right align-top"></td>
+                            <td className="border border-black px-4 py-1 text-right align-top">
+                              {jumlahDPIDR}
+                            </td>
+                          </tr>
+                        </>
+                      )}
                     </React.Fragment>
                   );
                 })}

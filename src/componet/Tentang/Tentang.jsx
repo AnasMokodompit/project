@@ -11,7 +11,7 @@ function Tentang() {
       <div className="flex gap-8">
         <img className="rounded-lg" src={img} alt="" />
         <div className="flex flex-col justify-center gap-4">
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 text-justify">
             <p>
               CV. Talongka Jaya berlokasi di Desa Leilem Kecamatan Sonder Kabupaten Minahasa yang
               dikenal dengan Desa Sentra Industri dan berpengalaman memproduksi furniture. CV.

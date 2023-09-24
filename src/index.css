@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  .sidebar {
+    height: calc(100dvh - 2rem);
+  }
+}
+
 @font-face {
   font-family: "Archivo";
   src: url("./Asset/fonts/archivo/archivo.ttf");

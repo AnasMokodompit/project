@@ -4,7 +4,7 @@ import { Link } from "react-scroll";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DataOrder from "../DataOrder/DataOrder";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import jwt from "jwt-decode";
 import { UserLogOut } from "../../config/actions/UserAction";
 
@@ -40,8 +40,10 @@ import {
   SheetTrigger,
 } from "../../componet/sheet";
 import { ScrollArea } from "../../componet/scroll-area";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../componet/tooltip";
 
 function Navbar() {
+  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -59,6 +61,8 @@ function Navbar() {
   const [noHp, setNoHp] = useState("");
   const [alamat, setAlamat] = useState("");
   const [email, setEmail] = useState("");
+
+  const pathname = location?.pathname;
 
   // let { dataOrder } = useSelector((data) => data.CvTalangkaJaya);
   // const dispatch = useDispatch();
@@ -138,7 +142,7 @@ function Navbar() {
     UserLogOut();
     localStorage.clear();
     setTimeout(() => {
-      navigate("/");
+      navigate(0);
     }, 300);
   };
 
@@ -326,187 +330,228 @@ function Navbar() {
         </div>
         <div>
           <ul className="flex gap-8">
-            {/* <Link
-              className="cursor-pointer"
-              to="hero"
-              spy={true}
-              smooth={true}
-              offset={-150}
-              duration={500}>
-              Beranda
-            </Link> */}
-            {/* <Link>Produk</Link> */}
-            <Link
-              className="cursor-pointer"
-              to="tentang"
-              spy={true}
-              smooth={true}
-              offset={-150}
-              duration={500}>
-              Tentang
-            </Link>
-            <Link
-              className="cursor-pointer"
-              to="contactus"
-              spy={true}
-              smooth={true}
-              offset={-150}
-              duration={500}>
-              Kontak Kami
-            </Link>
+            {pathname === "/" && (
+              <>
+                <Link
+                  className="cursor-pointer"
+                  to="product"
+                  spy={true}
+                  smooth={true}
+                  offset={-150}
+                  duration={500}>
+                  Produk
+                </Link>
+                <Link
+                  className="cursor-pointer"
+                  to="contactus"
+                  spy={true}
+                  smooth={true}
+                  offset={-150}
+                  duration={500}>
+                  Kontak
+                </Link>
+                <Link
+                  className="cursor-pointer"
+                  to="tentang"
+                  spy={true}
+                  smooth={true}
+                  offset={-150}
+                  duration={500}>
+                  Tentang
+                </Link>
+              </>
+            )}
           </ul>
         </div>
         <div>
-          <div className="flex items-center gap-8">
-            <Sheet>
-              <SheetTrigger>
-                <button onClick={() => hendleOpsiClick()} className="relative flex items-center">
-                  <ShoppingCart02 className="text-[1.5rem]" />
-                  {jumlahOrder?.length !== 0 && (
-                    <p className="absolute right-2 top-2 flex h-5 w-5 -translate-y-full translate-x-full items-center justify-center rounded-full bg-red-500 p-1 font-open-sans text-xs text-white">
-                      {jumlahOrder?.length}
-                    </p>
-                  )}
-                </button>
-              </SheetTrigger>
-              <SheetContent className="bg-white">
-                <ScrollArea className="h-full">
-                  <div className="flex flex-col gap-12">
-                    {dataOrder?.length !== 0 && (
-                      <div className="flex flex-col gap-4">
-                        <p className="font-archivo text-lg font-extrabold">Keranjang</p>
+          <TooltipProvider>
+            <div className="flex items-center gap-8">
+              <Sheet>
+                {pathname === "/" && (
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <div className="flex items-center">
+                        <SheetTrigger>
+                          <button
+                            onClick={() => hendleOpsiClick()}
+                            className="relative flex items-center">
+                            <ShoppingCart02 className="text-[1.5rem]" />
+                            {jumlahOrder?.length !== 0 && (
+                              <p className="absolute right-2 top-2 flex h-5 w-5 -translate-y-full translate-x-full items-center justify-center rounded-full bg-red-500 p-1 font-open-sans text-xs text-white">
+                                {jumlahOrder?.length}
+                              </p>
+                            )}
+                          </button>
+                        </SheetTrigger>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent className="bg-neutral-100 shadow-lg">
+                      <p className="font-archivo text-base">Keranjang</p>
+                    </TooltipContent>
+                  </Tooltip>
+                )}
+                <SheetContent className="bg-white py-8 pl-4 pr-2">
+                  <ScrollArea type={"auto"} className="h-full pr-4">
+                    <div className="flex flex-col gap-12">
+                      {dataOrder?.length !== 0 && (
                         <div className="flex flex-col gap-4">
-                          {dataOrder?.map((data, index) => {
-                            return (
-                              <div className="relative grid grid-cols-3 gap-2 rounded-lg bg-neutral-100 p-2 font-archivo shadow-sm">
-                                <div className="col-span-1 self-center">
-                                  <img
-                                    className="h-32 w-24 rounded-lg object-cover"
-                                    src={data?.url_image}
-                                    alt="Gambar Produk"
-                                  />
-                                </div>
-                                <div className="col-span-2 pr-4">
-                                  <div className="flex flex-col gap-2">
-                                    <div>
-                                      <p className="truncate text-base">{data.name}</p>
-                                      <p className="text-xs font-bold">Tipe: {data.tipe}</p>
-                                    </div>
-                                    <p className={style.cardHarga}>
-                                      {new Intl.NumberFormat("id-ID", {
-                                        style: "currency",
-                                        currency: "IDR",
-                                      })
-                                        .format(data.jumlahHarga)
-                                        .replace(/(\.|,)00$/g, "")}
-                                    </p>
-                                    <div className="flex w-max border-collapse items-center justify-between gap-3 rounded-lg">
-                                      <button
-                                        className="flex h-8 w-8 items-center justify-center rounded-md border-2 border-neutral-500 transition-colors hover:border-amber-300 hover:bg-amber-300"
-                                        onClick={() => hendleKurangOrder(data.id, data.harga)}>
-                                        <Minus className="text-base" />
-                                      </button>
-                                      <p className="w-4 text-center">{data.jumlah}</p>
-                                      <button
-                                        className="flex h-8 w-8 items-center justify-center rounded-md border-2 border-neutral-500 transition-colors hover:border-amber-300 hover:bg-amber-300"
-                                        onClick={() => hendleTambahOrder(data.id, data.harga)}>
-                                        <Plus className="text-base" />
-                                      </button>
-                                    </div>
+                          <p className="font-archivo text-lg font-extrabold">Keranjang</p>
+                          <div className="flex flex-col gap-4">
+                            {dataOrder?.map((data, index) => {
+                              return (
+                                <div className="relative grid grid-cols-3 gap-2 rounded-lg bg-neutral-100 p-2 font-archivo shadow-sm">
+                                  <div className="col-span-1 self-center">
+                                    <img
+                                      className="h-32 w-24 rounded-lg object-cover"
+                                      src={data?.url_image}
+                                      alt="Gambar Produk"
+                                    />
                                   </div>
-                                  <div className={style.contentCenterItem}>
-                                    {/* <span
+                                  <div className="col-span-2 pr-4">
+                                    <div className="flex flex-col gap-2">
+                                      <div>
+                                        <p className="truncate text-base">{data.name}</p>
+                                        <p className="text-xs font-bold">Tipe: {data.tipe}</p>
+                                      </div>
+                                      <p className={style.cardHarga}>
+                                        {new Intl.NumberFormat("id-ID", {
+                                          style: "currency",
+                                          currency: "IDR",
+                                        })
+                                          .format(data.jumlahHarga)
+                                          .replace(/(\.|,)00$/g, "")}
+                                      </p>
+                                      <div className="flex w-max border-collapse items-center justify-between gap-3 rounded-lg">
+                                        <button
+                                          className="flex h-8 w-8 items-center justify-center rounded-md border-2 border-neutral-500 transition-colors hover:border-amber-300 hover:bg-amber-300"
+                                          onClick={() => hendleKurangOrder(data.id, data.harga)}>
+                                          <Minus className="text-base" />
+                                        </button>
+                                        <p className="w-4 text-center">{data.jumlah}</p>
+                                        <button
+                                          className="flex h-8 w-8 items-center justify-center rounded-md border-2 border-neutral-500 transition-colors hover:border-amber-300 hover:bg-amber-300"
+                                          onClick={() => hendleTambahOrder(data.id, data.harga)}>
+                                          <Plus className="text-base" />
+                                        </button>
+                                      </div>
+                                    </div>
+                                    <div className={style.contentCenterItem}>
+                                      {/* <span
                                     className={`material-symbols-outlined ${style.delete}`}
                                     onClick={() => hendleHapusOrder(data.id)}>
                                     delete
                                   </span> */}
+                                    </div>
                                   </div>
+                                  <button
+                                    onClick={() => hendleHapusOrder(data.id)}
+                                    className="absolute right-0 top-0 rounded-bl-lg rounded-tr-lg  bg-red-500 p-1 text-white transition-all">
+                                    <XClose className="text-base" />
+                                  </button>
                                 </div>
-                                <button
-                                  onClick={() => hendleHapusOrder(data.id)}
-                                  className="absolute right-0 top-0 rounded-bl-lg rounded-tr-lg  bg-red-500 p-1 text-white transition-all">
-                                  <XClose className="text-base" />
-                                </button>
-                              </div>
-                            );
-                          })}
+                              );
+                            })}
+                          </div>
                         </div>
+                      )}
+                      <div className="flex flex-col gap-4 font-open-sans ">
+                        <p className="text-lg font-bold">Biodata Pembeli</p>
+                        <div className="flex flex-col gap-4 py-2">
+                          <div className="flex flex-col">
+                            <label htmlFor="" className="text-left">
+                              Nama
+                            </label>
+                            <input
+                              className="w-full rounded-lg border-2 border-black p-2 text-base text-black"
+                              type="text"
+                              value={namePemesan}
+                              onChange={(e) => setNamaPemesan(e.target.value)}
+                            />
+                          </div>
+                          <div className="flex flex-col">
+                            <label className="text-left">Nomor Telepon</label>
+                            <input
+                              className="w-full rounded-lg border-2 border-black p-2 text-base text-black"
+                              type="text"
+                              value={noHp}
+                              onChange={(e) => setNoHp(e.target.value)}
+                            />
+                          </div>
+                          <div className="flex flex-col">
+                            <label className="text-left">Email</label>
+                            <input
+                              className="w-full rounded-lg border-2 border-black p-2 text-base text-black"
+                              type="text"
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
+                            />
+                          </div>
+                          <div className="flex flex-col">
+                            <label className="text-left">Alamat</label>
+                            <textarea
+                              className="w-full rounded-lg border-2 border-black p-2 text-base text-black"
+                              name=""
+                              id=""
+                              cols="30"
+                              rows="7"
+                              value={alamat}
+                              onChange={(e) => setAlamat(e.target.value)}></textarea>
+                          </div>
+                        </div>
+                        <input
+                          className="cursor-pointer rounded-lg bg-amber-300 p-2 font-bold"
+                          type="button"
+                          value="Checkout"
+                          onClick={hendleSubmitOrder}
+                        />
                       </div>
-                    )}
-                    <div className="flex flex-col gap-4 font-open-sans ">
-                      <p className="text-lg font-bold">Biodata Pembeli</p>
-                      <div className="flex flex-col gap-4 py-2">
-                        <div className="flex flex-col">
-                          <label htmlFor="" className="text-left">
-                            Nama
-                          </label>
-                          <input
-                            className="w-full rounded-lg border-2 border-black p-2 text-base text-black"
-                            type="text"
-                            value={namePemesan}
-                            onChange={(e) => setNamaPemesan(e.target.value)}
-                          />
-                        </div>
-                        <div className="flex flex-col">
-                          <label className="text-left">Nomor Telepon</label>
-                          <input
-                            className="w-full rounded-lg border-2 border-black p-2 text-base text-black"
-                            type="text"
-                            value={noHp}
-                            onChange={(e) => setNoHp(e.target.value)}
-                          />
-                        </div>
-                        <div className="flex flex-col">
-                          <label className="text-left">Email</label>
-                          <input
-                            className="w-full rounded-lg border-2 border-black p-2 text-base text-black"
-                            type="text"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                          />
-                        </div>
-                        <div className="flex flex-col">
-                          <label className="text-left">Alamat</label>
-                          <textarea
-                            className="w-full rounded-lg border-2 border-black p-2 text-base text-black"
-                            name=""
-                            id=""
-                            cols="30"
-                            rows="7"
-                            value={alamat}
-                            onChange={(e) => setAlamat(e.target.value)}></textarea>
-                        </div>
-                      </div>
-                      <input
-                        className="rounded-lg bg-amber-300 p-2 font-bold"
-                        type="button"
-                        value="Checkout"
-                        onClick={hendleSubmitOrder}
-                      />
                     </div>
-                  </div>
-                </ScrollArea>
-              </SheetContent>
-            </Sheet>
-            {/* <button>
+                  </ScrollArea>
+                </SheetContent>
+              </Sheet>
+              {/* <button>
               <MessageTextSquare02 className="text-[1.5rem]" />
             </button> */}
-            {!!dataLogin && (
-              <>
-                <NavLink to="/customer">
-                  <Box className="text-[1.5rem]" />
-                </NavLink>
-                <button onClick={hendleLogout}>
-                  <LogOut01 className="text-[1.5rem]" />
-                </button>
-              </>
-            )}
-            {!dataLogin && (
-              <NavLink to="/login">
-                <LogIn02 className="text-[1.5rem]" />
-              </NavLink>
-            )}
-          </div>
+              {!!dataLogin && (
+                <>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <NavLink to="/customer">
+                        <Box className="text-[1.5rem]" />
+                      </NavLink>
+                    </TooltipTrigger>
+                    <TooltipContent className="bg-neutral-100 shadow-lg">
+                      <p className="font-archivo text-base">Daftar Pembelian</p>
+                    </TooltipContent>
+                  </Tooltip>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <div className="flex flex-col items-center justify-center">
+                        <button onClick={hendleLogout}>
+                          <LogOut01 className="text-[1.5rem]" />
+                        </button>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent className="bg-neutral-100 shadow-lg">
+                      <p className="font-archivo text-base">Logout</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </>
+              )}
+              {!dataLogin && (
+                <Tooltip>
+                  <TooltipTrigger>
+                    <NavLink to="/login">
+                      <LogIn02 className="text-[1.5rem]" />
+                    </NavLink>
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-neutral-100 shadow-lg">
+                    <p className="font-archivo text-base">Login</p>
+                  </TooltipContent>
+                </Tooltip>
+              )}
+            </div>
+          </TooltipProvider>
         </div>
       </nav>
       {/* <DataOrder /> */}

@@ -1,6 +1,6 @@
-import logo from "./logo.svg";
-import style from "./App.module.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// Pages
 import Home from "./page/Home/Home";
 import Login from "./page/login/Login";
 import Beranda from "./page/Beranda/Beranda";
@@ -10,6 +10,11 @@ import Register from "./page/register/Register";
 import Customer from "./page/Customer/Customer";
 import { Transaksi } from "./page/transaksi";
 import { Jurnal } from "./page/jurnal";
+import { JenisTransaksi } from "./page/jenis-transaksi";
+import { Akun } from "./page/akun";
+
+// Layouts
+import { LayoutSidebar } from "./layouts";
 
 function App() {
   return (
@@ -19,11 +24,15 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/beranda" element={<Beranda />} />
-        <Route path="/product" element={<ProductAdmin />} />
-        <Route path="/order" element={<OrderAdmin />} />
-        <Route path="/transaksi" element={<Transaksi />} />
-        <Route path="/jurnal" element={<Jurnal />} />
         <Route path="/customer" element={<Customer />} />
+        <Route element={<LayoutSidebar />}>
+          <Route path="/jenis-transaksi" element={<JenisTransaksi />} />
+          <Route path="/order" element={<OrderAdmin />} />
+          <Route path="/product" element={<ProductAdmin />} />
+          <Route path="/akun" element={<Akun />} />
+          <Route path="/jurnal" element={<Jurnal />} />
+          <Route path="/transaksi" element={<Transaksi />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

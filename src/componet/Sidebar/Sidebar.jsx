@@ -1,12 +1,22 @@
-import style from "./Sidebar.module.css";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+// Packages
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import LinkScroll from "react-scroll";
+import { useNavigate, Link, NavLink, Navigate } from "react-router-dom";
+import axios from "axios";
 import jwt from "jwt-decode";
+
+// Actions
 import { UserLogOut } from "../../config/actions/UserAction";
 
+// Components
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../../componet/accordion";
+
+// Icons
 import CoinSwap02 from "../../Asset/icons/untitled-ui-icons/line/components/CoinsSwap02";
 import HomeLine from "../../Asset/icons/untitled-ui-icons/line/components/HomeLine";
 import Inbox02 from "../../Asset/icons/untitled-ui-icons/line/components/Inbox02";
@@ -14,6 +24,17 @@ import ShoppingCart02 from "../../Asset/icons/untitled-ui-icons/line/components/
 import UserSquare from "../../Asset/icons/untitled-ui-icons/line/components/UserSquare";
 import LogOut01 from "../../Asset/icons/untitled-ui-icons/line/components/LogOut01";
 import Table from "../../Asset/icons/untitled-ui-icons/line/components/Table";
+import BankNote02 from "../../Asset/icons/untitled-ui-icons/line/components/BankNote02";
+import Coins03 from "../../Asset/icons/untitled-ui-icons/line/components/Coins03";
+import Coins04 from "../../Asset/icons/untitled-ui-icons/line/components/Coins04";
+import CreditCard01 from "../../Asset/icons/untitled-ui-icons/line/components/CreditCard01";
+import CreditCardCheck from "../../Asset/icons/untitled-ui-icons/line/components/CreditCardCheck";
+import CreditCardPlus from "../../Asset/icons/untitled-ui-icons/line/components/CreditCardPlus";
+import CreditCardEdit from "../../Asset/icons/untitled-ui-icons/line/components/CreditCardEdit";
+import CoinsStacked01 from "../../Asset/icons/untitled-ui-icons/line/components/CoinsStacked01";
+import Building07 from "../../Asset/icons/untitled-ui-icons/line/components/Building07";
+import Server01 from "../../Asset/icons/untitled-ui-icons/line/components/Server01";
+import Box from "../../Asset/icons/untitled-ui-icons/line/components/Box";
 
 function Sidebar({ nameSdiber }) {
   const { dataLogin } = useSelector((tes) => tes.userReducer);
@@ -50,6 +71,9 @@ function Sidebar({ nameSdiber }) {
     setTimeout(() => {
       navigate("/");
     }, 300);
+    setTimeout(() => {
+      navigate(0);
+    }, 350);
   };
 
   useEffect(() => {
@@ -57,100 +81,137 @@ function Sidebar({ nameSdiber }) {
     hendleAccesRoleUser();
   }, []);
 
-  return (
-    <>
-      {
-        id === 1 ? (
-          <div className="flex flex-col items-center bg-neutral-50 py-4 font-archivo">
-            <div>
-              <p className="font-bold">CV Talangka Jaya</p>
+  console.log(id);
+
+  if (id === 1) {
+    return (
+      <div className="relative flex h-[100vh] w-full flex-col items-center bg-neutral-50 py-4 font-archivo">
+        <div>
+          <Link to="/" className="font-bold">
+            CV Talongka Jaya
+          </Link>
+        </div>
+        <div className="flex w-full flex-col gap-12 p-6 text-base">
+          <Accordion type="multiple" collapsible>
+            <AccordionItem value="item-1">
+              <AccordionTrigger className="hover:no-underline focus:outline-none active:outline-none">
+                <div className="flex items-center gap-3">
+                  <BankNote02 className="flex-shrink-0 text-2xl" />
+                  <p>Keuangan</p>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <ul className="flex w-full flex-col gap-4">
+                  <NavLink
+                    to="/akun"
+                    className="transition-colors hover:text-amber-300 hover:no-underline">
+                    <div className="flex items-center gap-3">
+                      <CoinsStacked01 className="flex-shrink-0 text-2xl" />
+                      <p>Akun</p>
+                    </div>
+                  </NavLink>
+                  <NavLink className="transition-colors hover:text-amber-300 hover:no-underline">
+                    <div className="flex items-center gap-3">
+                      <Coins04 className="flex-shrink-0 text-2xl" />
+                      <p>Saldo Awal</p>
+                    </div>
+                  </NavLink>
+                  <NavLink
+                    to="/jenis-transaksi"
+                    className="transition-colors hover:text-amber-300 hover:no-underline">
+                    <div className="flex items-center gap-3">
+                      <Coins03 className="flex-shrink-0 text-2xl" />
+                      <p>Jenis Transaksi</p>
+                    </div>
+                  </NavLink>
+                  <NavLink
+                    to="/transaksi"
+                    className="transition-colors hover:text-amber-300 hover:no-underline">
+                    <div className="flex items-center gap-3">
+                      <CoinSwap02 className="flex-shrink-0 text-2xl" />
+                      <p>Transaksi</p>
+                    </div>
+                  </NavLink>
+                  <NavLink
+                    to="/jurnal"
+                    className="transition-colors hover:text-amber-300 hover:no-underline">
+                    <div className="flex items-center gap-3">
+                      <CreditCard01 className="flex-shrink-0 text-2xl" />
+                      <p>Jurnal</p>
+                    </div>
+                  </NavLink>
+                  <NavLink className="transition-colors hover:text-amber-300 hover:no-underline">
+                    <div className="flex items-center gap-3">
+                      <CreditCardCheck className="flex-shrink-0 text-2xl" />
+                      <p>Rekap Jurnal</p>
+                    </div>
+                  </NavLink>
+                </ul>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
+              <AccordionTrigger className="hover:no-underline focus:outline-none active:outline-none">
+                <div className="flex items-center gap-3">
+                  <ShoppingCart02 className="flex-shrink-0 text-2xl" />
+                  <p>Penjualan</p>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <ul className="flex w-full flex-col gap-4">
+                  <NavLink
+                    to="/order"
+                    className="transition-colors hover:text-amber-300 hover:no-underline">
+                    <div className="flex items-center gap-3">
+                      <CreditCardPlus className="flex-shrink-0 text-2xl" />
+                      <p>Pemesanan</p>
+                    </div>
+                  </NavLink>
+                  <NavLink className="transition-colors hover:text-amber-300 hover:no-underline">
+                    <div className="flex items-center gap-3">
+                      <CreditCardEdit className="flex-shrink-0 text-2xl" />
+                      <p>Pemesanan Custom</p>
+                    </div>
+                  </NavLink>
+                </ul>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-3">
+              <AccordionTrigger className="hover:no-underline focus:outline-none active:outline-none">
+                <div className="flex items-center gap-3">
+                  <Building07 className="flex-shrink-0 text-2xl" />
+                  <p>Produksi</p>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <ul className="flex w-full flex-col gap-4">
+                  <NavLink className="transition-colors hover:text-amber-300 hover:no-underline">
+                    <div className="flex items-center gap-3">
+                      <Server01 className="flex-shrink-0 text-2xl" />
+                      <p>Persediaan Bahan Baku</p>
+                    </div>
+                  </NavLink>
+                  <NavLink
+                    to="/product"
+                    className="transition-colors hover:text-amber-300 hover:no-underline">
+                    <div className="flex items-center gap-3">
+                      <Box className="flex-shrink-0 text-2xl" />
+                      <p>Produk</p>
+                    </div>
+                  </NavLink>
+                </ul>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+          <button onClick={hendleLogout}>
+            <div className="flex items-center gap-3">
+              <LogOut01 className="text-2xl" />
+              <p className="text-sm">Logout</p>
             </div>
-            <div className="h-[100vh] w-64">
-              <ul className="flex flex-col gap-4 p-12">
-                {/* <Link to="/beranda">
-                  <div className="flex items-center gap-2">
-                    <HomeLine className="text-xl" />
-                    <p>Beranda</p>
-                  </div>
-                </Link> */}
-                <Link to="/product">
-                  <div className="flex items-center gap-2">
-                    <Inbox02 className="text-xl" />
-                    <p>Produk</p>
-                  </div>
-                </Link>
-                <Link to="/order">
-                  <div className="flex items-center gap-2">
-                    <ShoppingCart02 className="text-xl" />
-                    <p>Order</p>
-                  </div>
-                </Link>
-                <Link to="/transaksi">
-                  <div className="flex items-center gap-2">
-                    <CoinSwap02 className="text-xl" />
-                    <p>Transaksi</p>
-                  </div>
-                </Link>
-                <Link to="/jurnal">
-                  <div className="flex items-center gap-2">
-                    <Table className="text-xl" />
-                    <p>Jurnal</p>
-                  </div>
-                </Link>
-                {/* <Link>
-                  <div className="flex items-center gap-2">
-                    <UserSquare className="text-xl" />
-                    <p>Akun Saya</p>
-                  </div>
-                </Link> */}
-                <button onClick={hendleLogout}>
-                  <div className="flex items-center gap-2">
-                    <LogOut01 className="text-xl" />
-                    <p>Logout</p>
-                  </div>
-                </button>
-              </ul>
-            </div>
-          </div>
-        ) : (
-          // {id === "" && (
-          <div id="hero" className={style.sidebar}>
-            <ul className={style.contentSidebar}>
-              <h4 className={style.jdlSidebar}>CATEGORIES</h4>
-              <li>
-                <LinkScroll.Link
-                  to="product"
-                  spy={true}
-                  smooth={true}
-                  offset={-215}
-                  duration={500}
-                  onClick={() => nameSdiber()}>
-                  All Products
-                </LinkScroll.Link>
-              </li>
-              {dataCategories.length !== 0 &&
-                dataCategories.map((data, key) => {
-                  return (
-                    <li key={key}>
-                      <LinkScroll.Link
-                        to="product"
-                        spy={true}
-                        smooth={true}
-                        offset={-215}
-                        duration={500}
-                        onClick={() => nameSdiber(data.id)}>
-                        {data.name}
-                      </LinkScroll.Link>
-                    </li>
-                  );
-                })}
-            </ul>
-          </div>
-        )
-        // )}
-      }
-    </>
-  );
+          </button>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default Sidebar;

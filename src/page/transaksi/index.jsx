@@ -145,8 +145,7 @@ export const Transaksi = () => {
 
   return (
     <div className="flex font-archivo">
-      <Sidebar />
-      <div className="flex w-full flex-col gap-8 p-4 font-archivo">
+      <div className="flex w-full flex-col gap-8 font-archivo">
         <div>
           <p className="text-2xl font-bold">Transaksi</p>
         </div>
