@@ -218,7 +218,17 @@
   display: flex;
   flex-direction: column;
   font-family: "Alata", sans-serif;
+  /* border: 1px solid black; */
+  margin: 5px 0px;
 }
+
+.contrainerPopUpProduct .contentPopUpProduct .body .item .itemBahanBaku{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
 
 .contrainerPopUpProduct .contentPopUpProduct .body .gambarProduct {
   display: flex;

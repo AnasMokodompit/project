@@ -15,6 +15,8 @@ import {
   deleteOrder,
   kurangOrder,
   saveOrder,
+  tambahMeterOrder,
+  kurangMeterOrder
 } from "../../config/actions/OrderAction";
 
 // Icons
@@ -79,6 +81,14 @@ function Navbar() {
   const hendleKurangOrder = (id, harga) => {
     dispatch(kurangOrder({ id: id, jumlah: 1, harga: harga }));
   };
+
+  const hendleTambahMeterOrder = (id, harga) => {
+    dispatch(tambahMeterOrder({ id: id, jumlah_meter: 1, harga: harga }));
+  }
+
+  const hendleKurangMeterOrder = (id, harga) => {
+    dispatch(kurangMeterOrder({ id: id, jumlah_meter: 1, harga: harga }));
+  }
 
   const hendleHapusOrder = (id) => {
     dispatch(deleteOrder({ id: id }));
@@ -407,6 +417,7 @@ function Navbar() {
                           </p>
                           <div className="flex flex-col gap-4">
                             {dataOrder?.map((data, index) => {
+                              {console.log(data)}
                               return (
                                 <div className="relative grid grid-cols-3 gap-2 rounded-lg bg-neutral-100 p-2 font-archivo shadow-sm">
                                   <div className="col-span-1 self-center">
@@ -425,6 +436,40 @@ function Navbar() {
                                         <p className="text-xs font-bold">
                                           Tipe: {data.tipe}
                                         </p>
+                                        {data?.jumlah_meter && (
+                                          <>
+                                            <p className="text-xs font-bold">
+                                              harga permeter: {data.harga}
+                                            </p>
+                                            <p className="flex w-max border-collapse items-center justify-between gap-3 rounded-lg">
+                                              
+                                              <button
+                                                  className="flex h-5 w-5 items-center justify-center rounded-md border-2 border-neutral-500 transition-colors hover:border-amber-300 hover:bg-amber-300"
+                                                  onClick={() =>
+                                                    hendleKurangMeterOrder(
+                                                      data.id,
+                                                      data.harga,
+                                                    )
+                                                  }>
+                                                  <Minus className="text-base" />
+                                                </button>
+                                                <p className="w-3 text-center">
+                                                  {data.jumlah_meter}
+                                                </p>
+                                                <button
+                                                  className="flex h-5 w-5 items-center justify-center rounded-md border-2 border-neutral-500 transition-colors hover:border-amber-300 hover:bg-amber-300"
+                                                  onClick={() =>
+                                                    hendleTambahMeterOrder(
+                                                      data.id,
+                                                      data.harga,
+                                                    )
+                                                  }>
+                                                  <Plus className="text-base" />
+                                                </button>
+                                                <span>Meter</span>
+                                            </p>
+                                          </>
+                                        )}
                                       </div>
                                       <p className={style.cardHarga}>
                                         {new Intl.NumberFormat("id-ID", {
@@ -432,19 +477,20 @@ function Navbar() {
                                           currency: "IDR",
                                         })
                                           .format(data.jumlahHarga)
-                                          .replace(/(\.|,)00$/g, "")}
-                                        {data?.name.toLowerCase() ==
-                                        "kitcen set"
-                                          ? " /meter jalan"
-                                          : ""}
-                                        {data?.name.toLowerCase() ==
-                                        "set kamar tidur"
-                                          ? " /meter jalan"
-                                          : ""}
-                                        {data?.name.toLowerCase() ==
-                                        "backdrop / partisi ruangan / mini bar"
-                                          ? " /meter jalan"
-                                          : ""}
+                                        //   .replace(/(\.|,)00$/g, "")}
+                                        // {data?.name.toLowerCase() ==
+                                        // "kitcen set"
+                                        //   ? " /meter jalan"
+                                        //   : ""}
+                                        // {data?.name.toLowerCase() ==
+                                        // "set kamar tidur"
+                                        //   ? " /meter jalan"
+                                        //   : ""}
+                                        // {data?.name.toLowerCase() ==
+                                        // "backdrop / partisi ruangan / mini bar"
+                                        //   ? " /meter jalan"
+                                        //   : ""
+                                          }
                                       </p>
                                       <div className="flex w-max border-collapse items-center justify-between gap-3 rounded-lg">
                                         <button

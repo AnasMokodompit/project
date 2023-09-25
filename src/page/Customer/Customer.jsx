@@ -204,16 +204,10 @@ function Customer() {
                       />
                       <span>{data.products.name}</span>
                       <span>{data.products.categories.name}</span>
-                      <span>
-                        {data.jumlah}
-                        {data?.products?.name?.toLowerCase() == "kitcen set" ||
-                        data?.products?.name?.toLowerCase() ==
-                          "set kamar tidur" ||
-                        data?.products?.name?.toLowerCase() ==
-                          "backdrop / partisi ruangan / mini bar"
-                          ? " meter jalan"
-                          : " Product"}
-                      </span>
+                      {data.jumlah_meter && (
+                        <span>{data.jumlah_meter} Meter Jalan</span>
+                      )}
+                      <span>{data.jumlah} Barang</span>
                       <span>
                         Total Harga :{" "}
                         {new Intl.NumberFormat("id-ID", {
@@ -305,18 +299,11 @@ function Customer() {
                           ? " /meter jalan"
                           : ""}
                       </span>
-                      <p className={style.judulDetailPesanan}>Detail Pesanan</p>
-                      <span>
-                        {dataProductById?.jumlah}
-                        {dataProductById?.products?.name?.toLowerCase() ==
-                          "kitcen set" ||
-                        dataProductById?.products?.name?.toLowerCase() ==
-                          "set kamar tidur" ||
-                        dataProductById?.products?.name?.toLowerCase() ==
-                          "backdrop / partisi ruangan / mini bar"
-                          ? " meter jalan"
-                          : " Product"}
-                      </span>
+                      {console.log(dataProductById)}
+                      {dataProductById.jumlah_meter && (
+                        <span>{dataProductById.jumlah_meter} Meter Jalan</span>
+                      )}
+                      <span>{dataProductById.jumlah} Barang</span>
                       <span>
                         Total Harga :{" "}
                         {new Intl.NumberFormat("id-ID", {

@@ -21,6 +21,11 @@ function ProductAdmin() {
   const [ukuran, setUkuran] = useState();
   const [deskripsi, setDeskripsi] = useState();
   const [gambarProduk, setGambarProduct] = useState([]);
+  const [dataBahanBakuProduk, setDataBahanBakuProduk] = useState([])
+
+  // 
+  const [bahanBaku, setBahanBaku] = useState([])
+  const [persediaanBahanBaku, setPersediaanBahanBaku] = useState([])
 
   const hendleGetAllProduct = async () => {
     await axios
@@ -44,6 +49,33 @@ function ProductAdmin() {
         console.log(err);
       });
   };
+
+  const hendleGetAllBahanBaku = () => {
+    axios.get(`${process.env.REACT_APP_BASE_API}/bahanBaku`, {headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` }})
+      .then((res) => {
+        setBahanBaku(res.data.data)
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+    
+    const hendleGetSatuanBerdasarkanBahanBaku = (e) => {
+      axios.get(`${process.env.REACT_APP_BASE_API}/persediaanBahanBaku?id_bahan_baku=${e.target.value}`, {headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` }})
+      .then((res) => {
+        setPersediaanBahanBaku(res.data.data)
+      }).catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const hendleGetAllSatuanBahanBaku = () => {
+    axios.get(`${process.env.REACT_APP_BASE_API}/persediaanBahanBaku`, {headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` }})
+      .then((res) => {
+        setPersediaanBahanBaku(res.data.data)
+      }).catch((err) => {
+        console.log(err)
+      })
+  }
 
   const hendleCreateProduct = () => {};
 
@@ -120,6 +152,7 @@ function ProductAdmin() {
         setDeskripsi(res.data.data.Deskripsi_produk);
         setUkuran(res.data.data.ukuran);
         setGambarProduct(res.data.data.product_images);
+        setDataBahanBakuProduk(res.data.data.bahanBakuProduk)
         console.log(res.data.data);
       });
   };
@@ -140,6 +173,8 @@ function ProductAdmin() {
   useEffect(() => {
     hendleGetAllProduct();
     hendleGetAllCategory();
+    hendleGetAllBahanBaku();
+    hendleGetAllSatuanBahanBaku();
   }, [show]);
 
   return (
@@ -339,16 +374,38 @@ function ProductAdmin() {
                   </div>
                 </div>
                 <div className={style.item}>
-                  <label htmlFor="">Keperluan Bahan Baku</label>
-                  <div>
-                    <select name="" id="">
-                      <option value="">Bahan Baku</option>
-                    </select>
-                    <select name="" id="">
-                      <option value="">Satuan</option>
-                    </select>
-                    <input type="text" name="" id="" placeholder="Jumlah" />
-                  </div>
+                  <label htmlFor="" className={style.judul}>Keperluan Bahan Baku</label>
+                  {dataBahanBakuProduk.length !== 0 && (
+                    dataBahanBakuProduk.map((data, key) => {
+                      console.log(data)
+                      return (
+                        <div className={style.itemBahanBaku}>
+                          <label htmlFor="">{key + 1}</label>
+                          <select name="" id="" value={data.id_bahan_baku} onChange={(e) => hendleGetSatuanBerdasarkanBahanBaku(e)}>
+                            <option value="">Pilih Bahan Baku</option>
+                            {bahanBaku.length !== 0 && (
+                              bahanBaku.map((data, key) => {
+                                return (
+                                  <option key={key} value={data.id}>{data.nama}</option>
+                                )
+                              })
+                            )}
+                          </select>
+                          <select name="" id="" value={data.satuan} onChange={(e) => e}>
+                            <option value="">Pilih Satuan</option>
+                            {persediaanBahanBaku.length !== 0 && (
+                              persediaanBahanBaku.map((data, key) => {
+                                return (
+                                  <option id={data.id} value={data.satuan}>{data.satuan}</option>
+                                )
+                              })
+                            )}
+                          </select>
+                          <input type="text" name="" id="" value={data.jumlah} placeholder="Jumlah" />
+                        </div>
+                      )
+                    })
+                  )}
                 </div>
               </div>
               <div className={style.button}>

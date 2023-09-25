@@ -78,8 +78,7 @@ function Product({ product }) {
       .then((res) => {
         console.log(res.data.data);
         // dispatch(saveOrder(res.data.data))
-        dispatch(
-          saveOrder({
+        const option = {
             id: res.data.data.id,
             url_image: res.data.data?.product_images[0]?.url_image,
             name: res.data.data.name,
@@ -87,7 +86,14 @@ function Product({ product }) {
             jumlah: 1,
             harga: res.data.data.harga,
             jumlahHarga: res.data.data.harga,
-          }),
+        }
+
+        if (res.data.data.name.toLowerCase() == "kitcen set" || res.data.data.name.toLowerCase() == "set kamar tidur" || res.data.data.name.toLowerCase() == "backdrop / partisi ruangan / mini bar") {
+          option.jumlah_meter = 1
+        }
+            
+        dispatch(
+          saveOrder(option),
         );
         // data = res.data.data
       })

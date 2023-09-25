@@ -11,8 +11,7 @@ function PersediaanBahanBaku() {
   const [popup, setPopup] = useState(false);
   const [dataPersediaanBahanBaku, setDataPersediaanBahanBaku] = useState([]);
   const [dataBahanBaku, setDataBahanBaku] = useState([]);
-  const [dataCreatePersediaanBahanBaku, setDataCreatePersediaanBahanBaku] =
-    useState([]);
+  const [dataCreatePersediaanBahanBaku, setDataCreatePersediaanBahanBaku] = useState([]);
   const [idPersediaanBahanBaku, setIdPersediaanBahanBaku] = useState();
   const [idBahanBaku, setIdBahanBaku] = useState();
   const [namaBahanBaku, setNamaBahanBaku] = useState();

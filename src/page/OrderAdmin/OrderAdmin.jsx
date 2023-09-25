@@ -156,7 +156,7 @@ function OrderAdmin() {
     } else {
       setIsPembayaranDP(true);
       data.id_nama_akun_transaksi = 36;
-      data.jumlah = 0.3 * jumlah;
+      data.jumlah = jumlah;
     }
 
     // return console.log(data, statusTransaksi)
@@ -370,27 +370,27 @@ function OrderAdmin() {
                                       {data?.products.categories.name}
                                     </span>
                                   </span>
+                                  {data.jumlah_meter && (
+                                    <span>
+                                      <span
+                                        style={{
+                                          fontWeight: "bold",
+                                          fontSize: "14px",
+                                        }}>
+                                        Jumlah Meter Jalan :{" "}
+                                      </span>
+                                      {data.jumlah_meter}
+                                    </span>
+                                  )}
                                   <span>
                                     <span
                                       style={{
                                         fontWeight: "bold",
                                         fontSize: "14px",
                                       }}>
-                                      Jumlah :{" "}
+                                      Jumlah Barang :{" "}
                                     </span>
                                     {data.jumlah}
-                                    {data?.products?.name?.toLowerCase() ==
-                                    "kitcen set"
-                                      ? " / meter jalan"
-                                      : ""}
-                                    {data?.products?.name?.toLowerCase() ==
-                                    "set kamar tidur"
-                                      ? " / meter jalan"
-                                      : ""}
-                                    {data?.products?.name?.toLowerCase() ==
-                                    "backdrop / partisi ruangan / mini bar"
-                                      ? " / meter jalan"
-                                      : ""}
                                   </span>
                                   <span>
                                     <p
