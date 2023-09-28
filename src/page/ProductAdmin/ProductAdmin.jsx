@@ -4,6 +4,8 @@ import img from "../../Asset/Cor1.jpg";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { FaSearch } from "react-icons/fa";
+
 
 function ProductAdmin() {
   const { dataLogin } = useSelector((tes) => tes.userReducer);
@@ -19,13 +21,23 @@ function ProductAdmin() {
   const [hargaProduct, setHargaProduct] = useState();
   const [kategori, setKategori] = useState();
   const [ukuran, setUkuran] = useState();
+  const [isPermeter, setIsPermeter] = useState(false)
   const [deskripsi, setDeskripsi] = useState();
   const [gambarProduk, setGambarProduct] = useState([]);
   const [dataBahanBakuProduk, setDataBahanBakuProduk] = useState([])
 
   // 
+  const [aksiBahanBakuProduk, setAksiBahanBakuProduk] = useState("")
+  const [idBahanBakuProduk, setIdBahanBakuProduk] = useState()
+  const [idBahanBaku, setIdBahanBaku] = useState()
+  const [formKeparluanBahanBaku, setFormKeparluanBahanBaku] = useState(false)
+  const [namaBahanBaku, setNamaBahanBaku] = useState()
+  const [namaSatuanPersediaanBahanBaku, setNamaSatuanPersediaanBahanBaku] = useState()
+  const [jumlah, setJumlah] = useState()
   const [bahanBaku, setBahanBaku] = useState([])
-  const [persediaanBahanBaku, setPersediaanBahanBaku] = useState([])
+  // const [dataCreateBahanBakuProduk, setDataCreateBahanBakuProduk] = useState([])
+  const [dataCreatePersediaanBahanBaku, setDataCreatePersediaanBahanBaku] = useState([])
+  const [idDrafTambahBahanBakuProduk, setIdDrafTambahBahanBakuProduk] = useState()
 
   const hendleGetAllProduct = async () => {
     await axios
@@ -58,26 +70,7 @@ function ProductAdmin() {
         console.log(err)
       })
     }
-    
-    const hendleGetSatuanBerdasarkanBahanBaku = (e) => {
-      axios.get(`${process.env.REACT_APP_BASE_API}/persediaanBahanBaku?id_bahan_baku=${e.target.value}`, {headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` }})
-      .then((res) => {
-        setPersediaanBahanBaku(res.data.data)
-      }).catch((err) => {
-        console.log(err)
-      })
-  }
 
-  const hendleGetAllSatuanBahanBaku = () => {
-    axios.get(`${process.env.REACT_APP_BASE_API}/persediaanBahanBaku`, {headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` }})
-      .then((res) => {
-        setPersediaanBahanBaku(res.data.data)
-      }).catch((err) => {
-        console.log(err)
-      })
-  }
-
-  const hendleCreateProduct = () => {};
 
   const hendleTambahGambar = (e) => {
     setGambarProduct([...gambarProduk, e.target.files[0]]);
@@ -95,22 +88,48 @@ function ProductAdmin() {
     setDeskripsi();
     setUkuran();
     setGambarProduct([]);
+    setIsPermeter(false)
+    setDataBahanBakuProduk([])
+    setFormKeparluanBahanBaku(false)
+    setBahanBaku([]);
+    setDataCreatePersediaanBahanBaku([]);
+    setJumlah();
+    setNamaBahanBaku();
+    setNamaSatuanPersediaanBahanBaku();
+    setIdBahanBaku();
+    setIdBahanBakuProduk()
   };
 
   const hendleSubmitProduct = () => {
     const formData = new FormData();
+
+    // return console.log(isPermeter)
 
     formData.append("nama", namaProduct);
     formData.append("ukuran", ukuran);
     formData.append("harga", hargaProduct);
     formData.append("Deskripsi_produk", deskripsi);
     formData.append("categoriesId", kategori);
-
+    formData.append("IsPermeter", isPermeter);
+    
     gambarProduk.map((data, i) => {
       formData.append("gambarProduct", data);
     });
-
+    
+    
+    
     if (aksi === "TambahProduct") {
+
+      dataBahanBakuProduk.map((data, i) => {
+        console.log(data,i)
+        formData.append(`bahanBakuProduk[${i}][idBahanBaku]`, data.idBahanBaku);
+        formData.append(`bahanBakuProduk[${i}][idDraf]`, data.idDraf);
+        formData.append(`bahanBakuProduk[${i}][jumlah]`, data.jumlah);
+        formData.append(`bahanBakuProduk[${i}][nama]`, data.nama);
+        formData.append(`bahanBakuProduk[${i}][satuan]`, data.satuan);
+      })
+
+
       axios
         .post(`http://localhost:3000/api/v1.0/products`, formData, {
           headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
@@ -137,6 +156,26 @@ function ProductAdmin() {
           console.log(err);
         });
     }
+
+
+    setId();
+    setNamaProduct();
+    setHargaProduct();
+    setKategori();
+    setDeskripsi();
+    setUkuran();
+    setGambarProduct([]);
+    setIsPermeter(false)
+    setDataBahanBakuProduk([])
+    setFormKeparluanBahanBaku(false)
+    setBahanBaku([]);
+    setDataCreatePersediaanBahanBaku([]);
+    setJumlah();
+    setNamaBahanBaku();
+    setNamaSatuanPersediaanBahanBaku();
+    setIdBahanBaku();
+    setIdBahanBakuProduk()
+    
   };
 
   const hendleEditProduct = (id) => {
@@ -151,8 +190,10 @@ function ProductAdmin() {
         setKategori(res.data.data.categoriesId);
         setDeskripsi(res.data.data.Deskripsi_produk);
         setUkuran(res.data.data.ukuran);
+        setIsPermeter(res.data.data.IsPermeter)
         setGambarProduct(res.data.data.product_images);
         setDataBahanBakuProduk(res.data.data.bahanBakuProduk)
+        console.log(res.data.data.IsPermeter);
         console.log(res.data.data);
       });
   };
@@ -170,11 +211,234 @@ function ProductAdmin() {
       });
   };
 
+
+  // Bahan Baku Produk
+  const hendleGetByIdBahanBakuProduk = (BahanBaku, satuanBahanBaku, jumlah) => {
+      setNamaSatuanPersediaanBahanBaku(satuanBahanBaku);
+      setJumlah(jumlah);
+      setNamaBahanBaku(BahanBaku);
+  }
+
+  const hendleClickBahanBaku = (e) => {
+    e.preventDefault();
+    setNamaBahanBaku(e.target.innerText);
+    setBahanBaku([]);
+    setIdBahanBaku(e.target.id);
+
+    axios
+      .get(
+        `${process.env.REACT_APP_BASE_API}/persediaanBahanBaku?id_bahan_baku=${e.target.id}`,
+        {
+          headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
+        },
+      )
+      .then((res) => {
+        console.log(res.data.data);
+        setDataCreatePersediaanBahanBaku(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const hendleClickPersediaanBahanBaku = (e) => {
+    e.preventDefault();
+    setNamaSatuanPersediaanBahanBaku(e.target.innerText);
+    setDataCreatePersediaanBahanBaku([]);
+
+    // return console.log(e.target.id)
+    axios
+      .get(
+        `${process.env.REACT_APP_BASE_API}/persediaanBahanBaku/${e.target.id}`,
+        {
+          headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
+        },
+      )
+      .then((res) => {
+        console.log(res.data.data);
+        setNamaSatuanPersediaanBahanBaku(res.data.data.satuan);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleSearchBahanBaku = (e) => {
+    e.preventDefault();
+    axios
+      .get(
+        `${process.env.REACT_APP_BASE_API}/bahanBaku?searchName=${e.target.value}`,
+        {
+          headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
+        },
+      )
+      .then((res) => {
+        console.log(res.data.data);
+        if (
+          res.data.data[0]?.name?.toLowerCase() == e.target.value?.toLowerCase()
+        ) {
+          setNamaBahanBaku(e.target.value);
+          setBahanBaku([]);
+          setIdBahanBaku(res.data.data[0].id);
+
+          axios
+            .get(
+              `${process.env.REACT_APP_BASE_API}/persediaanBahanBaku?id_bahan_baku=${e.target.id}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${dataLogin.dataLogin.token}`,
+                },
+              },
+            )
+            .then((res) => {
+              setDataCreatePersediaanBahanBaku(res.data.data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else if (e.target.value.length == 0) {
+          setNamaBahanBaku();
+          setBahanBaku([]);
+          setIdBahanBaku();
+          setDataCreatePersediaanBahanBaku([]);
+        } else {
+          setBahanBaku(res.data.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const hendleSearchPersedianBahanBaku = (e) => {
+    axios
+      .get(
+        `${process.env.REACT_APP_BASE_API}/persediaanBahanBaku?search=${e.target.value}&id_bahan_baku=${idBahanBaku}`,
+        { headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` } },
+      )
+      .then((res) => {
+        console.log(res.data.data);
+        setDataCreatePersediaanBahanBaku(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const sumbitPersediaanBahanBaku = () => {
+    const data = {
+      idBahanBaku: idBahanBaku,
+      nama: namaBahanBaku,
+      jumlah: jumlah,
+      satuan: namaSatuanPersediaanBahanBaku,
+    };
+
+    if (aksi == "TambahProduct") {
+      if (aksiBahanBakuProduk == "EditBahanBakuProduk") {
+        
+        const index = dataBahanBakuProduk.findIndex((item) => (item.idDraf == idDrafTambahBahanBakuProduk))
+
+        if (index >= 0) {
+          console.log(namaBahanBaku, namaSatuanPersediaanBahanBaku, index)
+          const newArrayData = [...dataBahanBakuProduk];
+          newArrayData[index].nama = namaBahanBaku;
+          newArrayData[index].satuan = namaSatuanPersediaanBahanBaku;
+          newArrayData[index].jumlah = jumlah;
+
+          setDataBahanBakuProduk(newArrayData)
+        }
+      }else{
+        data.idDraf = dataBahanBakuProduk.length
+        setDataBahanBakuProduk([...dataBahanBakuProduk, data])
+      }
+    }else{
+      if (aksiBahanBakuProduk == "EditBahanBakuProduk") {
+        data.idProduk = id
+        
+        axios
+            .patch(`${process.env.REACT_APP_BASE_API}/bahanBakuProduk/${idBahanBakuProduk}`, data, {
+              headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
+            })
+            .then((res) => {
+              console.log(res.data.data);
+              hendleEditProduct(res.data.data.id_produk);
+            })
+            .catch((err) => {
+              console.log(err);
+              if (err?.response?.data?.code == 404) {
+                alert(err?.response?.data?.message);
+              }
+            });
+      }else{
+        data.idProduk = id
+        
+        axios
+            .post(`${process.env.REACT_APP_BASE_API}/bahanBakuProduk`, data, {
+              headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
+            })
+            .then((res) => {
+              console.log(res.data.data);
+              hendleEditProduct(res.data.data.id_produk);
+            })
+            .catch((err) => {
+              console.log(err);
+              // if (err?.response?.data?.code == 404) {
+              //   alert(err?.response?.data?.message);
+              // }
+            });
+      }
+    }
+        
+    setFormKeparluanBahanBaku(false);
+    setBahanBaku([]);
+    setDataCreatePersediaanBahanBaku([]);
+    setJumlah();
+    setNamaBahanBaku();
+    setNamaSatuanPersediaanBahanBaku();
+    setIdBahanBaku();
+  }
+
+  const hendleDeleteBahanBakuProduk = (idBahanBakuProduk) => {
+    axios
+          .delete(`${process.env.REACT_APP_BASE_API}/bahanBakuProduk/${idBahanBakuProduk}`, {
+            headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
+          })
+          .then(() => {
+            hendleEditProduct(id);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+  }
+
+    // Draff
+      const hendleGetByNamaAndSatuanBahanBakuProdukDraf = (idDraf, nama, satuan, jumlah) => {
+        setIdDrafTambahBahanBakuProduk(idDraf)
+        setNamaSatuanPersediaanBahanBaku(satuan)
+        setNamaBahanBaku(nama)
+        setJumlah(jumlah)
+      }
+
+
+      const hendleDeleteBahanBakuProdukDraf = (nama, satuan) => {
+        const newArrayData = dataBahanBakuProduk.filter(data => (data.nama !== nama && data.satuan !== satuan))
+
+        setDataBahanBakuProduk(newArrayData)
+      }
+
+  const hendleClose = () => {
+    setBahanBaku([]);
+    setDataCreatePersediaanBahanBaku([]);
+    setJumlah();
+    setNamaBahanBaku();
+    setNamaSatuanPersediaanBahanBaku();
+    setIdBahanBaku();
+    setIdBahanBakuProduk()
+  };
+
   useEffect(() => {
     hendleGetAllProduct();
     hendleGetAllCategory();
-    hendleGetAllBahanBaku();
-    hendleGetAllSatuanBahanBaku();
   }, [show]);
 
   return (
@@ -187,7 +451,7 @@ function ProductAdmin() {
             className={style.userAddButton}
             value="Tambah Data"
             onClick={() =>
-              `${hendleCreateProduct()} ${setPopUpProduct(true)} ${setAksi(
+              `${setPopUpProduct(true)} ${setAksi(
                 "TambahProduct",
               )}`
             }
@@ -225,7 +489,7 @@ function ProductAdmin() {
           {dataProduct.length !== 0 &&
             dataProduct.map((data, key) => {
               return (
-                <div className={style.card}>
+                <div key={key} className={style.card}>
                   <div className={style.contentCard}>
                     <img src={data.product_images[0]?.url_image} alt="" />
                     <span className={style.cardCategori}>
@@ -239,21 +503,14 @@ function ProductAdmin() {
                       })
                         .format(data.harga)
                         .replace(/(\.|,)00$/g, "")}
-                      {data?.name.toLowerCase() == "kitcen set"
-                        ? " /meter jalan"
-                        : ""}
-                      {data?.name.toLowerCase() == "set kamar tidur"
-                        ? " /meter jalan"
-                        : ""}
-                      {data?.name.toLowerCase() ==
-                      "backdrop / partisi ruangan / mini bar"
+                      {data?.IsPermeter == true
                         ? " /meter jalan"
                         : ""}
                     </span>
                   </div>
                   <div className={style.optionCard}>
                     <span
-                      class="material-symbols-outlined"
+                      className="material-symbols-outlined"
                       onClick={() =>
                         `${hendleEditProduct(data.id)} ${setPopUpProduct(
                           true,
@@ -262,7 +519,7 @@ function ProductAdmin() {
                       edit
                     </span>
                     <span
-                      class="material-symbols-outlined"
+                      className="material-symbols-outlined"
                       onClick={() => hendleDeleteProduct(data.id)}>
                       delete
                     </span>
@@ -302,6 +559,11 @@ function ProductAdmin() {
                     onChange={(e) => setHargaProduct(e.target.value)}
                   />
                 </div>
+                <div className={style.checkboxPermeter}>
+                  {console.log(isPermeter)}
+                  <label htmlFor="">Dijual Permeter</label>
+                  <input type="checkbox" name="" checked={isPermeter == true ? true : false} id="" onChange={() => setIsPermeter(!isPermeter)}/>
+                </div>
                 <div className={style.item}>
                   <label htmlFor="">Kategori</label>
                   <select
@@ -313,7 +575,7 @@ function ProductAdmin() {
                     {dataCategories.length !== 0 &&
                       dataCategories.map((data, key) => {
                         // console.log(data)
-                        return <option value={data.id}>{data.name}</option>;
+                        return <option key={key} value={data.id}>{data.name}</option>;
                       })}
                   </select>
                 </div>
@@ -352,7 +614,7 @@ function ProductAdmin() {
                             {data?.url_image ? (
                               <>
                                 <span
-                                  class="material-symbols-outlined"
+                                  className="material-symbols-outlined"
                                   onClick={() => hendleHapusGambar(data.name)}>
                                   close
                                 </span>
@@ -361,7 +623,7 @@ function ProductAdmin() {
                             ) : (
                               <>
                                 <span
-                                  class="material-symbols-outlined"
+                                  className="material-symbols-outlined"
                                   onClick={() => hendleHapusGambar(data.name)}>
                                   close
                                 </span>
@@ -375,39 +637,147 @@ function ProductAdmin() {
                 </div>
                 <div className={style.item}>
                   <label htmlFor="" className={style.judul}>Keperluan Bahan Baku</label>
-                  {dataBahanBakuProduk.length !== 0 && (
-                    dataBahanBakuProduk.map((data, key) => {
-                      console.log(data)
-                      return (
-                        <div className={style.itemBahanBaku}>
-                          <label htmlFor="">{key + 1}</label>
-                          <select name="" id="" value={data.id_bahan_baku} onChange={(e) => hendleGetSatuanBerdasarkanBahanBaku(e)}>
-                            <option value="">Pilih Bahan Baku</option>
-                            {bahanBaku.length !== 0 && (
-                              bahanBaku.map((data, key) => {
-                                return (
-                                  <option key={key} value={data.id}>{data.nama}</option>
-                                )
-                              })
-                            )}
-                          </select>
-                          <select name="" id="" value={data.satuan} onChange={(e) => e}>
-                            <option value="">Pilih Satuan</option>
-                            {persediaanBahanBaku.length !== 0 && (
-                              persediaanBahanBaku.map((data, key) => {
-                                return (
-                                  <option id={data.id} value={data.satuan}>{data.satuan}</option>
-                                )
-                              })
-                            )}
-                          </select>
-                          <input type="text" name="" id="" value={data.jumlah} placeholder="Jumlah" />
-                        </div>
-                      )
-                    })
-                  )}
-                </div>
+                    <span className={style.buttonAddBahanBakuProduk} onClick={() => `${setFormKeparluanBahanBaku(true)} ${setAksiBahanBakuProduk("AddBahanBakuProduk")}`}>Buat</span>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>No</th>
+                        <th>Bahan Baku</th>
+                        <th>Satuan</th>
+                        <th>Jumlah</th>
+                        <th>Options</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {dataBahanBakuProduk.length !== 0 && (
+                          dataBahanBakuProduk.map((data, key) => {
+                            console.log(data)
+                            return (
+                              <tr key={key}>
+                                <td>{(key += 1)}</td>
+                                {aksi === "TambahProduct" && (
+                                  <td>{data?.nama}</td>
+                                )}
+                                {aksi === "EditProduct" && (
+                                  <td>{data?.bahanBaku?.nama}</td>
+                                )}
+                                <td>{data.satuan}</td>
+                                <td>{data.jumlah}</td>
+                                <td className={style.options}>
+                                  {aksi == "EditProduct" && (
+                                    <>
+                                      <span className={`material-symbols-outlined ${style.iconOptions}`} onClick={() => `${setFormKeparluanBahanBaku(true)} ${setIdBahanBaku(data.bahanBaku.id)} ${setIdBahanBakuProduk(data.id)} ${hendleGetByIdBahanBakuProduk(data.bahanBaku.nama, data.satuan, data.jumlah)} ${setAksiBahanBakuProduk("EditBahanBakuProduk")}`}>edit</span>
+                                      <span className={`material-symbols-outlined ${style.iconOptions}`} onClick={() => hendleDeleteBahanBakuProduk(data.id)}>delete</span>
+                                    </>
+                                  )}
+                                  {aksi == "TambahProduct" && (
+                                    <>
+                                      <span className={`material-symbols-outlined ${style.iconOptions}`} onClick={() => `${setFormKeparluanBahanBaku(true)} ${hendleGetByNamaAndSatuanBahanBakuProdukDraf(key-=1, data.nama, data.satuan, data.jumlah)} ${setAksiBahanBakuProduk("EditBahanBakuProduk")}`}>edit</span>
+                                      <span className={`material-symbols-outlined ${style.iconOptions}`} onClick={() => hendleDeleteBahanBakuProdukDraf(data.nama, data.satuan)}>delete</span>
+                                    </>
+                                  )}
+                                </td>
+                              </tr>
+                              )
+                            })
+                          )}
+                      </tbody>
+                    </table>
+                  </div>
               </div>
+              {formKeparluanBahanBaku === true && (
+                <div className={style.item}>
+                    <div className={style.contentPopUpBahanBaku}>
+                      <div className={style.top}>
+                        {/* {popup == "Tambah" && <h5>Tambahkan Bahan Baku</h5>}
+                        {popup == "Edit" && <h5>Edit Bahan Baku</h5>} */}
+                        <span>Input Bahan Baku Produk</span>
+                        <span
+                          className="material-symbols-outlined"
+                          onClick={() => `${setFormKeparluanBahanBaku(false)} ${hendleClose()}`}>
+                          close
+                        </span>
+                      </div>
+                      <div className={style.itemContentOrderCustom}>
+                        <label htmlFor="">Bahan Baku</label>
+                        <div className={style.inputWrapper}>
+                          <FaSearch id={style.searchIcon} />
+                          <input
+                            placeholder="Type to search nama bahan baku..."
+                            value={namaBahanBaku}
+                            onClick={() => hendleGetAllBahanBaku()}
+                            onChange={(e) =>
+                              `${setNamaBahanBaku(
+                                e.target.value,
+                              )} ${handleSearchBahanBaku(e)}`
+                            }
+                          />
+                        </div>
+                        <div className={style.resultsList}>
+                          {bahanBaku.length !== 0 &&
+                            bahanBaku.map((data, key) => {
+                              console.log(data);
+                              return (
+                                <div
+                                  id={data.id}
+                                  key={key}
+                                  onClick={(e) => hendleClickBahanBaku(e)}
+                                  className={style.searchResult}>
+                                  {data.nama}
+                                </div>
+                              );
+                            })}
+                        </div>
+                      </div>
+                      <div className={style.itemContentOrderCustom}>
+                        <label htmlFor="">Satuan</label>
+                        <div className={style.inputWrapper}>
+                          <FaSearch id={style.searchIcon} />
+                          <input
+                            placeholder="Type to search nama satuan..."
+                            value={namaSatuanPersediaanBahanBaku}
+                            onChange={(e) =>
+                              `${setNamaSatuanPersediaanBahanBaku(
+                                e.target.value,
+                              )} ${hendleSearchPersedianBahanBaku(e)}`
+                            }
+                          />
+                        </div>
+                        <div className={style.resultsList}>
+                          {dataCreatePersediaanBahanBaku.length !== 0 &&
+                            dataCreatePersediaanBahanBaku.map((data, key) => {
+                              return (
+                                <div
+                                  id={data.id}
+                                  key={key}
+                                  onClick={(e) => hendleClickPersediaanBahanBaku(e)}
+                                  className={style.searchResult}>
+                                  {data.satuan}
+                                </div>
+                              );
+                            })}
+                        </div>
+                      </div>
+                      <div className={style.itemContentOrderCustom}>
+                        <label htmlFor="">Jumlah</label>
+                        <input
+                          type="text"
+                          id={style.input}
+                          value={jumlah}
+                          onChange={(e) => setJumlah(e.target.value)}
+                          >
+                        </input>
+                      </div>
+                      <div className={style.button}>
+                        <input
+                          type="button"
+                          value={aksi == "TambahProduct" ? "Simpan Draf" : "Kirim"}
+                          onClick={() => sumbitPersediaanBahanBaku()}
+                        />
+                      </div>
+                    </div>
+                </div>
+              )}
               <div className={style.button}>
                 <input
                   type="button"

@@ -88,7 +88,7 @@ function Product({ product }) {
             jumlahHarga: res.data.data.harga,
         }
 
-        if (res.data.data.name.toLowerCase() == "kitcen set" || res.data.data.name.toLowerCase() == "set kamar tidur" || res.data.data.name.toLowerCase() == "backdrop / partisi ruangan / mini bar") {
+        if (res.data.data.IsPermeter == true) {
           option.jumlah_meter = 1
         }
             
@@ -270,17 +270,9 @@ function Product({ product }) {
                   })
                     .format(dataById?.harga)
                     .replace(/(\.|,)00$/g, "")}
-                  {dataById?.name.toLowerCase() == "kitcen set"
-                    ? " /meter jalan"
-                    : ""}
-                  {dataById?.name.toLowerCase() == "set kamar tidur"
-                    ? " /meter jalan"
-                    : ""}
-                  {dataById?.name.toLowerCase() ==
-                  "backdrop / partisi ruangan / mini bar"
-                    ? " /meter jalan"
-                    : ""}
-                  {/* {console.log(dataById?.name.toLowerCase().search("backdrop"))} */}
+                  {dataById?.IsPermeter == true
+                        ? " /meter jalan"
+                        : ""}
                 </span>
                 <span className={style.rantingStart}>
                   <ReactStars

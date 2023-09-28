@@ -286,18 +286,9 @@ function Customer() {
                         })
                           .format(dataProductById?.products?.harga)
                           .replace(/(\.|,)00$/g, "")}
-                        {dataProductById?.products?.name.toLowerCase() ==
-                        "kitcen set"
-                          ? " /meter jalan"
-                          : ""}
-                        {dataProductById?.products?.name.toLowerCase() ==
-                        "set kamar tidur"
-                          ? " /meter jalan"
-                          : ""}
-                        {dataProductById?.products?.name.toLowerCase() ==
-                        "backdrop / partisi ruangan / mini bar"
-                          ? " /meter jalan"
-                          : ""}
+                        {dataProductById?.products?.IsPermeter == true
+                              ? " /meter jalan"
+                              : ""}
                       </span>
                       {console.log(dataProductById)}
                       {dataProductById.jumlah_meter && (
