@@ -32,6 +32,8 @@ import CreditCardCheck from "../../Asset/icons/untitled-ui-icons/line/components
 import CreditCardPlus from "../../Asset/icons/untitled-ui-icons/line/components/CreditCardPlus";
 import CreditCardEdit from "../../Asset/icons/untitled-ui-icons/line/components/CreditCardEdit";
 import CoinsStacked01 from "../../Asset/icons/untitled-ui-icons/line/components/CoinsStacked01";
+import CoinsHand from "../../Asset/icons/untitled-ui-icons/line/components/CoinsHand";
+import Scales02 from "../../Asset/icons/untitled-ui-icons/line/components/Scales02";
 import Building07 from "../../Asset/icons/untitled-ui-icons/line/components/Building07";
 import Server01 from "../../Asset/icons/untitled-ui-icons/line/components/Server01";
 import Box from "../../Asset/icons/untitled-ui-icons/line/components/Box";
@@ -85,13 +87,15 @@ function Sidebar({ nameSdiber }) {
 
   if (id === 1) {
     return (
-      <div className="relative flex h-[100vh] w-full flex-col items-center bg-neutral-50 py-4 font-archivo">
-        <div>
-          <Link to="/" className="font-bold">
+      <div className="relative flex h-full w-full flex-col items-center gap-3 bg-neutral-100 py-4 font-archivo">
+        <div className="flex w-full items-center justify-center">
+          <Link to="/" className="text-lg font-bold">
             CV Talongka Jaya
           </Link>
         </div>
-        <div className="flex w-full flex-col gap-12 p-6 text-base">
+        <div
+          className="scrollbar-gutter-stable-both flex h-full w-full flex-col gap-8 overflow-y-auto px-3 py-6 text-base
+        ">
           <Accordion type="multiple" collapsible>
             <AccordionItem value="item-1">
               <AccordionTrigger className="hover:no-underline focus:outline-none active:outline-none">
@@ -144,6 +148,22 @@ function Sidebar({ nameSdiber }) {
                     <div className="flex items-center gap-3">
                       <CreditCardCheck className="flex-shrink-0 text-2xl" />
                       <p>Rekap Jurnal</p>
+                    </div>
+                  </NavLink>
+                  <NavLink
+                    to="/posisi-keuangan"
+                    className="transition-colors hover:text-amber-300 hover:no-underline">
+                    <div className="flex items-center gap-3">
+                      <CoinsHand className="flex-shrink-0 text-2xl" />
+                      <p>Posisi Keuangan</p>
+                    </div>
+                  </NavLink>
+                  <NavLink
+                    to="/laba-rugi"
+                    className="transition-colors hover:text-amber-300 hover:no-underline">
+                    <div className="flex items-center gap-3">
+                      <Scales02 className="flex-shrink-0 text-2xl" />
+                      <p>Laba Rugi</p>
                     </div>
                   </NavLink>
                 </ul>
@@ -207,7 +227,7 @@ function Sidebar({ nameSdiber }) {
             </AccordionItem>
           </Accordion>
           <button onClick={hendleLogout}>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 py-3">
               <LogOut01 className="text-2xl" />
               <p className="text-sm">Logout</p>
             </div>

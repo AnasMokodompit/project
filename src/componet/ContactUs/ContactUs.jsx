@@ -1,5 +1,5 @@
 import { useState } from "react";
-import style from "./ContactUs.module.css";
+// import style from "./ContactUs.module.css";
 import axios from "axios";
 
 import MarkerPin01 from "../../Asset/icons/untitled-ui-icons/line/components/MarkerPin01";

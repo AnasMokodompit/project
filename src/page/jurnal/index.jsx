@@ -1,11 +1,29 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { format } from "date-fns";
+import { id } from "date-fns/locale";
 import axios from "axios";
 
-import Sidebar from "../../componet/Sidebar/Sidebar";
+import { cn } from "../../utils/cn";
+
+import { Button } from "../../componet/button";
+import { Calendar } from "../../componet/calendar";
+import { Input } from "../../componet/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "../../componet/popover";
+
+import Search from "../../Asset/icons/untitled-ui-icons/line/components/SearchLg";
+import CalendarIcon from "../../Asset/icons/untitled-ui-icons/line/components/Calendar";
+import Printer from "../../Asset/icons/untitled-ui-icons/line/components/Printer";
+import Minus from "../../Asset/icons/untitled-ui-icons/line/components/Minus";
 
 export const Jurnal = () => {
   const [transaksiData, setTransaksiData] = useState();
+  const [tanggalAwal, setTanggalAwal] = useState();
+  const [tanggalAkhir, setTanggalAkhir] = useState();
 
   const { refetch } = useQuery({
     queryKey: ["transaksi"],
@@ -37,15 +55,80 @@ export const Jurnal = () => {
   // console.log(transaksiData);
 
   return (
-    <section className="flex font-archivo">
-      <div className="flex w-full flex-col gap-8 font-archivo">
+    <section className="flex max-w-full overflow-auto font-archivo">
+      <div className="flex w-full flex-col gap-4 font-archivo">
         <div>
           <p className="text-2xl font-bold">Jurnal</p>
         </div>
+        <div className="flex justify-between gap-4 rounded-lg bg-neutral-100 p-3">
+          <div className="flex items-center gap-2">
+            <div>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-60 justify-start gap-2 p-3 text-left font-normal",
+                      !tanggalAwal && "text-muted-foreground",
+                    )}>
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {tanggalAwal ? (
+                      format(tanggalAwal, "PPP", { locale: id })
+                    ) : (
+                      <span>Pilih tanggal</span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={tanggalAwal}
+                    onSelect={setTanggalAwal}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+            <Minus />
+            <div>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-[280px] justify-start text-left font-normal",
+                      !tanggalAkhir && "text-muted-foreground",
+                    )}>
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {tanggalAkhir ? (
+                      format(tanggalAkhir, "PPP", { locale: id })
+                    ) : (
+                      <span>Pilih tanggal</span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={tanggalAkhir}
+                    onSelect={setTanggalAkhir}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+            <button className="flex-shrink-0 rounded-lg bg-amber-300 p-2">
+              <Printer />
+            </button>
+          </div>
+          <div>
+            <Input className="w-60" placeholder="Cari" />
+          </div>
+        </div>
         <div>
-          <table className="w-full border-collapse overflow-hidden rounded-lg border-black">
+          <table className="w-full table-auto border-collapse rounded-lg border-2 text-sm">
             <thead>
-              <tr className="border-b-2 border-neutral-500 bg-amber-300">
+              <tr className="border-b-2 bg-amber-300">
                 <th className="px-4 py-3 text-center">Tanggal</th>
                 <th className="px-4 py-3 text-center">Transaksi</th>
                 <th className="px-4 py-3 text-center">Nama Akun</th>

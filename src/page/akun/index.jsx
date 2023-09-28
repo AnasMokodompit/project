@@ -1,7 +1,7 @@
 // Packages
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import axios from "axios";
 
 // Assets
@@ -36,7 +36,17 @@ export const Akun = () => {
   const formCreate = useForm({
     defaultValues: {
       nama: "",
+      jenis_transaksi: [
+        {
+          id_jenis_transaksi: "",
+        },
+      ],
     },
+  });
+
+  const { fields, append, prepend, remove } = useFieldArray({
+    name: "jenis_transaksi",
+    control: formCreate.control,
   });
 
   const [namaAkunTransaksiData, setNamaAkunTransaksiData] = useState();
@@ -141,9 +151,7 @@ export const Akun = () => {
                     name="nama"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="font-archivo">
-                          Nama Akun Transaksi
-                        </FormLabel>
+                        <FormLabel className="font-archivo">Nama</FormLabel>
                         <FormControl>
                           <Input {...field} />
                         </FormControl>
@@ -170,19 +178,51 @@ export const Akun = () => {
               <th className="px-4 py-3 text-center font-semibold">
                 Nama Akun Transaksi
               </th>
+              <th className="px-4 py-3 text-center font-semibold">
+                Jenis Transaksi
+              </th>
               <th className="px-4 py-2 text-center font-semibold"></th>
             </tr>
           </thead>
           <tbody>
             {!!namaAkunTransaksiData &&
               namaAkunTransaksiData.map((item, index) => {
-                const { id, kode, nama } = item;
+                const {
+                  id,
+                  kode,
+                  nama,
+                  nama_akun_transaksi_dalam_jenis_transaksi:
+                    namaAkunTransaksiDalamJenisTransaksi,
+                } = item;
+
+                // console.log(namaAkunTransaksiDalamJenisTransaksi);
 
                 return (
                   <tr key={id} className="border-b even:bg-neutral-50">
                     <td className="p-3 text-center">{index + 1}.</td>
                     <td className="w-0 p-2">{kode}</td>
                     <td className="p-2">{nama}</td>
+                    <td className="p-2">
+                      <div className="flex">
+                        {namaAkunTransaksiDalamJenisTransaksi.length !== 0
+                          ? namaAkunTransaksiDalamJenisTransaksi.map(
+                              (item, index) => {
+                                const {
+                                  id,
+                                  jenis_akun_transaksi: { nama },
+                                } = item;
+                                return (
+                                  <p
+                                    key={id}
+                                    className="before:mr-1 before:content-[','] before:first:mr-0 before:first:content-none">
+                                    {nama}
+                                  </p>
+                                );
+                              },
+                            )
+                          : "-"}
+                      </div>
+                    </td>
                     <td className="p-2 text-center">
                       <div className="flex items-center justify-end gap-4">
                         <Popover>

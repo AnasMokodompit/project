@@ -6,6 +6,14 @@
   .sidebar {
     height: calc(100dvh - 2rem);
   }
+
+  .scrollbar-gutter-stable {
+    scrollbar-gutter: stable;
+  }
+
+  .scrollbar-gutter-stable-both {
+    scrollbar-gutter: stable both-edges;
+  }
 }
 
 @font-face {
