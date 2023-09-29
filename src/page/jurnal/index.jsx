@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { da, id, tr } from "date-fns/locale";
+import { id } from "date-fns/locale";
 import axios from "axios";
 
 import { cn } from "../../utils/cn";
@@ -19,20 +19,53 @@ import Search from "../../Asset/icons/untitled-ui-icons/line/components/SearchLg
 import CalendarIcon from "../../Asset/icons/untitled-ui-icons/line/components/Calendar";
 import Printer from "../../Asset/icons/untitled-ui-icons/line/components/Printer";
 import Minus from "../../Asset/icons/untitled-ui-icons/line/components/Minus";
+import Refresh from "../../Asset/icons/untitled-ui-icons/line/components/RefreshCw04";
+import ChevronLeft from "../../Asset/icons/untitled-ui-icons/line/components/ChevronLeft";
+import ChevronRight from "../../Asset/icons/untitled-ui-icons/line/components/ChevronRight";
 
 export const Jurnal = () => {
   const [transaksiData, setTransaksiData] = useState();
   const [tanggalAwal, setTanggalAwal] = useState();
   const [tanggalAkhir, setTanggalAkhir] = useState();
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+
+  // console.log(search);
+
+  // console.log(tanggalAwal);
+
+  console.log(transaksiData.length);
 
   const { refetch } = useQuery({
     queryKey: ["transaksi"],
     queryFn: async () => {
-      return await axios.get(`${process.env.REACT_APP_BASE_API}/transaksi`);
+      if (!!tanggalAwal && !!tanggalAkhir && !!search) {
+        let tanggalAkhirModified = new Date(tanggalAkhir);
+        tanggalAkhirModified.setHours(23, 59, 59);
+
+        return await axios.get(
+          `${process.env.REACT_APP_BASE_API}/transaksi?firstDate=${tanggalAwal}&lastDate=${tanggalAkhirModified}&search=${search}&page=${page}`,
+        );
+      } else if (!!tanggalAwal && !!tanggalAkhir) {
+        let tanggalAkhirModified = new Date(tanggalAkhir);
+        tanggalAkhirModified.setHours(23, 59, 59);
+
+        return await axios.get(
+          `${process.env.REACT_APP_BASE_API}/transaksi?firstDate=${tanggalAwal}&lastDate=${tanggalAkhirModified}&page=${page}`,
+        );
+      } else if (!!search) {
+        return await axios.get(
+          `${process.env.REACT_APP_BASE_API}/transaksi?search=${search}&page=${page}`,
+        );
+      } else {
+        return await axios.get(
+          `${process.env.REACT_APP_BASE_API}/transaksi?page=${page}`,
+        );
+      }
     },
     onSuccess: (data) => {
-      // console.log(data.data.data);
       setTransaksiData(data.data.data);
+      // console.log(data.data.data);
     },
   });
 
@@ -44,15 +77,9 @@ export const Jurnal = () => {
   };
   const formatterTime = new Intl.DateTimeFormat("id-ID", optionsTime);
 
-  const optionsCurrency = {
-    style: "currency",
-    currency: "IDR",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  };
-  const formatterCurrency = new Intl.NumberFormat("id-ID", optionsCurrency);
-
-  // console.log(transaksiData);
+  useEffect(() => {
+    refetch();
+  }, [tanggalAwal, tanggalAkhir, search, page]);
 
   return (
     <section className="flex max-w-full overflow-auto font-archivo">
@@ -62,6 +89,14 @@ export const Jurnal = () => {
         </div>
         <div className="flex justify-between gap-4 rounded-lg bg-neutral-100 p-3">
           <div className="flex items-center gap-2">
+            <button
+              onClick={() => {
+                setTanggalAwal();
+                setTanggalAkhir();
+              }}
+              className="flex-shrink-0 rounded-lg bg-amber-300 p-2">
+              <Refresh />
+            </button>
             <div>
               <Popover>
                 <PopoverTrigger asChild>
@@ -85,6 +120,7 @@ export const Jurnal = () => {
                     selected={tanggalAwal}
                     onSelect={setTanggalAwal}
                     initialFocus
+                    disabled={{ after: new Date() }}
                   />
                 </PopoverContent>
               </Popover>
@@ -113,6 +149,7 @@ export const Jurnal = () => {
                     selected={tanggalAkhir}
                     onSelect={setTanggalAkhir}
                     initialFocus
+                    disabled={{ after: new Date() }}
                   />
                 </PopoverContent>
               </Popover>
@@ -121,9 +158,35 @@ export const Jurnal = () => {
               <Printer />
             </button>
           </div>
-          <div>
-            <Input className="w-60" placeholder="Cari" />
+          <div className="relative">
+            <Search className="absolute bottom-0 left-2 top-0 m-auto" />
+            <Input
+              className="w-96 px-8 pr-4"
+              placeholder="Cari"
+              onChange={(event) => {
+                setSearch(event.target.value);
+              }}
+            />
           </div>
+        </div>
+        <div className="flex w-full items-center justify-end gap-4 text-xs">
+          <button
+            onClick={() => {
+              setPage(page - 1);
+            }}
+            className="rounded-lg bg-amber-300 p-2 disabled:bg-amber-200"
+            disabled={page <= 1}>
+            <ChevronLeft />
+          </button>
+          <div className="w-4 text-center">{page}</div>
+          <button
+            onClick={() => {
+              setPage(page + 1);
+            }}
+            className="rounded-lg bg-amber-300 p-2 disabled:bg-amber-200"
+            disabled={transaksiData.length < 8}>
+            <ChevronRight />
+          </button>
         </div>
         <div>
           <table className="w-full table-auto border-collapse rounded-lg border-2 text-sm">
@@ -140,54 +203,91 @@ export const Jurnal = () => {
               </tr>
             </thead>
             <tbody>
-              {!!transaksiData && (
+              {!!transaksiData &&
                 transaksiData.map((item, index) => {
+                  const { id } = item;
+
                   return (
-                   <>
-                     <tr key={index}>
-                      <td rowSpan={
-                            item.namaAkunTransaksiDalamJenisTransaksi.nama === "Pendapatan DP" ? 4 : 2
+                    <Fragment key={id}>
+                      <tr>
+                        <td
+                          rowSpan={
+                            item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                            "Pendapatan DP"
+                              ? 4
+                              : 2
                           }
                           className="border border-black px-4 py-1 text-left">
-                        {formatterTime.format(new Date(item.tanggal))}</td>
-                      <td rowSpan={
-                            item.namaAkunTransaksiDalamJenisTransaksi.nama === "Pendapatan DP" ? 4 : 2
+                          {formatterTime.format(new Date(item.tanggal))}
+                        </td>
+                        <td
+                          rowSpan={
+                            item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                            "Pendapatan DP"
+                              ? 4
+                              : 2
                           }
                           className="border border-black px-4 py-1 text-left">
-                        {item.jenis_transaksi.nama}</td>
-                      <td rowSpan={
-                            item.namaAkunTransaksiDalamJenisTransaksi.nama === "Pendapatan DP" ? 4 : 2
-                          } 
+                          {item.jenis_transaksi.nama}
+                        </td>
+                        <td
+                          rowSpan={
+                            item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                            "Pendapatan DP"
+                              ? 4
+                              : 2
+                          }
                           className="border border-black px-4 py-1 text-left">
-                        {item.namaAkunTransaksiDalamJenisTransaksi.nama}</td>
-                      <td rowSpan={
-                            item.namaAkunTransaksiDalamJenisTransaksi.nama === "Pendapatan DP" ? 4 : 2
-                          }  
+                          {item.namaAkunTransaksiDalamJenisTransaksi.nama}
+                        </td>
+                        <td
+                          rowSpan={
+                            item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                            "Pendapatan DP"
+                              ? 4
+                              : 2
+                          }
                           className="border border-black px-4 py-1 text-left">
-                        {item.keterangan}</td>
-                      <td rowSpan={2}
+                          {item.keterangan}
+                        </td>
+                        <td
+                          rowSpan={2}
                           className="border border-black px-4 py-1 text-right">
-                        {item.jumlah}</td>
-                      <td
-                          rowSpan={1}
-                          className="border border-black px-4 py-1 text-right align-top">
-                          {item?.namaAkunTransaksiDalamJenisTransaksi?.akunTransaksi[0]?.namaAkunTransaksi?.nama}
-                          {console.log(item?.namaAkunTransaksiDalamJenisTransaksi?.akunTransaksi[0]?.namaAkunTransaksi?.nama)}
+                          {convertIDRCurrency(item.jumlah)}
                         </td>
-                      <td
+                        <td
                           rowSpan={1}
-                          className="border border-black px-4 py-1 text-right align-top">
-                          {item?.namaAkunTransaksiDalamJenisTransaksi?.akunTransaksi[0]?.namaAkunTransaksi?.nama !== undefined ? item.jumlah : ""}
+                          className="border border-black px-4 py-1 align-top">
+                          {
+                            item?.namaAkunTransaksiDalamJenisTransaksi
+                              ?.akunTransaksi[0]?.namaAkunTransaksi?.nama
+                          }
+                          {/* {console.log(
+                            item?.namaAkunTransaksiDalamJenisTransaksi
+                              ?.akunTransaksi[0]?.namaAkunTransaksi?.nama,
+                          )} */}
                         </td>
-                      <td
-                        rowSpan={1}
-                        className="border border-black px-4 py-1 text-left align-bottom"></td>
-                    </tr>
-                    <tr>
                         <td
                           rowSpan={1}
                           className="border border-black px-4 py-1 text-right align-top">
-                          {item.namaAkunTransaksiDalamJenisTransaksi?.akunTransaksi[1]?.namaAkunTransaksi?.nama}
+                          {item?.namaAkunTransaksiDalamJenisTransaksi
+                            ?.akunTransaksi[0]?.namaAkunTransaksi?.nama !==
+                          undefined
+                            ? convertIDRCurrency(item.jumlah)
+                            : ""}
+                        </td>
+                        <td
+                          rowSpan={1}
+                          className="border border-black px-4 py-1 text-left align-bottom"></td>
+                      </tr>
+                      <tr>
+                        <td
+                          rowSpan={1}
+                          className="border border-black px-4 py-1 align-top">
+                          {
+                            item.namaAkunTransaksiDalamJenisTransaksi
+                              ?.akunTransaksi[1]?.namaAkunTransaksi?.nama
+                          }
                         </td>
                         <td
                           rowSpan={1}
@@ -195,40 +295,50 @@ export const Jurnal = () => {
                         <td
                           rowSpan={1}
                           className="border border-black px-4 py-1 text-right align-top">
-                          {item?.namaAkunTransaksiDalamJenisTransaksi?.akunTransaksi[0]?.namaAkunTransaksi?.nama !== undefined ? item.jumlah : ""}
+                          {item?.namaAkunTransaksiDalamJenisTransaksi
+                            ?.akunTransaksi[0]?.namaAkunTransaksi?.nama !==
+                          undefined
+                            ? convertIDRCurrency(item.jumlah)
+                            : ""}
                         </td>
-                    </tr>
-                    {item.namaAkunTransaksiDalamJenisTransaksi.nama === "Pendapatan DP" && (
+                      </tr>
+                      {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                        "Pendapatan DP" && (
                         <>
                           <tr>
                             <td
                               rowSpan={2}
                               className="border border-black px-4 py-1 text-right align-middle">
-                              {item.jumlah}
+                              {convertIDRCurrency(item.jumlah)}
                             </td>
                             <td className="border border-black px-4 py-1 align-top">
-                              {item.namaAkunTransaksiDalamJenisTransaksi?.akunTransaksi[2]?.namaAkunTransaksi?.nama}
+                              {
+                                item.namaAkunTransaksiDalamJenisTransaksi
+                                  ?.akunTransaksi[2]?.namaAkunTransaksi?.nama
+                              }
                             </td>
                             <td className="border border-black px-4 py-1 text-right align-top">
-                              {item.jumlah}
+                              {convertIDRCurrency(item.jumlah)}
                             </td>
                             <td className="border border-black px-4 py-1 text-right align-top"></td>
                           </tr>
                           <tr>
                             <td className="border border-black px-4 py-1 align-top">
-                              {item.namaAkunTransaksiDalamJenisTransaksi?.akunTransaksi[3]?.namaAkunTransaksi?.nama}
+                              {
+                                item.namaAkunTransaksiDalamJenisTransaksi
+                                  ?.akunTransaksi[3]?.namaAkunTransaksi?.nama
+                              }
                             </td>
                             <td className="border border-black px-4 py-1 text-right align-top"></td>
                             <td className="border border-black px-4 py-1 text-right align-top">
-                              {item.jumlah}
+                              {convertIDRCurrency(item.jumlah)}
                             </td>
                           </tr>
                         </>
                       )}
-                   </>
-                  )
-                })
-              )}
+                    </Fragment>
+                  );
+                })}
               {/* {!!transaksiData &&
                 transaksiData.map((item, index) => {
                   console.log(item);
@@ -369,3 +479,15 @@ export const Jurnal = () => {
     </section>
   );
 };
+
+function convertIDRCurrency(value) {
+  const optionsCurrency = {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  };
+  const formatterCurrency = new Intl.NumberFormat("id-ID", optionsCurrency);
+  const convertValue = formatterCurrency.format(value);
+  return convertValue;
+}

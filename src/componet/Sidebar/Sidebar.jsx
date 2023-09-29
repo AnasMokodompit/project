@@ -83,7 +83,7 @@ function Sidebar({ nameSdiber }) {
     hendleAccesRoleUser();
   }, []);
 
-  console.log(id);
+  // console.log(id);
 
   if (id === 1) {
     return (
