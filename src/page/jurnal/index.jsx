@@ -146,22 +146,22 @@ export const Jurnal = () => {
                    <>
                      <tr key={index}>
                       <td rowSpan={
-                            item.jenis_transaksi.nama === "Pendapatan DP" ? 4 : 2
+                            item.namaAkunTransaksiDalamJenisTransaksi.nama === "Pendapatan DP" ? 4 : 2
                           }
                           className="border border-black px-4 py-1 text-left">
                         {formatterTime.format(new Date(item.tanggal))}</td>
                       <td rowSpan={
-                            item.jenis_transaksi.nama === "Pendapatan DP" ? 4 : 2
+                            item.namaAkunTransaksiDalamJenisTransaksi.nama === "Pendapatan DP" ? 4 : 2
                           }
                           className="border border-black px-4 py-1 text-left">
                         {item.jenis_transaksi.nama}</td>
                       <td rowSpan={
-                            item.jenis_transaksi.nama === "Pendapatan DP" ? 4 : 2
+                            item.namaAkunTransaksiDalamJenisTransaksi.nama === "Pendapatan DP" ? 4 : 2
                           } 
                           className="border border-black px-4 py-1 text-left">
                         {item.namaAkunTransaksiDalamJenisTransaksi.nama}</td>
                       <td rowSpan={
-                            item.jenis_transaksi.nama === "Pendapatan DP" ? 4 : 2
+                            item.namaAkunTransaksiDalamJenisTransaksi.nama === "Pendapatan DP" ? 4 : 2
                           }  
                           className="border border-black px-4 py-1 text-left">
                         {item.keterangan}</td>
@@ -171,12 +171,13 @@ export const Jurnal = () => {
                       <td
                           rowSpan={1}
                           className="border border-black px-4 py-1 text-right align-top">
-                          {item?.namaAkunTransaksiDalamJenisTransaksi?.akunTransaksi?.namaAkunTransaksi == undefined ? "" : item?.namaAkunTransaksiDalamJenisTransaksi?.akunTransaksi[0]?.namaAkunTransaksi?.nama}
+                          {item?.namaAkunTransaksiDalamJenisTransaksi?.akunTransaksi[0]?.namaAkunTransaksi?.nama}
+                          {console.log(item?.namaAkunTransaksiDalamJenisTransaksi?.akunTransaksi[0]?.namaAkunTransaksi?.nama)}
                         </td>
                       <td
                           rowSpan={1}
                           className="border border-black px-4 py-1 text-right align-top">
-                          {item.jumlah}
+                          {item?.namaAkunTransaksiDalamJenisTransaksi?.akunTransaksi[0]?.namaAkunTransaksi?.nama !== undefined ? item.jumlah : ""}
                         </td>
                       <td
                         rowSpan={1}
@@ -186,7 +187,7 @@ export const Jurnal = () => {
                         <td
                           rowSpan={1}
                           className="border border-black px-4 py-1 text-right align-top">
-                          {item?.namaAkunTransaksiDalamJenisTransaksi?.akunTransaks?.namaAkunTransaksi == undefined ? "" : item.namaAkunTransaksiDalamJenisTransaksi?.akunTransaksi[1]?.namaAkunTransaksi?.nama}
+                          {item.namaAkunTransaksiDalamJenisTransaksi?.akunTransaksi[1]?.namaAkunTransaksi?.nama}
                         </td>
                         <td
                           rowSpan={1}
@@ -194,9 +195,36 @@ export const Jurnal = () => {
                         <td
                           rowSpan={1}
                           className="border border-black px-4 py-1 text-right align-top">
-                          {item.jumlah}
+                          {item?.namaAkunTransaksiDalamJenisTransaksi?.akunTransaksi[0]?.namaAkunTransaksi?.nama !== undefined ? item.jumlah : ""}
                         </td>
                     </tr>
+                    {item.namaAkunTransaksiDalamJenisTransaksi.nama === "Pendapatan DP" && (
+                        <>
+                          <tr>
+                            <td
+                              rowSpan={2}
+                              className="border border-black px-4 py-1 text-right align-middle">
+                              {item.jumlah}
+                            </td>
+                            <td className="border border-black px-4 py-1 align-top">
+                              {item.namaAkunTransaksiDalamJenisTransaksi?.akunTransaksi[2]?.namaAkunTransaksi?.nama}
+                            </td>
+                            <td className="border border-black px-4 py-1 text-right align-top">
+                              {item.jumlah}
+                            </td>
+                            <td className="border border-black px-4 py-1 text-right align-top"></td>
+                          </tr>
+                          <tr>
+                            <td className="border border-black px-4 py-1 align-top">
+                              {item.namaAkunTransaksiDalamJenisTransaksi?.akunTransaksi[3]?.namaAkunTransaksi?.nama}
+                            </td>
+                            <td className="border border-black px-4 py-1 text-right align-top"></td>
+                            <td className="border border-black px-4 py-1 text-right align-top">
+                              {item.jumlah}
+                            </td>
+                          </tr>
+                        </>
+                      )}
                    </>
                   )
                 })
