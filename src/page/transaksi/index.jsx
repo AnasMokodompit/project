@@ -46,7 +46,7 @@ export const Transaksi = () => {
   const form = useForm({
     defaultValues: {
       id_jenis_transaksi: "",
-      id_nama_akun_transaksi: "",
+      id_nama_akun_jenis_transaksi: "",
       keterangan: "",
       jumlah: "",
     },
@@ -83,14 +83,16 @@ export const Transaksi = () => {
       );
     },
     onSuccess: (data) => {
-      // console.log(data.data.data);
+      console.log(data.data.data);
 
       const test = data?.data?.data?.nama_akun_transaksi_dalam_jenis_transaksi;
 
       const extractedData = test.map((item) => {
-        const { id, nama } = item.nama_akun_transaksi;
+        console.log(item)
+        const { id, nama } = item;
         return { id, nama };
       });
+      
 
       setNamaAkunTransaksiData(extractedData);
     },
@@ -99,6 +101,7 @@ export const Transaksi = () => {
 
   const { mutate } = useMutation({
     mutationFn: (data) => {
+      // return console.log(data)
       return axios.post(`${process.env.REACT_APP_BASE_API}/transaksi`, data);
     },
     onSuccess: (data) => {
@@ -200,7 +203,7 @@ export const Transaksi = () => {
                                         },
                                       );
                                       form.setValue(
-                                        "id_nama_akun_transaksi",
+                                        "id_nama_akun_jenis_transaksi",
                                         null,
                                       );
                                       setIdJenisTransaksi(data.id);
@@ -227,7 +230,7 @@ export const Transaksi = () => {
               />
               <FormField
                 control={form.control}
-                name="id_nama_akun_transaksi"
+                name="id_nama_akun_jenis_transaksi"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
                     <FormLabel>Akun</FormLabel>
@@ -263,7 +266,7 @@ export const Transaksi = () => {
                                     value={data.id}
                                     onSelect={(value) => {
                                       form.setValue(
-                                        "id_nama_akun_transaksi",
+                                        "id_nama_akun_jenis_transaksi",
                                         data.id,
                                         {
                                           shouldValidate: true,

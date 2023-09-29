@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { id } from "date-fns/locale";
+import { da, id, tr } from "date-fns/locale";
 import axios from "axios";
 
 import { cn } from "../../utils/cn";
@@ -140,7 +140,68 @@ export const Jurnal = () => {
               </tr>
             </thead>
             <tbody>
-              {!!transaksiData &&
+              {!!transaksiData && (
+                transaksiData.map((item, index) => {
+                  return (
+                   <>
+                     <tr key={index}>
+                      <td rowSpan={
+                            item.jenis_transaksi.nama === "Pendapatan DP" ? 4 : 2
+                          }
+                          className="border border-black px-4 py-1 text-left">
+                        {formatterTime.format(new Date(item.tanggal))}</td>
+                      <td rowSpan={
+                            item.jenis_transaksi.nama === "Pendapatan DP" ? 4 : 2
+                          }
+                          className="border border-black px-4 py-1 text-left">
+                        {item.jenis_transaksi.nama}</td>
+                      <td rowSpan={
+                            item.jenis_transaksi.nama === "Pendapatan DP" ? 4 : 2
+                          } 
+                          className="border border-black px-4 py-1 text-left">
+                        {item.namaAkunTransaksiDalamJenisTransaksi.nama}</td>
+                      <td rowSpan={
+                            item.jenis_transaksi.nama === "Pendapatan DP" ? 4 : 2
+                          }  
+                          className="border border-black px-4 py-1 text-left">
+                        {item.keterangan}</td>
+                      <td rowSpan={2}
+                          className="border border-black px-4 py-1 text-right">
+                        {item.jumlah}</td>
+                      <td
+                          rowSpan={1}
+                          className="border border-black px-4 py-1 text-right align-top">
+                          {item?.namaAkunTransaksiDalamJenisTransaksi?.akunTransaksi?.namaAkunTransaksi == undefined ? "" : item?.namaAkunTransaksiDalamJenisTransaksi?.akunTransaksi[0]?.namaAkunTransaksi?.nama}
+                        </td>
+                      <td
+                          rowSpan={1}
+                          className="border border-black px-4 py-1 text-right align-top">
+                          {item.jumlah}
+                        </td>
+                      <td
+                        rowSpan={1}
+                        className="border border-black px-4 py-1 text-left align-bottom"></td>
+                    </tr>
+                    <tr>
+                        <td
+                          rowSpan={1}
+                          className="border border-black px-4 py-1 text-right align-top">
+                          {item?.namaAkunTransaksiDalamJenisTransaksi?.akunTransaks?.namaAkunTransaksi == undefined ? "" : item.namaAkunTransaksiDalamJenisTransaksi?.akunTransaksi[1]?.namaAkunTransaksi?.nama}
+                        </td>
+                        <td
+                          rowSpan={1}
+                          className="border border-black px-4 py-1 text-left"></td>
+                        <td
+                          rowSpan={1}
+                          className="border border-black px-4 py-1 text-right align-top">
+                          {item.jumlah}
+                        </td>
+                    </tr>
+                   </>
+                  )
+                })
+              )}
+              {/* {!!transaksiData &&
                 transaksiData.map((item, index) => {
                   console.log(item);
                   const {
@@ -272,7 +333,7 @@ export const Jurnal = () => {
                       )}
                     </React.Fragment>
                   );
-                })}
+                })} */}
             </tbody>
           </table>
         </div>
