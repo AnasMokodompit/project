@@ -14,6 +14,8 @@ import { Transaksi } from "./page/transaksi";
 import { Jurnal } from "./page/jurnal";
 import { JenisTransaksi } from "./page/jenis-transaksi";
 import { Akun } from "./page/akun";
+import { PosisiKeuangan } from "./page/posisi-keuangan";
+import { LabaRugi } from "./page/laba-rugi";
 
 // Layouts
 import { LayoutSidebar } from "./layouts";
@@ -36,6 +38,8 @@ function App() {
           <Route path="/transaksi" element={<Transaksi />} />
           <Route path="/order/custom" element={<PesananCustom />} />
           <Route path="/bahan-baku" element={<PersediaanBahanBaku />} />
+          <Route path="/posisi-keuangan" element={<PosisiKeuangan />} />
+          <Route path="/laba-rugi" element={<LabaRugi />} />
         </Route>
       </Routes>
     </BrowserRouter>

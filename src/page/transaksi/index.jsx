@@ -31,6 +31,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../../componet/popover";
+import { ScrollArea } from "../../componet/scroll-area";
 import { Textarea } from "../../componet/textarea";
 
 import Check from "../../Asset/icons/untitled-ui-icons/line/components/Check";
@@ -152,7 +153,7 @@ export const Transaksi = () => {
     <div className="flex font-archivo">
       <div className="flex w-full flex-col gap-8 font-archivo">
         <div>
-          <p className="text-2xl font-bold">Transaksi</p>
+          <h1 className="text-2xl font-bold">Transaksi</h1>
         </div>
         <div className="flex flex-col gap-4">
           <Form {...form}>
@@ -168,8 +169,7 @@ export const Transaksi = () => {
                         <Button
                           variant="outline"
                           role="combobox"
-                          // aria-expanded={open}
-                          className="w-6/12 justify-between px-3 py-4">
+                          className="w-full justify-between px-3 py-4">
                           {field.value
                             ? jenisTransaksiData.find(
                                 (data) => data.id === field.value,
@@ -178,43 +178,45 @@ export const Transaksi = () => {
                           <ChevronSelectorVertical className="ml-2 h-4 w-4 shrink-0 text-right opacity-50" />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-[200px] p-0">
+                      <PopoverContent align="start" className="p-0">
                         <Command>
                           <CommandInput placeholder="Cari Jenis Transaksi..." />
                           <CommandEmpty>
                             Jenis Transaksi tidak tersedia.
                           </CommandEmpty>
                           <CommandGroup>
-                            {!!jenisTransaksiData &&
-                              jenisTransaksiData.map((data) => (
-                                <CommandItem
-                                  key={data.id}
-                                  value={data.id}
-                                  onSelect={(value) => {
-                                    form.setValue(
-                                      "id_jenis_transaksi",
-                                      data.id,
-                                      {
-                                        shouldValidate: true,
-                                      },
-                                    );
-                                    form.setValue(
-                                      "id_nama_akun_transaksi",
-                                      null,
-                                    );
-                                    setIdJenisTransaksi(data.id);
-                                  }}>
-                                  <Check
-                                    className={cn(
-                                      "mr-2 h-4 w-4",
-                                      data.id === field.value
-                                        ? "opacity-100"
-                                        : "opacity-0",
-                                    )}
-                                  />
-                                  {data.nama}
-                                </CommandItem>
-                              ))}
+                            <ScrollArea className="h-48">
+                              {!!jenisTransaksiData &&
+                                jenisTransaksiData.map((data) => (
+                                  <CommandItem
+                                    key={data.id}
+                                    value={data.id}
+                                    onSelect={(value) => {
+                                      form.setValue(
+                                        "id_jenis_transaksi",
+                                        data.id,
+                                        {
+                                          shouldValidate: true,
+                                        },
+                                      );
+                                      form.setValue(
+                                        "id_nama_akun_transaksi",
+                                        null,
+                                      );
+                                      setIdJenisTransaksi(data.id);
+                                    }}>
+                                    <Check
+                                      className={cn(
+                                        "mr-2 h-4 w-4",
+                                        data.id === field.value
+                                          ? "opacity-100"
+                                          : "opacity-0",
+                                      )}
+                                    />
+                                    {data.nama}
+                                  </CommandItem>
+                                ))}
+                            </ScrollArea>
                           </CommandGroup>
                         </Command>
                       </PopoverContent>
@@ -236,7 +238,7 @@ export const Transaksi = () => {
                           variant="outline"
                           role="combobox"
                           // aria-expanded={open}
-                          className="w-6/12 justify-between px-3 py-4">
+                          className="w-full justify-between px-3 py-4">
                           {field.value
                             ? namaAkunTransaksiData.find(
                                 (data) => data.id === field.value,
@@ -245,39 +247,41 @@ export const Transaksi = () => {
                           <ChevronSelectorVertical className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-[200px] p-0">
+                      <PopoverContent align="start" className="p-0">
                         <Command>
                           <CommandInput placeholder="Cari Akun..." />
                           <CommandEmpty>
                             Akun Transaksi tidak tersedia.
                           </CommandEmpty>
                           <CommandGroup>
-                            {!!namaAkunTransaksiData &&
-                              namaAkunTransaksiData.map((data) => (
-                                <CommandItem
-                                  // className="bg-red-500 text-black"
-                                  key={data.id}
-                                  value={data.id}
-                                  onSelect={(value) => {
-                                    form.setValue(
-                                      "id_nama_akun_transaksi",
-                                      data.id,
-                                      {
-                                        shouldValidate: true,
-                                      },
-                                    );
-                                  }}>
-                                  <Check
-                                    className={cn(
-                                      "mr-2 h-4 w-4",
-                                      data.id === field.value
-                                        ? "opacity-100"
-                                        : "opacity-0",
-                                    )}
-                                  />
-                                  {data.nama}
-                                </CommandItem>
-                              ))}
+                            <ScrollArea className="h-48">
+                              {!!namaAkunTransaksiData &&
+                                namaAkunTransaksiData.map((data) => (
+                                  <CommandItem
+                                    className="min-w-max"
+                                    key={data.id}
+                                    value={data.id}
+                                    onSelect={(value) => {
+                                      form.setValue(
+                                        "id_nama_akun_transaksi",
+                                        data.id,
+                                        {
+                                          shouldValidate: true,
+                                        },
+                                      );
+                                    }}>
+                                    <Check
+                                      className={cn(
+                                        "mr-2 h-4 w-4",
+                                        data.id === field.value
+                                          ? "opacity-100"
+                                          : "opacity-0",
+                                      )}
+                                    />
+                                    {data.nama}
+                                  </CommandItem>
+                                ))}
+                            </ScrollArea>
                           </CommandGroup>
                         </Command>
                       </PopoverContent>
@@ -293,7 +297,7 @@ export const Transaksi = () => {
                   <FormItem>
                     <FormLabel>Keterangan</FormLabel>
                     <FormControl>
-                      <Textarea className="w-6/12" {...field} />
+                      <Textarea className="min-h-[5rem] w-full" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -308,7 +312,7 @@ export const Transaksi = () => {
                     <FormControl>
                       <div className="relative">
                         <Input
-                          className="w-6/12 px-3 py-4 text-right"
+                          className="z-20 w-full px-3 py-4 text-right"
                           {...field}
                           // value={jumlahValue}
                           // onChange={(event) => {
@@ -320,16 +324,18 @@ export const Transaksi = () => {
                           // }}
                           onKeyDown={restrictAlphabet}
                         />
-                        <p className="absolute left-4 top-0 translate-y-1/2">
-                          Rp.
-                        </p>
+                        <div className="absolute left-4 top-1/2 m-auto flex -translate-y-1/2 items-center">
+                          <p className="text-sm">Rp.</p>
+                        </div>
                       </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button className="bg-amber-300" type="submit">
+              <Button
+                className="w-full bg-amber-300 p-4 text-lg font-bold"
+                type="submit">
                 Simpan
               </Button>
             </form>
