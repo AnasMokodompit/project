@@ -63,7 +63,7 @@ export const Jurnal = () => {
                   const {
                     id,
                     jenis_transaksi: { nama: jenisTransaksi },
-                    nama_akun_transaksi: { nama: namaAkunTransaksi },
+                    namaAkunTransaksiDalamJenisTransaksi: { nama: namaAkunTransaksi },
                     keterangan,
                     jumlah,
                     tanggal,
