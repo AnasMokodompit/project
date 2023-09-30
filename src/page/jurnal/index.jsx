@@ -34,7 +34,7 @@ export const Jurnal = () => {
 
   // console.log(tanggalAwal);
 
-  console.log(transaksiData.length);
+  console.log(transaksiData?.length);
 
   const { refetch } = useQuery({
     queryKey: ["transaksi"],
@@ -184,7 +184,7 @@ export const Jurnal = () => {
               setPage(page + 1);
             }}
             className="rounded-lg bg-amber-300 p-2 disabled:bg-amber-200"
-            disabled={transaksiData.length < 8}>
+            disabled={transaksiData?.length < 8}>
             <ChevronRight />
           </button>
         </div>
@@ -253,7 +253,7 @@ export const Jurnal = () => {
                         <td
                           rowSpan={2}
                           className="border border-black px-4 py-1 text-right">
-                          {convertIDRCurrency(item.jumlah)}
+                          {item.namaAkunTransaksiDalamJenisTransaksi.nama === "Pendapatan DP"  ? convertIDRCurrency(item.jumlah / 0.3) : convertIDRCurrency(item.jumlah)}
                         </td>
                         <td
                           rowSpan={1}
@@ -270,9 +270,11 @@ export const Jurnal = () => {
                         <td
                           rowSpan={1}
                           className="border border-black px-4 py-1 text-right align-top">
+                            {item.namaAkunTransaksiDalamJenisTransaksi.nama === "Pendapatan DP"  ? convertIDRCurrency(item.jumlah / 0.3) : ""}
                           {item?.namaAkunTransaksiDalamJenisTransaksi
                             ?.akunTransaksi[0]?.namaAkunTransaksi?.nama !==
-                          undefined
+                          undefined && item.namaAkunTransaksiDalamJenisTransaksi.nama !==
+                          "Pendapatan DP"
                             ? convertIDRCurrency(item.jumlah)
                             : ""}
                         </td>
@@ -295,9 +297,11 @@ export const Jurnal = () => {
                         <td
                           rowSpan={1}
                           className="border border-black px-4 py-1 text-right align-top">
+                          {item.namaAkunTransaksiDalamJenisTransaksi.nama === "Pendapatan DP"  ? convertIDRCurrency(item.jumlah / 0.3) : ""}
                           {item?.namaAkunTransaksiDalamJenisTransaksi
                             ?.akunTransaksi[0]?.namaAkunTransaksi?.nama !==
-                          undefined
+                          undefined && item.namaAkunTransaksiDalamJenisTransaksi.nama !==
+                          "Pendapatan DP"
                             ? convertIDRCurrency(item.jumlah)
                             : ""}
                         </td>
@@ -318,7 +322,7 @@ export const Jurnal = () => {
                               }
                             </td>
                             <td className="border border-black px-4 py-1 text-right align-top">
-                              {convertIDRCurrency(item.jumlah)}
+                              {convertIDRCurrency(item.jumlah )}
                             </td>
                             <td className="border border-black px-4 py-1 text-right align-top"></td>
                           </tr>

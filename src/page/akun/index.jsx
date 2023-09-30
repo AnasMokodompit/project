@@ -187,6 +187,7 @@ export const Akun = () => {
           <tbody>
             {!!namaAkunTransaksiData &&
               namaAkunTransaksiData.map((item, index) => {
+                console.log(item)
                 const {
                   id,
                   kode,
@@ -203,10 +204,10 @@ export const Akun = () => {
                     <td className="w-0 p-2">{kode}</td>
                     <td className="p-2">{nama}</td>
                     <td className="p-2">
-                      <div className="flex">
+                      {/* <div className="flex">
                         {namaAkunTransaksiDalamJenisTransaksi.length !== 0
                           ? namaAkunTransaksiDalamJenisTransaksi.map(
-                              (item, index) => {
+                            (item, index) => {
                                 const {
                                   id,
                                   jenis_akun_transaksi: { nama },
@@ -221,7 +222,7 @@ export const Akun = () => {
                               },
                             )
                           : "-"}
-                      </div>
+                      </div> */}
                     </td>
                     <td className="p-2 text-center">
                       <div className="flex items-center justify-end gap-4">

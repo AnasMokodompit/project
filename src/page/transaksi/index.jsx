@@ -101,7 +101,12 @@ export const Transaksi = () => {
 
   const { mutate } = useMutation({
     mutationFn: (data) => {
+      if (data.id_nama_akun_jenis_transaksi == 2) {
+        data.jumlah = 0.3 * data.jumlah
+      }
+
       // return console.log(data)
+
       return axios.post(`${process.env.REACT_APP_BASE_API}/transaksi`, data);
     },
     onSuccess: (data) => {

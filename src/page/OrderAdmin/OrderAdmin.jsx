@@ -148,7 +148,7 @@ function OrderAdmin() {
     if (statusTransaksi == true && isPembayaranDP == false) {
       setIsPembayaranLunas(true);
       data.id_nama_akun_transaksi = 18;
-      data.jumlah = jumlah;
+      data.jumlah = 0.3 * jumlah;
     } else if (statusTransaksi == true && isPembayaranDP == true) {
       setIsPembayaranLunas(true);
       data.id_nama_akun_transaksi = 18;
