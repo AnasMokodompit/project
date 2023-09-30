@@ -16,6 +16,8 @@ import { JenisTransaksi } from "./page/jenis-transaksi";
 import { Akun } from "./page/akun";
 import { PosisiKeuangan } from "./page/posisi-keuangan";
 import { LabaRugi } from "./page/laba-rugi";
+import { SaldoAwal } from "./page/saldo-awal";
+import { RekapJurnal } from "./page/rekap-jurnal";
 
 // Layouts
 import { LayoutSidebar } from "./layouts";
@@ -40,6 +42,8 @@ function App() {
           <Route path="/bahan-baku" element={<PersediaanBahanBaku />} />
           <Route path="/posisi-keuangan" element={<PosisiKeuangan />} />
           <Route path="/laba-rugi" element={<LabaRugi />} />
+          <Route path="/saldo-awal" element={<SaldoAwal />} />
+          <Route path="/rekap-jurnal" element={<RekapJurnal />} />
         </Route>
       </Routes>
     </BrowserRouter>

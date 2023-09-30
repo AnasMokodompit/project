@@ -1,4 +1,11 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  forwardRef,
+  Fragment,
+} from "react";
+import { useReactToPrint } from "react-to-print";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { id } from "date-fns/locale";
@@ -25,16 +32,19 @@ import ChevronRight from "../../Asset/icons/untitled-ui-icons/line/components/Ch
 
 export const Jurnal = () => {
   const [transaksiData, setTransaksiData] = useState();
+  const [tanggalBasedData, setTanggalBasedData] = useState();
   const [tanggalAwal, setTanggalAwal] = useState();
   const [tanggalAkhir, setTanggalAkhir] = useState();
+  const [daftarTanggal, setDaftarTanggal] = useState([]);
+  const [oldestTanggal, setOldestTanggal] = useState();
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-
-  // console.log(search);
-
-  // console.log(tanggalAwal);
-
-  console.log(transaksiData?.length);
+  const refJurnal = useRef();
+  const handlePrintJurnal = useReactToPrint({
+    content: () => refJurnal.current,
+    documentTitle: `Jurnal`,
+    bodyClass: "bg-white",
+  });
 
   const { refetch } = useQuery({
     queryKey: ["transaksi"],
@@ -44,28 +54,38 @@ export const Jurnal = () => {
         tanggalAkhirModified.setHours(23, 59, 59);
 
         return await axios.get(
-          `${process.env.REACT_APP_BASE_API}/transaksi?firstDate=${tanggalAwal}&lastDate=${tanggalAkhirModified}&search=${search}&page=${page}`,
+          `${process.env.REACT_APP_BASE_API}/transaksi?firstDate=${tanggalAwal}&lastDate=${tanggalAkhirModified}&search=${search}&page=${page}&row=8`,
         );
       } else if (!!tanggalAwal && !!tanggalAkhir) {
         let tanggalAkhirModified = new Date(tanggalAkhir);
         tanggalAkhirModified.setHours(23, 59, 59);
 
         return await axios.get(
-          `${process.env.REACT_APP_BASE_API}/transaksi?firstDate=${tanggalAwal}&lastDate=${tanggalAkhirModified}&page=${page}`,
+          `${process.env.REACT_APP_BASE_API}/transaksi?firstDate=${tanggalAwal}&lastDate=${tanggalAkhirModified}&page=${page}&row=8`,
         );
       } else if (!!search) {
         return await axios.get(
-          `${process.env.REACT_APP_BASE_API}/transaksi?search=${search}&page=${page}`,
+          `${process.env.REACT_APP_BASE_API}/transaksi?search=${search}&page=${page}&row=8`,
         );
       } else {
         return await axios.get(
-          `${process.env.REACT_APP_BASE_API}/transaksi?page=${page}`,
+          `${process.env.REACT_APP_BASE_API}/transaksi?page=${page}&row=8`,
         );
       }
     },
     onSuccess: (data) => {
       setTransaksiData(data.data.data);
       // console.log(data.data.data);
+    },
+  });
+
+  const { refetch: refetchTanggal } = useQuery({
+    queryKey: ["based-tanggal"],
+    queryFn: async () => {
+      return await axios.get(`${process.env.REACT_APP_BASE_API}/transaksi`);
+    },
+    onSuccess: (data) => {
+      setTanggalBasedData(data.data.data);
     },
   });
 
@@ -80,6 +100,29 @@ export const Jurnal = () => {
   useEffect(() => {
     refetch();
   }, [tanggalAwal, tanggalAkhir, search, page]);
+
+  useEffect(() => {
+    refetchTanggal();
+    let extractedTanggalArray;
+    if (!!tanggalBasedData) {
+      extractedTanggalArray = tanggalBasedData.map(
+        (transaction) => transaction.tanggal,
+      );
+      setDaftarTanggal(extractedTanggalArray);
+
+      const parsedDates = extractedTanggalArray.map(
+        (dateString) => new Date(dateString),
+      );
+
+      const minDate = new Date(Math.min.apply(null, parsedDates));
+
+      let oldestTanggalModified = new Date(minDate);
+
+      oldestTanggalModified.setHours(0, 0, 0, 0);
+
+      setOldestTanggal(oldestTanggalModified);
+    }
+  }, [transaksiData]);
 
   return (
     <section className="flex max-w-full overflow-auto font-archivo">
@@ -120,7 +163,7 @@ export const Jurnal = () => {
                     selected={tanggalAwal}
                     onSelect={setTanggalAwal}
                     initialFocus
-                    disabled={{ after: new Date() }}
+                    disabled={{ after: new Date(), before: oldestTanggal }}
                   />
                 </PopoverContent>
               </Popover>
@@ -149,12 +192,14 @@ export const Jurnal = () => {
                     selected={tanggalAkhir}
                     onSelect={setTanggalAkhir}
                     initialFocus
-                    disabled={{ after: new Date() }}
+                    disabled={{ after: new Date(), before: oldestTanggal }}
                   />
                 </PopoverContent>
               </Popover>
             </div>
-            <button className="flex-shrink-0 rounded-lg bg-amber-300 p-2">
+            <button
+              onClick={handlePrintJurnal}
+              className="flex-shrink-0 rounded-lg bg-amber-300 p-2">
               <Printer />
             </button>
           </div>
@@ -253,7 +298,10 @@ export const Jurnal = () => {
                         <td
                           rowSpan={2}
                           className="border border-black px-4 py-1 text-right">
-                          {item.namaAkunTransaksiDalamJenisTransaksi.nama === "Pendapatan DP"  ? convertIDRCurrency(item.jumlah / 0.3) : convertIDRCurrency(item.jumlah)}
+                          {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                          "Pendapatan DP"
+                            ? convertIDRCurrency(item.jumlah / 0.3)
+                            : convertIDRCurrency(item.jumlah)}
                         </td>
                         <td
                           rowSpan={1}
@@ -270,11 +318,15 @@ export const Jurnal = () => {
                         <td
                           rowSpan={1}
                           className="border border-black px-4 py-1 text-right align-top">
-                            {item.namaAkunTransaksiDalamJenisTransaksi.nama === "Pendapatan DP"  ? convertIDRCurrency(item.jumlah / 0.3) : ""}
+                          {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                          "Pendapatan DP"
+                            ? convertIDRCurrency(item.jumlah / 0.3)
+                            : ""}
                           {item?.namaAkunTransaksiDalamJenisTransaksi
                             ?.akunTransaksi[0]?.namaAkunTransaksi?.nama !==
-                          undefined && item.namaAkunTransaksiDalamJenisTransaksi.nama !==
-                          "Pendapatan DP"
+                            undefined &&
+                          item.namaAkunTransaksiDalamJenisTransaksi.nama !==
+                            "Pendapatan DP"
                             ? convertIDRCurrency(item.jumlah)
                             : ""}
                         </td>
@@ -297,11 +349,15 @@ export const Jurnal = () => {
                         <td
                           rowSpan={1}
                           className="border border-black px-4 py-1 text-right align-top">
-                          {item.namaAkunTransaksiDalamJenisTransaksi.nama === "Pendapatan DP"  ? convertIDRCurrency(item.jumlah / 0.3) : ""}
+                          {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                          "Pendapatan DP"
+                            ? convertIDRCurrency(item.jumlah / 0.3)
+                            : ""}
                           {item?.namaAkunTransaksiDalamJenisTransaksi
                             ?.akunTransaksi[0]?.namaAkunTransaksi?.nama !==
-                          undefined && item.namaAkunTransaksiDalamJenisTransaksi.nama !==
-                          "Pendapatan DP"
+                            undefined &&
+                          item.namaAkunTransaksiDalamJenisTransaksi.nama !==
+                            "Pendapatan DP"
                             ? convertIDRCurrency(item.jumlah)
                             : ""}
                         </td>
@@ -322,7 +378,7 @@ export const Jurnal = () => {
                               }
                             </td>
                             <td className="border border-black px-4 py-1 text-right align-top">
-                              {convertIDRCurrency(item.jumlah )}
+                              {convertIDRCurrency(item.jumlah)}
                             </td>
                             <td className="border border-black px-4 py-1 text-right align-top"></td>
                           </tr>
@@ -343,146 +399,261 @@ export const Jurnal = () => {
                     </Fragment>
                   );
                 })}
-              {/* {!!transaksiData &&
-                transaksiData.map((item, index) => {
-                  console.log(item);
-                  const {
-                    id,
-                    jenis_transaksi: { nama: jenisTransaksi },
-                    namaAkunTransaksiDalamJenisTransaksi: { nama: namaAkunTransaksi },
-                    keterangan,
-                    jumlah,
-                    tanggal,
-                  } = item;
-
-                  const tanggalWITA = formatterTime.format(new Date(tanggal));
-                  const jumlahIDR = formatterCurrency.format(jumlah);
-
-                  let jumlahDPIDR;
-
-                  if (namaAkunTransaksi === "Pendapatan DP") {
-                    jumlahDPIDR = jumlah * 0.3;
-                    jumlahDPIDR = formatterCurrency.format(jumlahDPIDR);
-                  }
-
-                  return (
-                    <React.Fragment key={id}>
-                      <tr>
-                        <td
-                          rowSpan={
-                            namaAkunTransaksi === "Pendapatan DP" ? 4 : 2
-                          }
-                          className="border border-black px-4 py-1 text-left">
-                          {tanggalWITA}
-                        </td>
-                        <td
-                          rowSpan={
-                            namaAkunTransaksi === "Pendapatan DP" ? 4 : 2
-                          }
-                          className="border border-black px-4 py-1 text-left">
-                          {jenisTransaksi}
-                        </td>
-                        <td
-                          rowSpan={
-                            namaAkunTransaksi === "Pendapatan DP" ? 4 : 2
-                          }
-                          className="border border-black px-4 py-1 text-left">
-                          {namaAkunTransaksi}
-                        </td>
-                        <td
-                          rowSpan={
-                            namaAkunTransaksi === "Pendapatan DP" ? 4 : 2
-                          }
-                          className="border border-black px-4 py-1 text-left">
-                          {keterangan}
-                        </td>
-                        <td
-                          rowSpan={2}
-                          className="border border-black px-4 py-1 text-right">
-                          {jumlahIDR}
-                        </td>
-                        <td
-                          rowSpan={1}
-                          className="border border-black px-4 py-1 text-left">
-                          {jenisTransaksi === "Pemasukan" &&
-                          namaAkunTransaksi === "Pendapatan"
-                            ? "Kas"
-                            : null}
-                          {jenisTransaksi === "Pemasukan" &&
-                          namaAkunTransaksi === "Pendapatan DP"
-                            ? "Piutang"
-                            : null}
-                          {jenisTransaksi !== "Pemasukan"
-                            ? `${namaAkunTransaksi}`
-                            : null}
-                        </td>
-                        <td
-                          rowSpan={1}
-                          className="border border-black px-4 py-1 text-right align-top">
-                          {jumlahIDR}
-                        </td>
-                        <td
-                          rowSpan={1}
-                          className="border border-black px-4 py-1 text-left align-bottom"></td>
-                      </tr>
-                      <tr>
-                        <td
-                          rowSpan={1}
-                          className="border border-black px-4 py-1 text-left">
-                          {jenisTransaksi === "Pemasukan"
-                            ? "Pendapatan"
-                            : "Kas"}
-                          {!namaAkunTransaksi === "Pendapatan" &&
-                          "Pendapatan DP"
-                            ? "Kas"
-                            : null}
-                        </td>
-                        <td
-                          rowSpan={1}
-                          className="border border-black px-4 py-1 text-left"></td>
-                        <td
-                          rowSpan={1}
-                          className="border border-black px-4 py-1 text-right align-bottom">
-                          {jumlahIDR}
-                        </td>
-                      </tr>
-                      {namaAkunTransaksi === "Pendapatan DP" && (
-                        <>
-                          <tr>
-                            <td
-                              rowSpan={2}
-                              className="border border-black px-4 py-1 text-right align-middle">
-                              {jumlahDPIDR}
-                            </td>
-                            <td className="border border-black px-4 py-1 align-top">
-                              Kas
-                            </td>
-                            <td className="border border-black px-4 py-1 text-right align-top">
-                              {jumlahDPIDR}
-                            </td>
-                            <td className="border border-black px-4 py-1 text-right align-top"></td>
-                          </tr>
-                          <tr>
-                            <td className="border border-black px-4 py-1 align-top">
-                              Piutang
-                            </td>
-                            <td className="border border-black px-4 py-1 text-right align-top"></td>
-                            <td className="border border-black px-4 py-1 text-right align-top">
-                              {jumlahDPIDR}
-                            </td>
-                          </tr>
-                        </>
-                      )}
-                    </React.Fragment>
-                  );
-                })} */}
             </tbody>
           </table>
+        </div>
+        <div style={{ display: "none" }}>
+          <DokumenJurnal
+            ref={refJurnal}
+            tanggalAwal={tanggalAwal}
+            tanggalAkhir={tanggalAkhir}
+          />
         </div>
       </div>
     </section>
   );
 };
+
+const DokumenJurnal = forwardRef((props, ref) => {
+  const [transaksiData, setTransaksiData] = useState();
+
+  const tanggalAwal = props?.tanggalAwal;
+  const tanggalAkhir = props?.tanggalAkhir;
+
+  const { refetch } = useQuery({
+    queryKey: ["transaksi-cetak"],
+    queryFn: async () => {
+      if (!!tanggalAwal && !!tanggalAkhir) {
+        let tanggalAkhirModified = new Date(tanggalAkhir);
+        tanggalAkhirModified.setHours(23, 59, 59);
+
+        return await axios.get(
+          `${process.env.REACT_APP_BASE_API}/transaksi?firstDate=${tanggalAwal}&lastDate=${tanggalAkhirModified}`,
+        );
+      } else {
+        return await axios.get(`${process.env.REACT_APP_BASE_API}/transaksi`);
+      }
+    },
+    onSuccess: (data) => {
+      setTransaksiData(data.data.data);
+      // console.log(data.data.data);
+    },
+  });
+
+  const optionsTime = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "Asia/Makassar",
+  };
+  const formatterTime = new Intl.DateTimeFormat("id-ID", optionsTime);
+
+  const setStyles = () => {
+    return `@page { 
+      margin: ${"1.5cm"} !important;
+      size: landscape !important;
+    }`;
+  };
+
+  useEffect(() => {
+    refetch();
+  }, [tanggalAwal, tanggalAkhir]);
+
+  return (
+    <section ref={ref}>
+      <style>{setStyles()}</style>
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="font-archivo text-xl font-bold">Jurnal</p>
+          </div>
+          {!!tanggalAwal && !!tanggalAkhir && (
+            <div className="flex items-center gap-2">
+              <p className="text-xs font-bold">Periode:</p>
+              <p className="text-[8pt]">
+                {formatterTime.format(new Date(props.tanggalAwal))}
+              </p>
+              <Minus className="text-xs" />
+              <p className="text-[8pt]">
+                {formatterTime.format(new Date(props.tanggalAkhir))}
+              </p>
+            </div>
+          )}
+        </div>
+        <table className="w-full table-auto border-collapse rounded-lg border-2 text-[8pt]">
+          <thead>
+            <tr className="border-b-2 bg-amber-300">
+              <th className="px-4 py-3 text-center">Tanggal</th>
+              <th className="px-4 py-3 text-center">Transaksi</th>
+              <th className="px-4 py-3 text-center">Nama Akun</th>
+              <th className="px-4 py-3 text-center">Keterangan</th>
+              <th className="px-4 py-3 text-center">Jumlah</th>
+              <th className="px-4 py-3 text-center">Akun</th>
+              <th className="px-4 py-3 text-center">Debet</th>
+              <th className="px-4 py-3 text-center">Kredit</th>
+            </tr>
+          </thead>
+          <tbody>
+            {!!transaksiData &&
+              transaksiData.map((item, index) => {
+                const { id } = item;
+
+                // console.log(item.tanggal);
+                // console.log(formatterTime.format(new Date(item.tanggal)));
+
+                return (
+                  <Fragment key={id}>
+                    <tr>
+                      <td
+                        rowSpan={
+                          item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                          "Pendapatan DP"
+                            ? 4
+                            : 2
+                        }
+                        className="border border-black px-4 py-1 text-left">
+                        {formatterTime.format(new Date(item.tanggal))}
+                      </td>
+                      <td
+                        rowSpan={
+                          item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                          "Pendapatan DP"
+                            ? 4
+                            : 2
+                        }
+                        className="border border-black px-4 py-1 text-left">
+                        {item.jenis_transaksi.nama}
+                      </td>
+                      <td
+                        rowSpan={
+                          item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                          "Pendapatan DP"
+                            ? 4
+                            : 2
+                        }
+                        className="border border-black px-4 py-1 text-left">
+                        {item.namaAkunTransaksiDalamJenisTransaksi.nama}
+                      </td>
+                      <td
+                        rowSpan={
+                          item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                          "Pendapatan DP"
+                            ? 4
+                            : 2
+                        }
+                        className="border border-black px-4 py-1 text-left">
+                        {item.keterangan}
+                      </td>
+                      <td
+                        rowSpan={2}
+                        className="border border-black px-4 py-1 text-right">
+                        {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                        "Pendapatan DP"
+                          ? convertIDRCurrency(item.jumlah / 0.3)
+                          : convertIDRCurrency(item.jumlah)}
+                      </td>
+                      <td
+                        rowSpan={1}
+                        className="border border-black px-4 py-1 align-top">
+                        {
+                          item?.namaAkunTransaksiDalamJenisTransaksi
+                            ?.akunTransaksi[0]?.namaAkunTransaksi?.nama
+                        }
+                        {/* {console.log(
+                            item?.namaAkunTransaksiDalamJenisTransaksi
+                              ?.akunTransaksi[0]?.namaAkunTransaksi?.nama,
+                          )} */}
+                      </td>
+                      <td
+                        rowSpan={1}
+                        className="border border-black px-4 py-1 text-right align-top">
+                        {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                        "Pendapatan DP"
+                          ? convertIDRCurrency(item.jumlah / 0.3)
+                          : ""}
+                        {item?.namaAkunTransaksiDalamJenisTransaksi
+                          ?.akunTransaksi[0]?.namaAkunTransaksi?.nama !==
+                          undefined &&
+                        item.namaAkunTransaksiDalamJenisTransaksi.nama !==
+                          "Pendapatan DP"
+                          ? convertIDRCurrency(item.jumlah)
+                          : ""}
+                      </td>
+                      <td
+                        rowSpan={1}
+                        className="border border-black px-4 py-1 text-left align-bottom"></td>
+                    </tr>
+                    <tr>
+                      <td
+                        rowSpan={1}
+                        className="border border-black px-4 py-1 align-top">
+                        {
+                          item.namaAkunTransaksiDalamJenisTransaksi
+                            ?.akunTransaksi[1]?.namaAkunTransaksi?.nama
+                        }
+                      </td>
+                      <td
+                        rowSpan={1}
+                        className="border border-black px-4 py-1 text-left"></td>
+                      <td
+                        rowSpan={1}
+                        className="border border-black px-4 py-1 text-right align-top">
+                        {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                        "Pendapatan DP"
+                          ? convertIDRCurrency(item.jumlah / 0.3)
+                          : ""}
+                        {item?.namaAkunTransaksiDalamJenisTransaksi
+                          ?.akunTransaksi[0]?.namaAkunTransaksi?.nama !==
+                          undefined &&
+                        item.namaAkunTransaksiDalamJenisTransaksi.nama !==
+                          "Pendapatan DP"
+                          ? convertIDRCurrency(item.jumlah)
+                          : ""}
+                      </td>
+                    </tr>
+                    {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                      "Pendapatan DP" && (
+                      <>
+                        <tr>
+                          <td
+                            rowSpan={2}
+                            className="border border-black px-4 py-1 text-right align-middle">
+                            {convertIDRCurrency(item.jumlah)}
+                          </td>
+                          <td className="border border-black px-4 py-1 align-top">
+                            {
+                              item.namaAkunTransaksiDalamJenisTransaksi
+                                ?.akunTransaksi[2]?.namaAkunTransaksi?.nama
+                            }
+                          </td>
+                          <td className="border border-black px-4 py-1 text-right align-top">
+                            {convertIDRCurrency(item.jumlah)}
+                          </td>
+                          <td className="border border-black px-4 py-1 text-right align-top"></td>
+                        </tr>
+                        <tr>
+                          <td className="border border-black px-4 py-1 align-top">
+                            {
+                              item.namaAkunTransaksiDalamJenisTransaksi
+                                ?.akunTransaksi[3]?.namaAkunTransaksi?.nama
+                            }
+                          </td>
+                          <td className="border border-black px-4 py-1 text-right align-top"></td>
+                          <td className="border border-black px-4 py-1 text-right align-top">
+                            {convertIDRCurrency(item.jumlah)}
+                          </td>
+                        </tr>
+                      </>
+                    )}
+                  </Fragment>
+                );
+              })}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+});
 
 function convertIDRCurrency(value) {
   const optionsCurrency = {

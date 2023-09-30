@@ -114,7 +114,9 @@ function Sidebar({ nameSdiber }) {
                       <p>Akun</p>
                     </div>
                   </NavLink>
-                  <NavLink className="transition-colors hover:text-amber-300 hover:no-underline">
+                  <NavLink
+                    to="/saldo-awal"
+                    className="transition-colors hover:text-amber-300 hover:no-underline">
                     <div className="flex items-center gap-3">
                       <Coins04 className="flex-shrink-0 text-2xl" />
                       <p>Saldo Awal</p>
@@ -144,7 +146,9 @@ function Sidebar({ nameSdiber }) {
                       <p>Jurnal</p>
                     </div>
                   </NavLink>
-                  <NavLink className="transition-colors hover:text-amber-300 hover:no-underline">
+                  <NavLink
+                    to="/rekap-jurnal"
+                    className="transition-colors hover:text-amber-300 hover:no-underline">
                     <div className="flex items-center gap-3">
                       <CreditCardCheck className="flex-shrink-0 text-2xl" />
                       <p>Rekap Jurnal</p>
