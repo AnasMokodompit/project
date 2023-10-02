@@ -124,14 +124,14 @@ export const PosisiKeuangan = () => {
           <div>
             <h1 className="text-2xl font-bold">Posisi Keuangan</h1>
           </div>
-          <div className="flex justify-between gap-4 rounded-lg bg-neutral-100 p-3">
+          <div className="flex justify-between gap-4 rounded-lg border-2 border-neutral-500 bg-neutral-100 p-3">
             <div className="flex items-center gap-2">
               <button
                 onClick={() => {
                   setTanggalAwal();
                   setTanggalAkhir();
                 }}
-                className="flex-shrink-0 rounded-lg bg-amber-300 p-2">
+                className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border-2 border-neutral-500 bg-amber-300 p-2">
                 <Refresh />
               </button>
               <div>
@@ -140,7 +140,7 @@ export const PosisiKeuangan = () => {
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-60 justify-start gap-2 p-3 text-left font-normal",
+                        "w-60 justify-start gap-2 border-2 border-neutral-500 px-3 py-2 text-left font-normal",
                         !tanggalAwal && "text-muted-foreground",
                       )}>
                       <CalendarIcon className="mr-2 h-4 w-4" />
@@ -169,7 +169,7 @@ export const PosisiKeuangan = () => {
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-[280px] justify-start text-left font-normal",
+                        "w-60 justify-start gap-2 border-2 border-neutral-500 px-3 py-2 text-left font-normal",
                         !tanggalAkhir && "text-muted-foreground",
                       )}>
                       <CalendarIcon className="mr-2 h-4 w-4" />
@@ -193,7 +193,7 @@ export const PosisiKeuangan = () => {
               </div>
               <button
                 onClick={handlePrintLaporanPosisiKeuangan}
-                className="flex-shrink-0 rounded-lg bg-amber-300 p-2">
+                className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border-2 border-neutral-500 bg-amber-300 p-2">
                 <Printer />
               </button>
             </div>
@@ -217,65 +217,65 @@ export const PosisiKeuangan = () => {
                   </th>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Kas
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoKas)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Piutang Usaha
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoPiutangUsaha)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Persediaan Barang Jadi
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoPersediaanBarangJadi)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Persediaan Bahan Baku
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoPersediaanBahanBaku)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Persediaan Bahan Pembantu
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoPersediaanBahanPembantu)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
                   <td colSpan={4} className="p-3"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Total Aktiva Lancar
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalAktivaLancar)}
                   </td>
                 </tr>
@@ -286,149 +286,149 @@ export const PosisiKeuangan = () => {
                   </th>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Tanah
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTanah)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
                   <td colSpan={4} className="p-3"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Gedung
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoGedung)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Akumulasi Penyusutan Gedung
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoAkumulasiPenyusutanGedung)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalGedung)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
                   <td colSpan={4} className="p-3"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Mesin
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoMesin)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Akumulasi Penyusutan Mesin
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoAkumulasiPenyusutanMesin)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalMesin)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
                   <td colSpan={4} className="p-3"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Peralatan
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoPeralatan)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Akumulasi Penyusutan Peralatan
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoAkumulasiPenyusutanPeralatan)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalPeralatan)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
                   <td colSpan={4} className="p-3"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Kendaraan
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoKendaraan)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Akumulasi Penyusutan Kendaraan
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoAkumulasiPenyusutanKendaraan)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalKendaraan)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
                   <td colSpan={4} className="p-3"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Total Aktiva Tetap
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalAktivaTetap)}
                   </td>
                 </tr>
@@ -438,7 +438,7 @@ export const PosisiKeuangan = () => {
                   </td>
                   <td
                     colSpan={1}
-                    className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                    className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalAktiva)}
                   </td>
                 </tr>
@@ -449,14 +449,14 @@ export const PosisiKeuangan = () => {
                   </th>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Utang Usaha
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoUtangUsaha)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 {/* Keajiban Jangka Panjang */}
                 <tr className="border-b-2 bg-neutral-200">
@@ -465,25 +465,25 @@ export const PosisiKeuangan = () => {
                   </th>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Utang Bank
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoUtangBank)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
                   <td colSpan={4} className="p-3"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Total Kewajiban
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalKewajiban)}
                   </td>
                 </tr>
@@ -494,12 +494,12 @@ export const PosisiKeuangan = () => {
                   </th>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Modal Pemilik
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoModalPemilik)}
                   </td>
                 </tr>
@@ -509,7 +509,7 @@ export const PosisiKeuangan = () => {
                   </td>
                   <td
                     colSpan={1}
-                    className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                    className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalKewajibanDanModal)}
                   </td>
                 </tr>
@@ -671,65 +671,65 @@ const DokumenPosisiKeuangan = forwardRef((props, ref) => {
                   </th>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Kas
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoKas)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Piutang Usaha
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoPiutangUsaha)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Persediaan Barang Jadi
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoPersediaanBarangJadi)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Persediaan Bahan Baku
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoPersediaanBahanBaku)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Persediaan Bahan Pembantu
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoPersediaanBahanPembantu)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
                   <td colSpan={4} className="p-3"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Total Aktiva Lancar
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalAktivaLancar)}
                   </td>
                 </tr>
@@ -740,149 +740,149 @@ const DokumenPosisiKeuangan = forwardRef((props, ref) => {
                   </th>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Tanah
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTanah)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
                   <td colSpan={4} className="p-3"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Gedung
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoGedung)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Akumulasi Penyusutan Gedung
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoAkumulasiPenyusutanGedung)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalGedung)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
                   <td colSpan={4} className="p-3"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Mesin
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoMesin)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Akumulasi Penyusutan Mesin
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoAkumulasiPenyusutanMesin)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalMesin)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
                   <td colSpan={4} className="p-3"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Peralatan
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoPeralatan)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Akumulasi Penyusutan Peralatan
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoAkumulasiPenyusutanPeralatan)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalPeralatan)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
                   <td colSpan={4} className="p-3"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Kendaraan
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoKendaraan)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Akumulasi Penyusutan Kendaraan
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoAkumulasiPenyusutanKendaraan)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalKendaraan)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
                   <td colSpan={4} className="p-3"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Total Aktiva Tetap
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalAktivaTetap)}
                   </td>
                 </tr>
@@ -892,7 +892,7 @@ const DokumenPosisiKeuangan = forwardRef((props, ref) => {
                   </td>
                   <td
                     colSpan={1}
-                    className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                    className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalAktiva)}
                   </td>
                 </tr>
@@ -903,14 +903,14 @@ const DokumenPosisiKeuangan = forwardRef((props, ref) => {
                   </th>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Utang Usaha
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoUtangUsaha)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 {/* Keajiban Jangka Panjang */}
                 <tr className="border-b-2 bg-neutral-200">
@@ -919,25 +919,25 @@ const DokumenPosisiKeuangan = forwardRef((props, ref) => {
                   </th>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Utang Bank
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoUtangBank)}
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
                 <tr>
                   <td colSpan={4} className="p-3"></td>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Total Kewajiban
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalKewajiban)}
                   </td>
                 </tr>
@@ -948,12 +948,12 @@ const DokumenPosisiKeuangan = forwardRef((props, ref) => {
                   </th>
                 </tr>
                 <tr>
-                  <td className="border border-black px-4 py-1 text-left align-middle">
+                  <td className="border border-neutral-500 px-4 py-1 text-left align-middle">
                     Modal Pemilik
                   </td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle"></td>
-                  <td className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoModalPemilik)}
                   </td>
                 </tr>
@@ -963,7 +963,7 @@ const DokumenPosisiKeuangan = forwardRef((props, ref) => {
                   </td>
                   <td
                     colSpan={1}
-                    className="w-2/12 border border-black px-4 py-1 text-right align-middle">
+                    className="w-2/12 border border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalKewajibanDanModal)}
                   </td>
                 </tr>

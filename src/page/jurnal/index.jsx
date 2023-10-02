@@ -130,14 +130,14 @@ export const Jurnal = () => {
         <div>
           <p className="text-2xl font-bold">Jurnal</p>
         </div>
-        <div className="flex justify-between gap-4 rounded-lg bg-neutral-100 p-3">
+        <div className="flex justify-between gap-4 rounded-lg border-2 border-neutral-500 bg-neutral-100 p-3">
           <div className="flex items-center gap-2">
             <button
               onClick={() => {
                 setTanggalAwal();
                 setTanggalAkhir();
               }}
-              className="flex-shrink-0 rounded-lg bg-amber-300 p-2">
+              className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border-2 border-neutral-500 bg-amber-300 p-2">
               <Refresh />
             </button>
             <div>
@@ -146,7 +146,7 @@ export const Jurnal = () => {
                   <Button
                     variant={"outline"}
                     className={cn(
-                      "w-60 justify-start gap-2 p-3 text-left font-normal",
+                      "w-60 justify-start gap-2 border-2 border-neutral-500 px-3 py-2 text-left font-normal",
                       !tanggalAwal && "text-muted-foreground",
                     )}>
                     <CalendarIcon className="mr-2 h-4 w-4" />
@@ -168,14 +168,14 @@ export const Jurnal = () => {
                 </PopoverContent>
               </Popover>
             </div>
-            <Minus />
+            <Minus className="text-neutral-800" />
             <div>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
                     variant={"outline"}
                     className={cn(
-                      "w-[280px] justify-start text-left font-normal",
+                      "w-60 justify-start gap-2 border-2 border-neutral-500 px-3 py-2 text-left font-normal",
                       !tanggalAkhir && "text-muted-foreground",
                     )}>
                     <CalendarIcon className="mr-2 h-4 w-4" />
@@ -199,14 +199,14 @@ export const Jurnal = () => {
             </div>
             <button
               onClick={handlePrintJurnal}
-              className="flex-shrink-0 rounded-lg bg-amber-300 p-2">
+              className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border-2 border-neutral-500 bg-amber-300 p-2">
               <Printer />
             </button>
           </div>
           <div className="relative">
             <Search className="absolute bottom-0 left-2 top-0 m-auto" />
             <Input
-              className="w-96 px-8 pr-4"
+              className="w-96 border-2 border-neutral-500 px-8 pr-4"
               placeholder="Cari"
               onChange={(event) => {
                 setSearch(event.target.value);
@@ -234,17 +234,33 @@ export const Jurnal = () => {
           </button>
         </div>
         <div>
-          <table className="w-full table-auto border-collapse rounded-lg border-2 text-sm">
+          <table className="w-full table-auto border-collapse rounded-lg border-2 border-neutral-500 text-sm">
             <thead>
               <tr className="border-b-2 bg-amber-300">
-                <th className="px-4 py-3 text-center">Tanggal</th>
-                <th className="px-4 py-3 text-center">Transaksi</th>
-                <th className="px-4 py-3 text-center">Nama Akun</th>
-                <th className="px-4 py-3 text-center">Keterangan</th>
-                <th className="px-4 py-3 text-center">Jumlah</th>
-                <th className="px-4 py-3 text-center">Akun</th>
-                <th className="px-4 py-3 text-center">Debet</th>
-                <th className="px-4 py-3 text-center">Kredit</th>
+                <th className="border-2 border-neutral-500 p-3 text-center">
+                  Tanggal
+                </th>
+                <th className="border-2 border-neutral-500 p-3 text-center">
+                  Transaksi
+                </th>
+                <th className="border-2 border-neutral-500 p-3 text-center">
+                  Nama Akun
+                </th>
+                <th className="border-2 border-neutral-500 p-3 text-center">
+                  Keterangan
+                </th>
+                <th className="border-2 border-neutral-500 p-3 text-center">
+                  Jumlah
+                </th>
+                <th className="border-2 border-neutral-500 p-3 text-center">
+                  Akun
+                </th>
+                <th className="border-2 border-neutral-500 p-3 text-center">
+                  Debet
+                </th>
+                <th className="border-2 border-neutral-500 p-3 text-center">
+                  Kredit
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -262,7 +278,7 @@ export const Jurnal = () => {
                               ? 4
                               : 2
                           }
-                          className="border border-black px-4 py-1 text-left">
+                          className="border-2 border-neutral-500 px-4 py-1 text-left">
                           {formatterTime.format(new Date(item.tanggal))}
                         </td>
                         <td
@@ -272,7 +288,7 @@ export const Jurnal = () => {
                               ? 4
                               : 2
                           }
-                          className="border border-black px-4 py-1 text-left">
+                          className="border-2 border-neutral-500 px-4 py-1 text-left">
                           {item.jenis_transaksi.nama}
                         </td>
                         <td
@@ -282,7 +298,7 @@ export const Jurnal = () => {
                               ? 4
                               : 2
                           }
-                          className="border border-black px-4 py-1 text-left">
+                          className="border-2 border-neutral-500 px-4 py-1 text-left">
                           {item.namaAkunTransaksiDalamJenisTransaksi.nama}
                         </td>
                         <td
@@ -292,12 +308,12 @@ export const Jurnal = () => {
                               ? 4
                               : 2
                           }
-                          className="border border-black px-4 py-1 text-left">
+                          className="border-2 border-neutral-500 px-4 py-1 text-left">
                           {item.keterangan}
                         </td>
                         <td
                           rowSpan={2}
-                          className="border border-black px-4 py-1 text-right">
+                          className="border-2 border-neutral-500 px-4 py-1 text-right">
                           {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
                           "Pendapatan DP"
                             ? convertIDRCurrency(item.jumlah / 0.3)
@@ -305,7 +321,7 @@ export const Jurnal = () => {
                         </td>
                         <td
                           rowSpan={1}
-                          className="border border-black px-4 py-1 align-top">
+                          className="border-2 border-neutral-500 px-4 py-1 align-top">
                           {
                             item?.namaAkunTransaksiDalamJenisTransaksi
                               ?.akunTransaksi[0]?.namaAkunTransaksi?.nama
@@ -317,7 +333,7 @@ export const Jurnal = () => {
                         </td>
                         <td
                           rowSpan={1}
-                          className="border border-black px-4 py-1 text-right align-top">
+                          className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
                           {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
                           "Pendapatan DP"
                             ? convertIDRCurrency(item.jumlah / 0.3)
@@ -332,12 +348,12 @@ export const Jurnal = () => {
                         </td>
                         <td
                           rowSpan={1}
-                          className="border border-black px-4 py-1 text-left align-bottom"></td>
+                          className="border-2 border-neutral-500 px-4 py-1 text-left align-bottom"></td>
                       </tr>
                       <tr>
                         <td
                           rowSpan={1}
-                          className="border border-black px-4 py-1 align-top">
+                          className="border-2 border-neutral-500 px-4 py-1 align-top">
                           {
                             item.namaAkunTransaksiDalamJenisTransaksi
                               ?.akunTransaksi[1]?.namaAkunTransaksi?.nama
@@ -345,10 +361,10 @@ export const Jurnal = () => {
                         </td>
                         <td
                           rowSpan={1}
-                          className="border border-black px-4 py-1 text-left"></td>
+                          className="border-2 border-neutral-500 px-4 py-1 text-left"></td>
                         <td
                           rowSpan={1}
-                          className="border border-black px-4 py-1 text-right align-top">
+                          className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
                           {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
                           "Pendapatan DP"
                             ? convertIDRCurrency(item.jumlah / 0.3)
@@ -368,29 +384,29 @@ export const Jurnal = () => {
                           <tr>
                             <td
                               rowSpan={2}
-                              className="border border-black px-4 py-1 text-right align-middle">
+                              className="border-2 border-neutral-500 px-4 py-1 text-right align-middle">
                               {convertIDRCurrency(item.jumlah)}
                             </td>
-                            <td className="border border-black px-4 py-1 align-top">
+                            <td className="border-2 border-neutral-500 px-4 py-1 align-top">
                               {
                                 item.namaAkunTransaksiDalamJenisTransaksi
                                   ?.akunTransaksi[2]?.namaAkunTransaksi?.nama
                               }
                             </td>
-                            <td className="border border-black px-4 py-1 text-right align-top">
+                            <td className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
                               {convertIDRCurrency(item.jumlah)}
                             </td>
-                            <td className="border border-black px-4 py-1 text-right align-top"></td>
+                            <td className="border-2 border-neutral-500 px-4 py-1 text-right align-top"></td>
                           </tr>
                           <tr>
-                            <td className="border border-black px-4 py-1 align-top">
+                            <td className="border-2 border-neutral-500 px-4 py-1 align-top">
                               {
                                 item.namaAkunTransaksiDalamJenisTransaksi
                                   ?.akunTransaksi[3]?.namaAkunTransaksi?.nama
                               }
                             </td>
-                            <td className="border border-black px-4 py-1 text-right align-top"></td>
-                            <td className="border border-black px-4 py-1 text-right align-top">
+                            <td className="border-2 border-neutral-500 px-4 py-1 text-right align-top"></td>
+                            <td className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
                               {convertIDRCurrency(item.jumlah)}
                             </td>
                           </tr>
@@ -483,14 +499,30 @@ const DokumenJurnal = forwardRef((props, ref) => {
         <table className="w-full table-auto border-collapse rounded-lg border-2 text-[8pt]">
           <thead>
             <tr className="border-b-2 bg-amber-300">
-              <th className="px-4 py-3 text-center">Tanggal</th>
-              <th className="px-4 py-3 text-center">Transaksi</th>
-              <th className="px-4 py-3 text-center">Nama Akun</th>
-              <th className="px-4 py-3 text-center">Keterangan</th>
-              <th className="px-4 py-3 text-center">Jumlah</th>
-              <th className="px-4 py-3 text-center">Akun</th>
-              <th className="px-4 py-3 text-center">Debet</th>
-              <th className="px-4 py-3 text-center">Kredit</th>
+              <th className="border-2 border-neutral-500 px-4 py-3 text-center">
+                Tanggal
+              </th>
+              <th className="border-2 border-neutral-500 px-4 py-3 text-center">
+                Transaksi
+              </th>
+              <th className="border-2 border-neutral-500 px-4 py-3 text-center">
+                Nama Akun
+              </th>
+              <th className="border-2 border-neutral-500 px-4 py-3 text-center">
+                Keterangan
+              </th>
+              <th className="border-2 border-neutral-500 px-4 py-3 text-center">
+                Jumlah
+              </th>
+              <th className="border-2 border-neutral-500 px-4 py-3 text-center">
+                Akun
+              </th>
+              <th className="border-2 border-neutral-500 px-4 py-3 text-center">
+                Debet
+              </th>
+              <th className="border-2 border-neutral-500 px-4 py-3 text-center">
+                Kredit
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -511,7 +543,7 @@ const DokumenJurnal = forwardRef((props, ref) => {
                             ? 4
                             : 2
                         }
-                        className="border border-black px-4 py-1 text-left">
+                        className="border-2 border-neutral-500 px-4 py-1 text-left">
                         {formatterTime.format(new Date(item.tanggal))}
                       </td>
                       <td
@@ -521,7 +553,7 @@ const DokumenJurnal = forwardRef((props, ref) => {
                             ? 4
                             : 2
                         }
-                        className="border border-black px-4 py-1 text-left">
+                        className="border-2 border-neutral-500 px-4 py-1 text-left">
                         {item.jenis_transaksi.nama}
                       </td>
                       <td
@@ -531,7 +563,7 @@ const DokumenJurnal = forwardRef((props, ref) => {
                             ? 4
                             : 2
                         }
-                        className="border border-black px-4 py-1 text-left">
+                        className="border-2 border-neutral-500 px-4 py-1 text-left">
                         {item.namaAkunTransaksiDalamJenisTransaksi.nama}
                       </td>
                       <td
@@ -541,12 +573,12 @@ const DokumenJurnal = forwardRef((props, ref) => {
                             ? 4
                             : 2
                         }
-                        className="border border-black px-4 py-1 text-left">
+                        className="border-2 border-neutral-500 px-4 py-1 text-left">
                         {item.keterangan}
                       </td>
                       <td
                         rowSpan={2}
-                        className="border border-black px-4 py-1 text-right">
+                        className="border-2 border-neutral-500 px-4 py-1 text-right">
                         {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
                         "Pendapatan DP"
                           ? convertIDRCurrency(item.jumlah / 0.3)
@@ -554,7 +586,7 @@ const DokumenJurnal = forwardRef((props, ref) => {
                       </td>
                       <td
                         rowSpan={1}
-                        className="border border-black px-4 py-1 align-top">
+                        className="border-2 border-neutral-500 px-4 py-1 align-top">
                         {
                           item?.namaAkunTransaksiDalamJenisTransaksi
                             ?.akunTransaksi[0]?.namaAkunTransaksi?.nama
@@ -566,7 +598,7 @@ const DokumenJurnal = forwardRef((props, ref) => {
                       </td>
                       <td
                         rowSpan={1}
-                        className="border border-black px-4 py-1 text-right align-top">
+                        className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
                         {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
                         "Pendapatan DP"
                           ? convertIDRCurrency(item.jumlah / 0.3)
@@ -581,12 +613,12 @@ const DokumenJurnal = forwardRef((props, ref) => {
                       </td>
                       <td
                         rowSpan={1}
-                        className="border border-black px-4 py-1 text-left align-bottom"></td>
+                        className="border-2 border-neutral-500 px-4 py-1 text-left align-bottom"></td>
                     </tr>
                     <tr>
                       <td
                         rowSpan={1}
-                        className="border border-black px-4 py-1 align-top">
+                        className="border-2 border-neutral-500 px-4 py-1 align-top">
                         {
                           item.namaAkunTransaksiDalamJenisTransaksi
                             ?.akunTransaksi[1]?.namaAkunTransaksi?.nama
@@ -594,10 +626,10 @@ const DokumenJurnal = forwardRef((props, ref) => {
                       </td>
                       <td
                         rowSpan={1}
-                        className="border border-black px-4 py-1 text-left"></td>
+                        className="border-2 border-neutral-500 px-4 py-1 text-left"></td>
                       <td
                         rowSpan={1}
-                        className="border border-black px-4 py-1 text-right align-top">
+                        className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
                         {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
                         "Pendapatan DP"
                           ? convertIDRCurrency(item.jumlah / 0.3)
@@ -617,29 +649,29 @@ const DokumenJurnal = forwardRef((props, ref) => {
                         <tr>
                           <td
                             rowSpan={2}
-                            className="border border-black px-4 py-1 text-right align-middle">
+                            className="border-2 border-neutral-500 px-4 py-1 text-right align-middle">
                             {convertIDRCurrency(item.jumlah)}
                           </td>
-                          <td className="border border-black px-4 py-1 align-top">
+                          <td className="border-2 border-neutral-500 px-4 py-1 align-top">
                             {
                               item.namaAkunTransaksiDalamJenisTransaksi
                                 ?.akunTransaksi[2]?.namaAkunTransaksi?.nama
                             }
                           </td>
-                          <td className="border border-black px-4 py-1 text-right align-top">
+                          <td className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
                             {convertIDRCurrency(item.jumlah)}
                           </td>
-                          <td className="border border-black px-4 py-1 text-right align-top"></td>
+                          <td className="border-2 border-neutral-500 px-4 py-1 text-right align-top"></td>
                         </tr>
                         <tr>
-                          <td className="border border-black px-4 py-1 align-top">
+                          <td className="border-2 border-neutral-500 px-4 py-1 align-top">
                             {
                               item.namaAkunTransaksiDalamJenisTransaksi
                                 ?.akunTransaksi[3]?.namaAkunTransaksi?.nama
                             }
                           </td>
-                          <td className="border border-black px-4 py-1 text-right align-top"></td>
-                          <td className="border border-black px-4 py-1 text-right align-top">
+                          <td className="border-2 border-neutral-500 px-4 py-1 text-right align-top"></td>
+                          <td className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
                             {convertIDRCurrency(item.jumlah)}
                           </td>
                         </tr>

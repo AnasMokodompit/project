@@ -88,11 +88,10 @@ export const Transaksi = () => {
       const test = data?.data?.data?.nama_akun_transaksi_dalam_jenis_transaksi;
 
       const extractedData = test.map((item) => {
-        console.log(item)
+        console.log(item);
         const { id, nama } = item;
         return { id, nama };
       });
-      
 
       setNamaAkunTransaksiData(extractedData);
     },
@@ -102,7 +101,7 @@ export const Transaksi = () => {
   const { mutate } = useMutation({
     mutationFn: (data) => {
       if (data.id_nama_akun_jenis_transaksi == 2) {
-        data.jumlah = 0.3 * data.jumlah
+        data.jumlah = 0.3 * data.jumlah;
       }
 
       // return console.log(data)
@@ -177,7 +176,7 @@ export const Transaksi = () => {
                         <Button
                           variant="outline"
                           role="combobox"
-                          className="w-full justify-between px-3 py-4">
+                          className="w-full justify-between p-3">
                           {field.value
                             ? jenisTransaksiData.find(
                                 (data) => data.id === field.value,
@@ -246,7 +245,7 @@ export const Transaksi = () => {
                           variant="outline"
                           role="combobox"
                           // aria-expanded={open}
-                          className="w-full justify-between px-3 py-4">
+                          className="w-full justify-between p-3">
                           {field.value
                             ? namaAkunTransaksiData.find(
                                 (data) => data.id === field.value,
@@ -305,7 +304,10 @@ export const Transaksi = () => {
                   <FormItem>
                     <FormLabel>Keterangan</FormLabel>
                     <FormControl>
-                      <Textarea className="min-h-[5rem] w-full" {...field} />
+                      <Textarea
+                        className="min-h-[5rem] w-full border-2 border-neutral-500"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -320,7 +322,7 @@ export const Transaksi = () => {
                     <FormControl>
                       <div className="relative">
                         <Input
-                          className="z-20 w-full px-3 py-4 text-right"
+                          className="z-20 w-full border-2 border-neutral-500 p-3  text-right"
                           {...field}
                           // value={jumlahValue}
                           // onChange={(event) => {
@@ -342,7 +344,7 @@ export const Transaksi = () => {
                 )}
               />
               <Button
-                className="w-full bg-amber-300 p-4 text-lg font-bold"
+                className="w-full border-2 border-neutral-500 bg-amber-300 p-3 text-lg font-bold"
                 type="submit">
                 Simpan
               </Button>
