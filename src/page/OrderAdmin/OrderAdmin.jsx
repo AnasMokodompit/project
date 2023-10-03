@@ -84,9 +84,9 @@ function OrderAdmin() {
       })
       .catch((err) => {
         console.log(err);
-        if (err.response.data.message.length !== 0) {
+        if (err.response.data?.message.length !== 0) {
           alert(
-            `Bahan Baku Tidak Mencukupi, ${err.response.data.message.map(
+            `Bahan Baku Tidak Mencukupi, ${err.response.data?.message.map(
               (data) =>
                 ` ${data.bahanBaku.nama} Tersisa ${data.jumlah} ${data.satuan}`,
             )}`,
@@ -141,22 +141,22 @@ function OrderAdmin() {
   const hendleTransaksi = (idOrder, statusTransaksi) => {
     const data = {
       id_jenis_transaksi: 1,
-      id_nama_akun_transaksi: 18,
+      id_nama_akun_jenis_transaksi: 18,
       keterangan: keterangan,
     };
 
     if (statusTransaksi == true && isPembayaranDP == false) {
       setIsPembayaranLunas(true);
-      data.id_nama_akun_transaksi = 18;
-      data.jumlah = 0.3 * jumlah;
+      data.id_nama_akun_jenis_transaksi = 1;
+      data.jumlah = jumlah;
     } else if (statusTransaksi == true && isPembayaranDP == true) {
       setIsPembayaranLunas(true);
-      data.id_nama_akun_transaksi = 18;
+      data.id_nama_akun_jenis_transaksi = 1;
       data.jumlah = 0.7 * jumlah;
     } else {
       setIsPembayaranDP(true);
-      data.id_nama_akun_transaksi = 36;
-      data.jumlah = jumlah;
+      data.id_nama_akun_jenis_transaksi = 2;
+      data.jumlah = 0.3 * jumlah;
     }
 
     // return console.log(data, statusTransaksi)
@@ -484,6 +484,7 @@ function OrderAdmin() {
                     {/* {console.log(isPembayaranDP, isPembayaranLunas)} */}
                     <h6>Bukti Pembayaran</h6>
                     {dataBuktiBayar.buktiBayar?.map((data, key) => {
+                      // console.log(data)
                       return (
                         <div className={style.contentBuktiPembayaran} key={key}>
                           {data.statusTransaksi === true ? (
