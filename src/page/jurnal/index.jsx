@@ -32,11 +32,9 @@ import ChevronRight from "../../Asset/icons/untitled-ui-icons/line/components/Ch
 
 export const Jurnal = () => {
   const [transaksiData, setTransaksiData] = useState();
-  const [tanggalBasedData, setTanggalBasedData] = useState();
   const [tanggalAwal, setTanggalAwal] = useState();
   const [tanggalAkhir, setTanggalAkhir] = useState();
-  const [daftarTanggal, setDaftarTanggal] = useState([]);
-  const [oldestTanggal, setOldestTanggal] = useState();
+  const [oldestDate, setOldestDate] = useState();
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const refJurnal = useRef();
@@ -74,18 +72,8 @@ export const Jurnal = () => {
       }
     },
     onSuccess: (data) => {
-      setTransaksiData(data.data.data);
-      // console.log(data.data.data);
-    },
-  });
-
-  const { refetch: refetchTanggal } = useQuery({
-    queryKey: ["based-tanggal"],
-    queryFn: async () => {
-      return await axios.get(`${process.env.REACT_APP_BASE_API}/transaksi`);
-    },
-    onSuccess: (data) => {
-      setTanggalBasedData(data.data.data);
+      setTransaksiData(data.data.data.listTransaksi);
+      setOldestDate(data.data.data.oldestDate);
     },
   });
 
@@ -100,29 +88,6 @@ export const Jurnal = () => {
   useEffect(() => {
     refetch();
   }, [tanggalAwal, tanggalAkhir, search, page]);
-
-  useEffect(() => {
-    refetchTanggal();
-    let extractedTanggalArray;
-    if (!!tanggalBasedData) {
-      extractedTanggalArray = tanggalBasedData.map(
-        (transaction) => transaction.tanggal,
-      );
-      setDaftarTanggal(extractedTanggalArray);
-
-      const parsedDates = extractedTanggalArray.map(
-        (dateString) => new Date(dateString),
-      );
-
-      const minDate = new Date(Math.min.apply(null, parsedDates));
-
-      let oldestTanggalModified = new Date(minDate);
-
-      oldestTanggalModified.setHours(0, 0, 0, 0);
-
-      setOldestTanggal(oldestTanggalModified);
-    }
-  }, [transaksiData]);
 
   return (
     <section className="flex max-w-full overflow-auto font-archivo">
@@ -163,7 +128,10 @@ export const Jurnal = () => {
                     selected={tanggalAwal}
                     onSelect={setTanggalAwal}
                     initialFocus
-                    disabled={{ after: new Date(), before: oldestTanggal }}
+                    disabled={{
+                      after: new Date(),
+                      before: new Date(oldestDate),
+                    }}
                   />
                 </PopoverContent>
               </Popover>
@@ -192,7 +160,10 @@ export const Jurnal = () => {
                     selected={tanggalAkhir}
                     onSelect={setTanggalAkhir}
                     initialFocus
-                    disabled={{ after: new Date(), before: oldestTanggal }}
+                    disabled={{
+                      after: new Date(),
+                      before: new Date(oldestDate),
+                    }}
                   />
                 </PopoverContent>
               </Popover>
@@ -267,6 +238,8 @@ export const Jurnal = () => {
               {!!transaksiData &&
                 transaksiData.map((item, index) => {
                   const { id } = item;
+
+                  console.log(item);
 
                   return (
                     <Fragment key={id}>
@@ -451,7 +424,7 @@ const DokumenJurnal = forwardRef((props, ref) => {
       }
     },
     onSuccess: (data) => {
-      setTransaksiData(data.data.data);
+      setTransaksiData(data.data.data.listTransaksi);
       // console.log(data.data.data);
     },
   });
