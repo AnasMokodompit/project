@@ -39,7 +39,13 @@ export const PosisiKeuangan = () => {
         tanggalAkhirModified.setHours(23, 59, 59);
 
         return await axios.get(
-          `${process.env.REACT_APP_BASE_API}/saldoAkunTransaksi?firstDate=${tanggalAwal}&lastDate=${tanggalAkhirModified}`,
+          `${process.env.REACT_APP_BASE_API}/saldoAkunTransaksi`,
+          {
+            params: {
+              firstDate: tanggalAwal,
+              lastDate: tanggalAkhirModified,
+            },
+          },
         );
       } else {
         return await axios.get(

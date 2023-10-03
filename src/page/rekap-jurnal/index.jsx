@@ -171,6 +171,7 @@ export const RekapJurnal = () => {
   const [tanggalAwal, setTanggalAwal] = useState();
   const [tanggalAkhir, setTanggalAkhir] = useState();
   const [rekapJurnalData, setRekapJurnalData] = useState();
+  const [oldestDate, setOldestDate] = useState();
   const refRekapJurnal = useRef();
 
   const handlePrintRekapJurnal = useReactToPrint({
@@ -202,6 +203,8 @@ export const RekapJurnal = () => {
     },
     onSuccess: (data) => {
       const Array2 = data.data.data;
+
+      setOldestDate(data.data.data[5]?.oldestDate);
       const Combine = combineArrays(Akun, Array2);
       setRekapJurnalData(Combine);
     },
@@ -210,6 +213,8 @@ export const RekapJurnal = () => {
   useEffect(() => {
     refetch();
   }, [tanggalAwal, tanggalAkhir]);
+
+  // console.log(rekapJurnalData);
 
   return (
     <section className="font-archivo text-neutral-800">
@@ -250,7 +255,10 @@ export const RekapJurnal = () => {
                     selected={tanggalAwal}
                     onSelect={setTanggalAwal}
                     initialFocus
-                    disabled={{ after: new Date() }}
+                    disabled={{
+                      after: new Date(),
+                      before: new Date(oldestDate),
+                    }}
                   />
                 </PopoverContent>
               </Popover>
@@ -279,7 +287,10 @@ export const RekapJurnal = () => {
                     selected={tanggalAkhir}
                     onSelect={setTanggalAkhir}
                     initialFocus
-                    disabled={{ after: new Date() }}
+                    disabled={{
+                      after: new Date(),
+                      before: new Date(oldestDate),
+                    }}
                   />
                 </PopoverContent>
               </Popover>
