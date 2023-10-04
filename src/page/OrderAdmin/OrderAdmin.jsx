@@ -3,7 +3,8 @@ import Sidebar from "../../componet/Sidebar/Sidebar";
 import style from "./OrderAdmin.module.css";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import jwt from "jwt-decode";
+import dateFormat from "dateformat";
+
 
 function OrderAdmin() {
   const { dataLogin } = useSelector((tes) => tes.userReducer);
@@ -11,6 +12,7 @@ function OrderAdmin() {
   const [productOrder, setProductOrder] = useState([]);
   const [statusOrderProduct, setStatusOrderProduct] = useState();
   const [id, setid] = useState();
+  const [idProdutOrder, setIdProdukOrder] = useState()
   const [dataBuktiBayar, setDataBuktiBayar] = useState([]);
   const [keterangan, setKeterangan] = useState("");
   const [jumlah, setJumlah] = useState("");
@@ -19,11 +21,14 @@ function OrderAdmin() {
   );
   const [isPembayaranDP, setIsPembayaranDP] = useState(false);
   const [isPembayaranLunas, setIsPembayaranLunas] = useState(false);
+
+  const [statusPesanan, setStatusPesanan] = useState()
+  const [tanggalPengerjaan, setTanggalPengerjaan] = useState()
   const [messageErrorPersediaanBahanBaku, setMessageErrorPersediaanBahanBaku] =
     useState([]);
+  const [dataNamaProdukPembaruanStatus, setDataNamaProdukPembaruanStatus] = useState([])
 
   //
-  const [status, setStatus] = useState([]);
 
   const hendleGetAllOrder = () => {
     // const decode = jwt(dataLogin.dataLogin.token)
@@ -40,21 +45,26 @@ function OrderAdmin() {
   };
 
   const hendleSubmintPembaruanStatus = () => {
+
+    const data = {
+      pesan_status: statusPesanan,
+      tanggal_pengerjaan: new Date(tanggalPengerjaan)
+    }
     axios
       .patch(
-        `http://localhost:3000/api/v1.0/productOrder/${id}`,
-        { status: status },
+        `http://localhost:3000/api/v1.0/productOrder/ProdukOrderTerima/${idProdutOrder}`, data,
         { headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` } },
       )
       .then((res) => {
-        console.log(res.data.data);
-        hendleGetAllOrder();
+        hendleGetAllOrder()
+      }).catch((err) => {
+        console.log(err)
       })
-      .catch((err) => {
-        console.log(err);
-      });
 
-    statusOrderProduct();
+    setStatusOrderProduct();
+    setIdProdukOrder()
+    setStatusPesanan()
+    setTanggalPengerjaan()
   };
 
   const hendleStatusPesanan = (id_Product_order, status, event) => {
@@ -182,6 +192,43 @@ function OrderAdmin() {
       });
   };
 
+  const hendleCekProdukOrder = (id_order) => {
+    axios
+    .get(
+      `http://localhost:3000/api/v1.0/productOrder/ProdukOrderTerima?id_orders=${id_order}`,
+      { headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` } },
+      )
+      .then((res) => {
+        setDataNamaProdukPembaruanStatus(res.data.data)
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+    
+  
+  const hendleCekDataProdukOrderStatusAndTanggal = (idProdukOrderCek) => {
+    setIdProdukOrder(idProdukOrderCek)
+    axios
+    .get(
+      `http://localhost:3000/api/v1.0/productOrder/customers/${idProdukOrderCek}`,
+      { headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` } },
+      )
+      .then((res) => {
+        if (res.data.data.pesan_status !== null) {
+          setStatusPesanan(res.data.data.pesan_status)
+        }else{
+          setStatusPesanan("")
+        }
+        if (res.data.data.tanggal_pengerjaan !== null) {
+          setTanggalPengerjaan(dateFormat(res.data.data.tanggal_pengerjaan, "yyyy-mm-dd"))
+        }else{
+          setTanggalPengerjaan("")
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+
   const menuRef = useRef(null);
   const buttonRef = useRef();
 
@@ -250,7 +297,7 @@ function OrderAdmin() {
               <tbody>
                 {dataOrder.length !== 0 &&
                   dataOrder.map((data, key) => {
-                    // console.log(data)
+                    console.log(data)
                     return (
                       <tr key={key}>
                         <td>{(key += 1)}</td>
@@ -266,14 +313,10 @@ function OrderAdmin() {
                             .format(data.Price)
                             .replace(/(\.|,)00$/g, "")}
                         </td>
-                        {/* {data.status === true && (
-                                                <td>Pesanan Diterima</td>
-                                            )}
-                                            {data.status === false && (
-                                                <td>Pesanan Ditolak</td>
-                                            )} */}
                         <td className={style.options}>
-                          {/* <span class={`material-symbols-outlined ${style.iconOptions}`} onClick={() => `${setStatusOrderProduct(true)} ${setid(data.id)} ${setStatus(data.status)}`}>edit</span> */}
+                          {(data.IsPembayaranDP == true && data.IsPembayaranLunas == true || data.IsPembayaranDP == true || data.IsPembayaranLunas == true) && (
+                            <span className={`material-symbols-outlined ${style.iconOptions}`} onClick={() => `${setStatusOrderProduct(true)} ${setid(data.id)} ${hendleCekProdukOrder(data.id)}`}>edit</span>
+                          )}
                           {/* <span className={`material-symbols-outlined ${style.iconOptions}`} onClick={() => hendleDeleteOrder(data.id)}>delete</span> */}
                           <span
                             ref={buttonRef}
@@ -302,29 +345,42 @@ function OrderAdmin() {
               </div>
             </div>
           </div>
-          {/* {statusOrderProduct === true && (
+          {statusOrderProduct === true && (
                     <div className={style.containerPopUpStatus}>
                         <div className={style.contentStatus}>
                             <p><span onClick={() => `${setStatusOrderProduct()}`} className="material-symbols-outlined">close</span></p>
-                            <span className={style.judul}>Pembaruan status pesanan produk</span>
+                            <span className={style.judul}>Pembaruan status pesanan produk dan Tanggal Pengerjaan</span>
                             <div className={style.item}>
-                                <input id="terima" type="checkbox" checked={status === 2 ? true : false} onChange={() => setStatus(2)}/>
                                 <div>
-                                    <label htmlFor="terima">Pesanan diterima</label>
-                                    <span>Tersetidanya semua kebutuhan dalam pembuatan</span>
+                                    <label htmlFor="">Produk</label>
+                                    <select name="" id="" onChange={(e) => hendleCekDataProdukOrderStatusAndTanggal(e.target.value)}>
+                                      <option>Pilih Produk</option>
+                                      {dataNamaProdukPembaruanStatus.length != 0 && (
+                                        dataNamaProdukPembaruanStatus.map((data, index) => {
+                                          return (
+                                            <option key={index} value={data.id}>{data.products.name}</option>
+                                          )
+                                        })
+                                      )}
+                                    </select>
                                 </div>
                             </div>
                             <div className={style.item}>
-                                <input id="ditolak" type="checkbox" checked={status === 1 ? true : false} onChange={() => setStatus(1)}/>
                                 <div>
-                                    <label htmlFor="ditolak">Pesanan ditolak</label>
-                                    <span>Terdapat kendala dalam membuat pesanan, antara lain, bahan, keguangan dll</span>
+                                    <label htmlFor="">Pesan</label>
+                                    <textarea name="" id="" cols="30" rows="10" value={statusPesanan} onChange={(e) => setStatusPesanan(e.target.value)}></textarea>
+                                </div>
+                            </div>
+                            <div className={style.item}>
+                                <div>
+                                    <label htmlFor="">Tanggal Pengerjaan</label>
+                                    <input type="date" name="" id="" value={tanggalPengerjaan} onChange={(e) => setTanggalPengerjaan(e.target.value)} />
                                 </div>
                             </div>
                             <input className={style.button} type="button" value="Simpan" onClick={() => hendleSubmintPembaruanStatus()} />
                         </div>
                     </div>
-                )} */}
+                )}
           {statusOrderProduct === "Product_Order" && (
             <div className={style.containerPopUpStatus}>
               <div ref={menuRef} className={style.dataOrder}>
