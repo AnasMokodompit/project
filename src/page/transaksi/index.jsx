@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { useForm } from "react-hook-form";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { useSelector } from "react-redux";
 
 import axios from "axios";
 
@@ -38,10 +39,18 @@ import Check from "../../Asset/icons/untitled-ui-icons/line/components/Check";
 import ChevronSelectorVertical from "../../Asset/icons/untitled-ui-icons/line/components/ChevronSelectorVertical";
 
 export const Transaksi = () => {
+  const { dataLogin } = useSelector((tes) => tes.userReducer);
+
   const [jenisTransaksiData, setJenisTransaksiData] = useState();
   const [namaAkunTransaksiData, setNamaAkunTransaksiData] = useState();
   const [idJenisTransaksi, setIdJenisTransaksi] = useState("");
+  const [idBahanBaku, setIdBahanBaku] = useState();
+  const [satuanBahanBakuData, setSatuanBahanBakuData] = useState();
   const [jumlahValue, setJumlahValue] = useState();
+  const [isBiayaBahanBaku, setIsBiayaBahanBaku] = useState(false);
+  const [bahanBakuData, setBahanBakuData] = useState();
+
+  // console.log(isBiayaBahanBaku);
 
   const form = useForm({
     defaultValues: {
@@ -83,12 +92,12 @@ export const Transaksi = () => {
       );
     },
     onSuccess: (data) => {
-      console.log(data.data.data);
+      // console.log(data.data.data);
 
       const test = data?.data?.data?.nama_akun_transaksi_dalam_jenis_transaksi;
 
       const extractedData = test.map((item) => {
-        console.log(item);
+        // console.log(item);
         const { id, nama } = item;
         return { id, nama };
       });
@@ -96,6 +105,37 @@ export const Transaksi = () => {
       setNamaAkunTransaksiData(extractedData);
     },
     enabled: !!idJenisTransaksi,
+  });
+
+  const {} = useQuery({
+    queryKey: ["bahan-baku"],
+    queryFn: async () => {
+      return axios.get(`${process.env.REACT_APP_BASE_API}/bahanBaku`, {
+        headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
+      });
+    },
+    onSuccess: (data) => {
+      // console.log(data.data.data);
+      setBahanBakuData(data.data.data);
+    },
+  });
+
+  const { refetch: refetchSatuanBahanBaku } = useQuery({
+    queryKey: ["satuan"],
+    queryFn: async () => {
+      return axios.get(
+        `${process.env.REACT_APP_BASE_API}/persediaanBahanBaku`,
+        {
+          headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
+          params: { id_bahan_baku: idBahanBaku },
+        },
+      );
+    },
+    onSuccess: (data) => {
+      // console.log(data.data.data);
+      setSatuanBahanBakuData(data.data.data);
+    },
+    enabled: !!idBahanBaku,
   });
 
   const { mutate } = useMutation({
@@ -109,19 +149,73 @@ export const Transaksi = () => {
       return axios.post(`${process.env.REACT_APP_BASE_API}/transaksi`, data);
     },
     onSuccess: (data) => {
-      console.log(data);
+      // console.log(data);
       form.reset();
+      setIsBiayaBahanBaku(false);
 
       // alert("Transaksi Berhasil di Simpan");
     },
   });
 
   const onSubmit = (data) => {
+    const {
+      id_jenis_transaksi,
+      id_nama_akun_jenis_transaksi,
+      jumlah: jumlahHarga,
+      keterangan,
+    } = data;
+
+    const id_bahan_baku = data?.bahanBaku?.id_bahan_baku;
+    const jumlah = data?.bahanBaku?.jumlah;
+    const satuan = data?.bahanBaku?.satuan;
+
     try {
-      mutate({
-        ...data,
-        jumlah: Number(data.jumlah),
-      });
+      // mutate({
+      //   ...data,
+      //   jumlah: Number(data.jumlah),
+      // });
+      // console.log({
+      //   ...data,
+      //   jumlah: Number(data.jumlah),
+      // });
+      // mutate(data);
+      if (!!isBiayaBahanBaku) {
+        mutate({
+          bahanBaku: [
+            {
+              id_bahan_baku,
+              jumlah: Number(jumlah),
+              satuan,
+            },
+          ],
+          id_jenis_transaksi,
+          id_nama_akun_jenis_transaksi,
+          jumlah: Number(jumlahHarga),
+          keterangan,
+        });
+
+        console.log({
+          bahanBaku: [
+            {
+              id_bahan_baku,
+              jumlah: Number(jumlah),
+              satuan,
+            },
+          ],
+          id_jenis_transaksi,
+          id_nama_akun_jenis_transaksi,
+          jumlah: Number(jumlahHarga),
+          keterangan,
+        });
+      } else {
+        mutate({
+          id_jenis_transaksi,
+          id_nama_akun_jenis_transaksi,
+          jumlah: Number(jumlahHarga),
+          keterangan,
+        });
+        // console.log(data);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -155,6 +249,10 @@ export const Transaksi = () => {
     maximumFractionDigits: 0,
   };
   const formatterCurrency = new Intl.NumberFormat("id-ID", optionsCurrency);
+
+  useEffect(() => {
+    refetchSatuanBahanBaku();
+  }, [idBahanBaku]);
 
   return (
     <div className="flex font-archivo">
@@ -276,6 +374,11 @@ export const Transaksi = () => {
                                           shouldValidate: true,
                                         },
                                       );
+                                      if (data.id === 3) {
+                                        setIsBiayaBahanBaku(true);
+                                      } else if (data.id !== 3) {
+                                        setIsBiayaBahanBaku(false);
+                                      }
                                     }}>
                                     <Check
                                       className={cn(
@@ -297,6 +400,181 @@ export const Transaksi = () => {
                   </FormItem>
                 )}
               />
+              {!!isBiayaBahanBaku && (
+                <Fragment>
+                  <div className="flex flex-col gap-4 rounded-lg border-2 border-neutral-500 p-12">
+                    <FormField
+                      control={form.control}
+                      name="bahanBaku.id_bahan_baku"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-col">
+                          <FormLabel>Bahan Baku</FormLabel>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <Button
+                                variant="outline"
+                                role="combobox"
+                                className="w-full justify-between p-3">
+                                {field.value
+                                  ? bahanBakuData.find(
+                                      (data) => data.id === field.value,
+                                    )?.nama
+                                  : "Pilih Bahan Baku..."}
+                                <ChevronSelectorVertical className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent align="start" className="p-0">
+                              <Command>
+                                <CommandInput placeholder="Cari Akun..." />
+                                <CommandEmpty>
+                                  Bahan Baku tidak tersedia.
+                                </CommandEmpty>
+                                <CommandGroup>
+                                  <ScrollArea className="h-48">
+                                    {!!bahanBakuData &&
+                                      bahanBakuData.map((data) => (
+                                        <CommandItem
+                                          className="min-w-max"
+                                          key={data.id}
+                                          value={data.id}
+                                          onSelect={(value) => {
+                                            form.setValue(
+                                              "bahanBaku.id_bahan_baku",
+                                              data.id,
+                                              {
+                                                shouldValidate: true,
+                                              },
+                                            );
+                                            form.setValue(
+                                              "bahanBaku.satuan",
+                                              null,
+                                              {
+                                                shouldValidate: true,
+                                              },
+                                            );
+                                            setIdBahanBaku(data.id);
+                                            // setIdBahanBaku();
+                                          }}>
+                                          <Check
+                                            className={cn(
+                                              "mr-2 h-4 w-4",
+                                              data.id === field.value
+                                                ? "opacity-100"
+                                                : "opacity-0",
+                                            )}
+                                          />
+                                          {data.nama}
+                                        </CommandItem>
+                                      ))}
+                                  </ScrollArea>
+                                </CommandGroup>
+                              </Command>
+                            </PopoverContent>
+                          </Popover>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="bahanBaku.jumlah"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Jumlah</FormLabel>
+                          <FormControl>
+                            <Input
+                              className="z-20 w-full border-2 border-neutral-500 p-3  text-right"
+                              {...field}
+                              onKeyDown={restrictAlphabet}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="bahanBaku.satuan"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-col">
+                          <FormLabel>Bahan Baku</FormLabel>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <Button
+                                disabled={!idBahanBaku}
+                                variant="outline"
+                                role="combobox"
+                                className="w-full justify-between p-3">
+                                {field.value
+                                  ? satuanBahanBakuData.find(
+                                      (data) => data.satuan === field.value,
+                                    )?.satuan
+                                  : "Pilih Satuan..."}
+                                <ChevronSelectorVertical className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent align="start" className="p-0">
+                              <Command>
+                                {/* <CommandInput placeholder="Cari Akun..." /> */}
+                                <CommandEmpty>
+                                  Satuan tidak tersedia.
+                                </CommandEmpty>
+                                <CommandGroup>
+                                  <ScrollArea className="h-48">
+                                    {!!satuanBahanBakuData &&
+                                      satuanBahanBakuData.map((data) => (
+                                        <CommandItem
+                                          className="min-w-max"
+                                          key={data.id}
+                                          value={data.satuan}
+                                          onSelect={(value) => {
+                                            form.setValue(
+                                              "bahanBaku.satuan",
+                                              data.satuan,
+                                              {
+                                                shouldValidate: true,
+                                              },
+                                            );
+                                          }}>
+                                          <Check
+                                            className={cn(
+                                              "mr-2 h-4 w-4",
+                                              data.satuan === field.value
+                                                ? "opacity-100"
+                                                : "opacity-0",
+                                            )}
+                                          />
+                                          {data.satuan}
+                                        </CommandItem>
+                                      ))}
+                                  </ScrollArea>
+                                </CommandGroup>
+                              </Command>
+                            </PopoverContent>
+                          </Popover>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    {/* <FormField
+                      control={form.control}
+                      name="bahanBaku.satuan"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Satuan</FormLabel>
+                          <FormControl>
+                            <Input
+                              className="z-20 w-full border-2 border-neutral-500 p-3  text-right"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    /> */}
+                  </div>
+                </Fragment>
+              )}
               <FormField
                 control={form.control}
                 name="keterangan"
