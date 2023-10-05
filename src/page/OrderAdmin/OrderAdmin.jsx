@@ -1,10 +1,28 @@
 import axios from "axios";
-import Sidebar from "../../componet/Sidebar/Sidebar";
 import style from "./OrderAdmin.module.css";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import dateFormat from "dateformat";
+import { format } from "date-fns";
+import { id as indonesia } from "date-fns/locale";
 
+import { cn } from "../../utils/cn";
+
+import { Button } from "../../componet/button";
+import { Calendar } from "../../componet/calendar";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+} from "../../componet/dialog";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "../../componet/popover";
+
+import Edit from "../../Asset/icons/untitled-ui-icons/line/components/Edit04";
+import CalendarIcon from "../../Asset/icons/untitled-ui-icons/line/components/Calendar";
 
 function OrderAdmin() {
   const { dataLogin } = useSelector((tes) => tes.userReducer);
@@ -12,7 +30,7 @@ function OrderAdmin() {
   const [productOrder, setProductOrder] = useState([]);
   const [statusOrderProduct, setStatusOrderProduct] = useState();
   const [id, setid] = useState();
-  const [idProdutOrder, setIdProdukOrder] = useState()
+  const [idProdutOrder, setIdProdukOrder] = useState();
   const [dataBuktiBayar, setDataBuktiBayar] = useState([]);
   const [keterangan, setKeterangan] = useState("");
   const [jumlah, setJumlah] = useState("");
@@ -22,12 +40,13 @@ function OrderAdmin() {
   const [isPembayaranDP, setIsPembayaranDP] = useState(false);
   const [isPembayaranLunas, setIsPembayaranLunas] = useState(false);
 
-  const [statusPesanan, setStatusPesanan] = useState()
-  const [tanggalPengerjaan, setTanggalPengerjaan] = useState()
+  const [statusPesanan, setStatusPesanan] = useState();
+  const [tanggalPengerjaan, setTanggalPengerjaan] = useState();
   const [messageErrorPersediaanBahanBaku, setMessageErrorPersediaanBahanBaku] =
     useState([]);
-  const [dataNamaProdukPembaruanStatus, setDataNamaProdukPembaruanStatus] = useState([])
-
+  const [dataNamaProdukPembaruanStatus, setDataNamaProdukPembaruanStatus] =
+    useState([]);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   //
 
   const hendleGetAllOrder = () => {
@@ -45,26 +64,27 @@ function OrderAdmin() {
   };
 
   const hendleSubmintPembaruanStatus = () => {
-
     const data = {
       pesan_status: statusPesanan,
-      tanggal_pengerjaan: new Date(tanggalPengerjaan)
-    }
+      tanggal_pengerjaan: new Date(tanggalPengerjaan),
+    };
     axios
       .patch(
-        `http://localhost:3000/api/v1.0/productOrder/ProdukOrderTerima/${idProdutOrder}`, data,
+        `http://localhost:3000/api/v1.0/productOrder/ProdukOrderTerima/${idProdutOrder}`,
+        data,
         { headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` } },
       )
       .then((res) => {
-        hendleGetAllOrder()
-      }).catch((err) => {
-        console.log(err)
+        hendleGetAllOrder();
       })
+      .catch((err) => {
+        console.log(err);
+      });
 
     setStatusOrderProduct();
-    setIdProdukOrder()
-    setStatusPesanan()
-    setTanggalPengerjaan()
+    setIdProdukOrder();
+    setStatusPesanan();
+    setTanggalPengerjaan();
   };
 
   const hendleStatusPesanan = (id_Product_order, status, event) => {
@@ -87,14 +107,14 @@ function OrderAdmin() {
       )
       .then((res) => {
         console.log(res.data.data);
-        hendleGetAllOrder()
+        hendleGetAllOrder();
         hendleGetByIdProductOrder(
           res.data.data?.id_orders,
           res.data.data?.id_user,
         );
       })
       .catch((err) => {
-        hendleGetAllOrder()
+        hendleGetAllOrder();
         console.log(err);
         if (err.response.data?.message.length !== 0) {
           alert(
@@ -188,52 +208,52 @@ function OrderAdmin() {
       .post(`http://localhost:3000/api/v1.0/transaksi`, data)
       .then((res) => {
         console.log(res.data.data);
-        
-        hendleGetAllOrder()
+
+        hendleGetAllOrder();
       })
       .catch((err) => {
         console.log(err);
-        hendleGetAllOrder()
+        hendleGetAllOrder();
       });
-
   };
 
   const hendleCekProdukOrder = (id_order) => {
     axios
-    .get(
-      `http://localhost:3000/api/v1.0/productOrder/ProdukOrderTerima?id_orders=${id_order}`,
-      { headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` } },
+      .get(
+        `http://localhost:3000/api/v1.0/productOrder/ProdukOrderTerima?id_orders=${id_order}`,
+        { headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` } },
       )
       .then((res) => {
-        setDataNamaProdukPembaruanStatus(res.data.data)
-      }).catch((err) => {
-        console.log(err)
+        setDataNamaProdukPembaruanStatus(res.data.data);
       })
-    }
-    
-  
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const hendleCekDataProdukOrderStatusAndTanggal = (idProdukOrderCek) => {
-    setIdProdukOrder(idProdukOrderCek)
+    setIdProdukOrder(idProdukOrderCek);
     axios
-    .get(
-      `http://localhost:3000/api/v1.0/productOrder/customers/${idProdukOrderCek}`,
-      { headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` } },
+      .get(
+        `http://localhost:3000/api/v1.0/productOrder/customers/${idProdukOrderCek}`,
+        { headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` } },
       )
       .then((res) => {
         if (res.data.data.pesan_status !== null) {
-          setStatusPesanan(res.data.data.pesan_status)
-        }else{
-          setStatusPesanan("")
+          setStatusPesanan(res.data.data.pesan_status);
+        } else {
+          setStatusPesanan("");
         }
         if (res.data.data.tanggal_pengerjaan !== null) {
-          setTanggalPengerjaan(dateFormat(res.data.data.tanggal_pengerjaan, "yyyy-mm-dd"))
-        }else{
-          setTanggalPengerjaan("")
+          setTanggalPengerjaan(new Date(res.data.data.tanggal_pengerjaan));
+        } else {
+          setTanggalPengerjaan("");
         }
-      }).catch((err) => {
-        console.log(err)
       })
-    }
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const menuRef = useRef(null);
   const buttonRef = useRef();
@@ -303,7 +323,7 @@ function OrderAdmin() {
               <tbody>
                 {dataOrder.length !== 0 &&
                   dataOrder.map((data, key) => {
-                    console.log(data)
+                    console.log(data);
                     return (
                       <tr key={key}>
                         <td>{(key += 1)}</td>
@@ -319,9 +339,139 @@ function OrderAdmin() {
                             .format(data.Price)
                             .replace(/(\.|,)00$/g, "")}
                         </td>
-                        <td className={style.options}>
-                          {(data.IsPembayaranDP == true && data.IsPembayaranLunas == true || data.IsPembayaranDP == true || data.IsPembayaranLunas == true) && (
-                            <span className={`material-symbols-outlined ${style.iconOptions}`} onClick={() => `${setStatusOrderProduct(true)} ${setid(data.id)} ${hendleCekProdukOrder(data.id)}`}>edit</span>
+                        <td className="flex items-center justify-center gap-2">
+                          {((data.IsPembayaranDP == true &&
+                            data.IsPembayaranLunas == true) ||
+                            data.IsPembayaranDP == true ||
+                            data.IsPembayaranLunas == true) && (
+                            // <span
+                            //   className={`material-symbols-outlined ${style.iconOptions}`}
+                            //   onClick={() =>
+                            //     `${setStatusOrderProduct(true)} ${setid(
+                            //       data.id,
+                            //     )} ${hendleCekProdukOrder(data.id)}`
+                            //   }>
+                            //   edit
+                            // </span>
+
+                            <Dialog
+                              open={isDialogOpen}
+                              onOpenChange={(open) => {
+                                setIsDialogOpen(open);
+                              }}>
+                              <DialogTrigger>
+                                <button
+                                  onClick={() => {
+                                    // setStatusOrderProduct(true);
+                                    setid(data.id);
+                                    hendleCekProdukOrder(data.id);
+                                  }}
+                                  className="rounded-lg bg-amber-300 p-2">
+                                  <Edit />
+                                </button>
+                              </DialogTrigger>
+                              <DialogContent>
+                                <div className="flex flex-col gap-4">
+                                  <p className="font-archivo text-xl font-bold">
+                                    Status Pesanan
+                                  </p>
+                                  <div className="font-archivo text-sm">
+                                    <div className="flex flex-col">
+                                      <label
+                                        htmlFor="produk"
+                                        className="font-bold">
+                                        Produk
+                                      </label>
+                                      <select
+                                        id="produk"
+                                        onChange={(e) =>
+                                          hendleCekDataProdukOrderStatusAndTanggal(
+                                            e.target.value,
+                                          )
+                                        }
+                                        className="rounded-lg border-2 border-neutral-500 p-3">
+                                        <option>Pilih Produk</option>
+                                        {dataNamaProdukPembaruanStatus.length !=
+                                          0 &&
+                                          dataNamaProdukPembaruanStatus.map(
+                                            (data, index) => {
+                                              return (
+                                                <option
+                                                  key={index}
+                                                  value={data.id}>
+                                                  {data.products.name}
+                                                </option>
+                                              );
+                                            },
+                                          )}
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div className="font-archivo text-sm">
+                                    <div className="flex flex-col">
+                                      <label className="font-bold">Pesan</label>
+                                      <textarea
+                                        // cols="30"
+                                        // rows="10"
+                                        value={statusPesanan}
+                                        onChange={(e) =>
+                                          setStatusPesanan(e.target.value)
+                                        }
+                                        className="min-h-[4rem] rounded-lg border-2 border-neutral-500 p-2"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div className="font-archivo text-sm">
+                                    <div className="flex flex-col">
+                                      <label
+                                        htmlFor="tanggal"
+                                        className="font-bold">
+                                        Tanggal Selesai
+                                      </label>
+                                      <Popover>
+                                        <PopoverTrigger asChild>
+                                          <Button
+                                            variant={"outline"}
+                                            className={cn(
+                                              "justify-start border-2 border-neutral-500 p-3 text-left font-normal",
+                                              !tanggalPengerjaan &&
+                                                "text-muted-foreground",
+                                            )}>
+                                            <CalendarIcon className="mr-2 h-4 w-4" />
+                                            {tanggalPengerjaan ? (
+                                              format(tanggalPengerjaan, "PPP", {
+                                                locale: indonesia,
+                                              })
+                                            ) : (
+                                              <span>Pilih Tanggal</span>
+                                            )}
+                                          </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-auto p-0">
+                                          <Calendar
+                                            mode="single"
+                                            selected={tanggalPengerjaan}
+                                            onSelect={setTanggalPengerjaan}
+                                            initialFocus
+                                            disabled={{
+                                              before: new Date(),
+                                            }}
+                                          />
+                                        </PopoverContent>
+                                      </Popover>
+                                    </div>
+                                  </div>
+                                  <button
+                                    onClick={() => {
+                                      hendleSubmintPembaruanStatus();
+                                      setIsDialogOpen(false);
+                                    }}
+                                    className="rounded-lg bg-amber-300 p-3 font-archivo font-bold">
+                                    Simpan
+                                  </button>
+                                </div>
+                              </DialogContent>
+                            </Dialog>
                           )}
                           {/* <span className={`material-symbols-outlined ${style.iconOptions}`} onClick={() => hendleDeleteOrder(data.id)}>delete</span> */}
                           <span
@@ -351,42 +501,6 @@ function OrderAdmin() {
               </div>
             </div>
           </div>
-          {statusOrderProduct === true && (
-                    <div className={style.containerPopUpStatus}>
-                        <div className={style.contentStatus}>
-                            <p><span onClick={() => `${setStatusOrderProduct()}`} className="material-symbols-outlined">close</span></p>
-                            <span className={style.judul}>Pembaruan status pesanan produk dan Tanggal Pengerjaan</span>
-                            <div className={style.item}>
-                                <div>
-                                    <label htmlFor="">Produk</label>
-                                    <select name="" id="" onChange={(e) => hendleCekDataProdukOrderStatusAndTanggal(e.target.value)}>
-                                      <option>Pilih Produk</option>
-                                      {dataNamaProdukPembaruanStatus.length != 0 && (
-                                        dataNamaProdukPembaruanStatus.map((data, index) => {
-                                          return (
-                                            <option key={index} value={data.id}>{data.products.name}</option>
-                                          )
-                                        })
-                                      )}
-                                    </select>
-                                </div>
-                            </div>
-                            <div className={style.item}>
-                                <div>
-                                    <label htmlFor="">Pesan</label>
-                                    <textarea name="" id="" cols="30" rows="10" value={statusPesanan} onChange={(e) => setStatusPesanan(e.target.value)}></textarea>
-                                </div>
-                            </div>
-                            <div className={style.item}>
-                                <div>
-                                    <label htmlFor="">Tanggal Pengerjaan</label>
-                                    <input type="date" name="" id="" value={tanggalPengerjaan} onChange={(e) => setTanggalPengerjaan(e.target.value)} />
-                                </div>
-                            </div>
-                            <input className={style.button} type="button" value="Simpan" onClick={() => hendleSubmintPembaruanStatus()} />
-                        </div>
-                    </div>
-                )}
           {statusOrderProduct === "Product_Order" && (
             <div className={style.containerPopUpStatus}>
               <div ref={menuRef} className={style.dataOrder}>

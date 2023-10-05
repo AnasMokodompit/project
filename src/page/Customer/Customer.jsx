@@ -16,8 +16,8 @@ function Customer() {
   const { dataLogin } = useSelector((tes) => tes.userReducer);
   const [dataUser, setDataUser] = useState([]);
 
-
-  const [namaKategoriPesanan, setNamaKategoriPesanan] = useState('Daftar Pesanan')
+  const [namaKategoriPesanan, setNamaKategoriPesanan] =
+    useState("Daftar Pesanan");
 
   const isLogin = dataLogin?.dataLogin?.token;
 
@@ -63,18 +63,20 @@ function Customer() {
                   <p className="text-sm font-bold">{dataUser.alamat}</p>
                 </div>
               </div>
-              <input
+              {/* <input
                 className="rounded-lg bg-amber-300 px-4 py-2"
                 id={dataUser.id}
                 type="button"
                 value="Edit"
-              />
+              /> */}
             </div>
           </div>
           <div className={style.contentItem}>
             <div className={style.itemCategori}>
               <h5>Kategori</h5>
-              <div className={style.item} onClick={() => setNamaKategoriPesanan('Daftar Pesanan')}>
+              <div
+                className={style.item}
+                onClick={() => setNamaKategoriPesanan("Daftar Pesanan")}>
                 <div>
                   <span className={`material-symbols-outlined ${style.icon}`}>
                     inventory_2
@@ -83,7 +85,9 @@ function Customer() {
                 </div>
                 <span className="material-symbols-outlined">navigate_next</span>
               </div>
-              <div className={style.item} onClick={() => setNamaKategoriPesanan('Pesanan Diproses')}>
+              <div
+                className={style.item}
+                onClick={() => setNamaKategoriPesanan("Pesanan Diproses")}>
                 <div>
                   <span className={`material-symbols-outlined ${style.icon}`}>
                     progress_activity
@@ -92,7 +96,9 @@ function Customer() {
                 </div>
                 <span className="material-symbols-outlined">navigate_next</span>
               </div>
-              <div className={style.item} onClick={() => setNamaKategoriPesanan('Pesanan Selesai')}>
+              <div
+                className={style.item}
+                onClick={() => setNamaKategoriPesanan("Pesanan Selesai")}>
                 <div>
                   <span className={`material-symbols-outlined ${style.icon}`}>
                     assignment_turned_in
@@ -102,15 +108,9 @@ function Customer() {
                 <span className="material-symbols-outlined">navigate_next</span>
               </div>
             </div>
-            {namaKategoriPesanan === "Daftar Pesanan" && (
-                <DaftarPesanan/>
-            )}
-            {namaKategoriPesanan === "Pesanan Diproses" && (
-                <PesananDiproses/>
-            )}
-            {namaKategoriPesanan === "Pesanan Selesai" && (
-                <PesananSelesai/>
-            )}
+            {namaKategoriPesanan === "Daftar Pesanan" && <DaftarPesanan />}
+            {namaKategoriPesanan === "Pesanan Diproses" && <PesananDiproses />}
+            {namaKategoriPesanan === "Pesanan Selesai" && <PesananSelesai />}
           </div>
         </div>
       </div>
