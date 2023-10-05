@@ -10,17 +10,35 @@
   }
   
   .itemProduct .item {
-      box-shadow: 0px 0px 2px gray;   
-    display: flex;
-    /* width: 24%; */
-    padding: 10px;
     border-radius: 5px;
+    box-shadow: 0px 0px 2px gray;   
+  }
+  
+  .itemProduct .inputReview{
+    margin: 10px;
+    background-color: rgb(22, 89, 92);
+    cursor: pointer;
+    /* border: 1px solid black; */
+    padding: 2px 4px;
+    border-radius: 3px;
+    color: white;
+  }
+  
+  .itemProduct .inputReview:hover{
+    background-color: rgb(49, 111, 113);
+  }
+  
+  .itemProduct .item div{
+    display: flex;
+    /* width: 27%;  */
+    padding: 10px 10px 0 10px;
     flex-direction: column;
     cursor: pointer;
   }
   
   .itemProduct .item img {
     width: 100%;
+    /* border: 1px solid black; */
     height: 150px;
     border-radius: 3px;
   }
@@ -228,3 +246,127 @@
       font-weight: bold;
     }
     
+
+    
+.containerPopUpStatus {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background-color: rgba(100, 100, 100, 0.8);
+}
+
+.containerPopUpStatus .contentStatus {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 50px;
+  width: 25%;
+  height: max-content;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 0 2px 2px rgba(100, 100, 100, 0.8);
+  padding: 15px 30px;
+  font-family: "Poppins", sans-serif;
+  /* border: 1px solid black; */
+}
+
+.containerPopUpStatus .contentStatus p:nth-child(1) {
+  /* border: 1px solid black; */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.containerPopUpStatus .contentStatus p:nth-child(1) span {
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.containerPopUpStatus .contentStatus p:nth-child(1) span:hover {
+  background-color: rgb(200, 196, 196);
+}
+
+.containerPopUpStatus .contentStatus .judul {
+  margin-bottom: 20px;
+  font-weight: 600;
+  font-size: 16px;
+  color: black;
+}
+
+.containerPopUpStatus .contentStatus .item {
+  display: flex;
+  /* border: 1px solid black; */
+  align-items: start;
+}
+
+.containerPopUpStatus .contentStatus .rating{
+  /* border: 1px solid black; */
+  margin-bottom: 6px;
+}
+
+.containerPopUpStatus .contentStatus .item div select {
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.containerPopUpStatus .contentStatus .item div textarea {
+  margin-top: 5px;
+  margin-right: 10px;
+  /* width: 100%; */
+  border: 1px solid gray;
+  border-radius: 5px;
+  height: 100px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.containerPopUpStatus .contentStatus .item div input {
+  margin-top: 5px;
+  margin-right: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  height: 30px;
+  padding: 0px 5px;
+  font-size: 14px;
+}
+
+.containerPopUpStatus .contentStatus .item div {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  /* border: 1px solid black; */
+  margin-bottom: 20px;
+}
+
+.containerPopUpStatus .contentStatus .item div label {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.containerPopUpStatus .contentStatus .rating div label{
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.containerPopUpStatus .contentStatus .item div span {
+  font-size: 15px;
+}
+
+.containerPopUpStatus .contentStatus .button {
+  background-color: greenyellow;
+  padding: 10px 0;
+  outline: none;
+  border: none;
+  border-radius: 40px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.containerPopUpStatus .contentStatus .button:hover {
+  background-color: rgb(157, 236, 38);
+}
