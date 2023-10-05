@@ -111,6 +111,7 @@ function PesananCustom() {
     setNamaKategori("");
     setNamaProduct("");
     setUkuranProduct("");
+    setHargaProduct("")
     setDeskripsiProduct("");
 
     setDataBahanBakuProduk([])
@@ -500,6 +501,16 @@ const handleSearchBahanBaku = (e) => {
                 onChange={(e) =>
                   setDeskripsiProduct(e.target.value)
                 }></textarea>
+            </div>
+            <div className={style.itemContentOrderCustom}>
+              <label htmlFor="">Harga</label>
+              <input
+                  type="text"
+                  id={style.input}
+                  value={hargaProduct}
+                  onChange={(e) => setHargaProduct(Number(e.target.value))}
+                  >
+                </input>
             </div>
             {dataBahanBakuProduk.length !== 0 && (
             <div className={style.item}>

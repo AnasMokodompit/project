@@ -115,6 +115,23 @@
   cursor: pointer;
 }
 
+.button{
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+.button input{
+  margin-top: 10px;
+  padding: 3px 17px;
+  border-radius: 4px;
+  background-color: gray;
+}
+
+.button input:hover{
+  background-color: rgb(116, 109, 109);
+}
+
 .content .contentItem .ButtonSimpanPesanan {
   margin: 10px auto;
   padding: 5px 10px;

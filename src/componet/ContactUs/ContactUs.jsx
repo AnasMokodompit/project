@@ -23,11 +23,13 @@ function Contact() {
     axios
       .post(`${process.env.REACT_APP_BASE_API}/contactUs`, data)
       .then(() => {
+        alert("Pesan Berhasil Dikirim")
         setNamaLengkap("");
         setEmail("");
         setPesan("");
       })
       .catch((err) => {
+        alert("Pesan Gagal Dikirim")
         console.log(err);
       });
   };
@@ -77,7 +79,7 @@ function Contact() {
             <input
               className="rounded-lg border-2 border-neutral-400 p-2"
               type="text"
-              required="true"
+              required
               name=""
               value={namaLengkap}
               onChange={(e) => setNamaLengkap(e.target.value)}
@@ -89,7 +91,7 @@ function Contact() {
             <input
               className="rounded-lg border-2 border-neutral-400 p-2"
               type="text"
-              required="true"
+              required
               name=""
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -105,14 +107,11 @@ function Contact() {
               value={pesan}
               onChange={(e) => setPesan(e.target.value)}></textarea>
           </div>
-
-          <div className="flex items-center justify-center rounded-lg bg-amber-300 p-2 text-lg">
-            <input
-              type="submit"
-              value="Kirim"
-              onClick={() => hendleSumbitContactUs()}
-            />
-          </div>
+          <input className="flex cursor-pointer items-center justify-center rounded-lg bg-amber-300 p-2 text-lg"
+            type="submit"
+            value="Kirim"
+            onClick={() => hendleSumbitContactUs()}
+          />
           {/* </form> */}
         </div>
       </div>
