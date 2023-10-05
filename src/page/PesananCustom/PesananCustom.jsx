@@ -505,7 +505,7 @@ const handleSearchBahanBaku = (e) => {
             <div className={style.itemContentOrderCustom}>
               <label htmlFor="">Harga</label>
               <input
-                  type="text"
+                  type="number"
                   id={style.input}
                   value={hargaProduct}
                   onChange={(e) => setHargaProduct(Number(e.target.value))}
