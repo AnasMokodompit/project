@@ -87,12 +87,14 @@ function OrderAdmin() {
       )
       .then((res) => {
         console.log(res.data.data);
+        hendleGetAllOrder()
         hendleGetByIdProductOrder(
           res.data.data?.id_orders,
           res.data.data?.id_user,
         );
       })
       .catch((err) => {
+        hendleGetAllOrder()
         console.log(err);
         if (err.response.data?.message.length !== 0) {
           alert(
@@ -186,10 +188,14 @@ function OrderAdmin() {
       .post(`http://localhost:3000/api/v1.0/transaksi`, data)
       .then((res) => {
         console.log(res.data.data);
+        
+        hendleGetAllOrder()
       })
       .catch((err) => {
         console.log(err);
+        hendleGetAllOrder()
       });
+
   };
 
   const hendleCekProdukOrder = (id_order) => {

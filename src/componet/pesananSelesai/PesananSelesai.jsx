@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import jwt from "jwt-decode";
 import { useEffect } from 'react';
+import ReactStars from "react-rating-stars-component";
+
 
 
 function PesananSelesai() {
@@ -16,11 +18,14 @@ function PesananSelesai() {
     const [popUpInformasiPesanan, setPopUpInformasiPesanan] = useState("");
     const [dataImageClick, setDataImageClick] = useState(false);
     const [dataImageBuktiBayar, setDataImageBuktiBayar] = useState(false);
-    const [buktibayarr, setBuktiBayar] = useState();
     const [id, setId] = useState();
     const [pembayaran, setPembayaran] = useState("");
-    const [dataBuktiBayar, setDataBuktiBayar] = useState([]);
     const [buktibayarGambar, setBuktiBayarGambar] = useState();
+    const [popupBeriNilai, setPopupBeriNilai] = useState(false)
+    const [jumlahStart, setJumlahStart] = useState(0);
+    const [komentarReview, setKomentarReview] = useState()
+    const [idProduk, setIdProdut] = useState()
+
 
     const isLogin = dataLogin?.dataLogin?.token;
 
@@ -64,9 +69,7 @@ function PesananSelesai() {
               console.log(err);
             });
         }
-    };
-
-      
+    };  
 
     const hendleUploadBuktiBayar = (id_orders) => {
         const formData = new FormData();
@@ -101,6 +104,37 @@ function PesananSelesai() {
         setPembayaran("");
     };
 
+    const hendleKirimReviewProduk = () => {
+        const data = {
+            id_produk_order: id,
+            products_id: idProduk,
+            bintang: jumlahStart,
+            komentar: komentarReview
+        }
+        axios
+        .post(`http://localhost:3000/api/v1.0/reviewProduk`, data, {
+            headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
+        })
+        .then((res) => {
+            hendleOrderByCustemers()
+        }).catch((err) => {
+            console.log(err)
+        })
+
+        console.log(data)
+
+        setPopupBeriNilai(false)
+        setIdProdut()
+        setJumlahStart(0)
+        setKomentarReview()
+        setId()
+    }
+
+    const ratingChanged = (newRating) => {
+        setJumlahStart(newRating)
+        console.log(newRating)
+    };
+
     useEffect(() => {
         hendleOrderByCustemers();
     }, [dataProductById]);
@@ -112,43 +146,77 @@ function PesananSelesai() {
                 <div className={style.itemProduct}>
                 {dataProduct.length !== 0 &&
                     dataProduct.map((data, key) => {
+                        console.log(data)
                     return (
-                        <div
-                        key={key}
-                        className={style.item}
-                        onClick={() =>
-                            `${setPopUpInformasiPesanan(
-                            "Active",
-                            )} ${hendleCekOrderProductById(data.id)} ${
-                            data?.picture_bukti_bayar
-                                ? setDataImageBuktiBayar(data?.picture_bukti_bayar)
-                                : setDataImageBuktiBayar(false)
-                            }`
-                        }>
-                        <img
-                            src={data.products.product_images[0].url_image}
-                            alt=""
-                        />
-                        <span>{data.products.name}</span>
-                        <span>{data.products.categories.name}</span>
-                        {data.jumlah_meter && (
-                            <span>{data.jumlah_meter} Meter Jalan</span>
-                        )}
-                        <span>{data.jumlah} Barang</span>
-                        <span>
-                            Total Harga :{" "}
-                            {new Intl.NumberFormat("id-ID", {
-                            style: "currency",
-                            currency: "IDR",
-                            })
-                            .format(data.Price)
-                            .replace(/(\.|,)00$/g, "")}
-                        </span>
-                        <span>Status : <span style={{color: "green"}}>{data.pesan_status}</span></span>
+                        <div className={style.item}>
+                            <div
+                                key={key}
+                                onClick={() =>
+                                    `${setPopUpInformasiPesanan(
+                                    "Active",
+                                    )} ${hendleCekOrderProductById(data.id)} ${
+                                    data?.picture_bukti_bayar
+                                        ? setDataImageBuktiBayar(data?.picture_bukti_bayar)
+                                        : setDataImageBuktiBayar(false)
+                                    }`
+                                }>
+                                <img
+                                    src={data.products.product_images[0].url_image}
+                                    alt=""
+                                />
+                                <span>{data.products.name}</span>
+                                <span>{data.products.categories.name}</span>
+                                {data.jumlah_meter && (
+                                    <span>{data.jumlah_meter} Meter Jalan</span>
+                                )}
+                                <span>{data.jumlah} Barang</span>
+                                <span>
+                                    Total Harga :{" "}
+                                    {new Intl.NumberFormat("id-ID", {
+                                    style: "currency",
+                                    currency: "IDR",
+                                    })
+                                    .format(data.Price)
+                                    .replace(/(\.|,)00$/g, "")}
+                                </span>
+                                <span>Status : <span style={{color: "green"}}>{data.pesan_status}</span></span>
+                            </div>
+                            {data.statusReview == false && (
+                                <input className={style.inputReview} type="button" value="Beri Nilai" onClick={() => `${setPopupBeriNilai(true)} ${setIdProdut(data.id_product)} ${setId(data.id)}`} />
+                            )}
                         </div>
                     );
                     })}
                 </div>
+                {popupBeriNilai == true && (
+                      <div className={style.containerPopUpStatus}>
+                      <div className={style.contentStatus}>
+                          <p><span onClick={() => `${setPopupBeriNilai(false)}`} className="material-symbols-outlined">close</span></p>
+                          <span className={style.judul}>Review Produk</span>
+                          <div className={style.rating}>
+                              <div>
+                                    <label htmlFor="">Rating</label>
+                                    <ReactStars
+                                        onChange={ratingChanged}
+                                        edit={true}
+                                        count={5}
+                                        size={24}
+                                        value={jumlahStart}
+                                        isHalf={true}
+                                        activeColor="#ffd700"
+                                    />
+                              </div>
+                          </div>
+                          <div className={style.item}>
+                              <div>
+                                  <label htmlFor="">Komentar</label>
+                                  <textarea name="" id="" cols="30" rows="10" value={komentarReview} onChange={(e) => setKomentarReview(e.target.value)}></textarea>
+                              </div>
+                          </div>
+                          <input className={style.button} type="button" value="Kirim" onClick={() => hendleKirimReviewProduk()}/>
+                      </div>
+                  </div>
+                )}
                 {popUpInformasiPesanan === "Active" && (
                 <div className={style.ReadProductDetail}>
                     <div className={style.popup}>
