@@ -37,6 +37,7 @@ import Scales02 from "../../Asset/icons/untitled-ui-icons/line/components/Scales
 import Building07 from "../../Asset/icons/untitled-ui-icons/line/components/Building07";
 import Server01 from "../../Asset/icons/untitled-ui-icons/line/components/Server01";
 import Box from "../../Asset/icons/untitled-ui-icons/line/components/Box";
+import MessageTextSquare from "../../Asset/icons/untitled-ui-icons/line/components/MessageTextSquare01";
 
 function Sidebar({ nameSdiber }) {
   const { dataLogin } = useSelector((tes) => tes.userReducer);
@@ -230,6 +231,14 @@ function Sidebar({ nameSdiber }) {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
+          <NavLink
+            to="/pesan"
+            className="transition-colors hover:text-amber-300 hover:no-underline">
+            <div className="flex items-center gap-3">
+              <MessageTextSquare className="flex-shrink-0 text-2xl" />
+              <p className="text-sm">Pesan</p>
+            </div>
+          </NavLink>
           <button onClick={hendleLogout}>
             <div className="flex items-center gap-3 py-3">
               <LogOut01 className="text-2xl" />
