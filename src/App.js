@@ -18,6 +18,7 @@ import { PosisiKeuangan } from "./page/posisi-keuangan";
 import { LabaRugi } from "./page/laba-rugi";
 import { SaldoAwal } from "./page/saldo-awal";
 import { RekapJurnal } from "./page/rekap-jurnal";
+import { Pesan } from "./page/pesan";
 
 // Layouts
 import { LayoutSidebar } from "./layouts";
@@ -44,6 +45,7 @@ function App() {
           <Route path="/laba-rugi" element={<LabaRugi />} />
           <Route path="/saldo-awal" element={<SaldoAwal />} />
           <Route path="/rekap-jurnal" element={<RekapJurnal />} />
+          <Route path="/pesan" element={<Pesan />} />
         </Route>
       </Routes>
     </BrowserRouter>
