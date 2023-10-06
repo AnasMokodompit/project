@@ -6,7 +6,7 @@ import axios from "axios";
 
 // Assets
 import Delete from "../../Asset/icons/untitled-ui-icons/line/components/Delete";
-import Edit05 from "../../Asset/icons/untitled-ui-icons/line/components/Edit05";
+import Edit from "../../Asset/icons/untitled-ui-icons/line/components/Edit03";
 import PlusCircle from "../../Asset/icons/untitled-ui-icons/line/components/PlusCircle";
 
 // Components
@@ -107,56 +107,56 @@ export const JenisTransaksi = () => {
   });
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-4">
       <div>
         <p className="text-2xl font-bold text-black">Jenis Transaksi</p>
       </div>
-      <div className="flex flex-col gap-2">
-        <div>
-          <Popover>
-            <PopoverTrigger>
-              <button className="flex items-center gap-2 rounded-lg bg-amber-300 p-2">
-                <PlusCircle className="text-sm" />
-                <p className="text-sm font-bold">Buat</p>
+      <div className=" rounded-lg border-2 border-neutral-500 bg-neutral-100 p-3">
+        <Popover>
+          <PopoverTrigger>
+            <button className="flex items-center gap-2 rounded-lg border-2 border-neutral-500 bg-amber-300 p-2">
+              <PlusCircle className="text-sm" />
+              <p className="text-sm font-bold">Buat</p>
+            </button>
+          </PopoverTrigger>
+          <PopoverContent align="start">
+            <div className="flex flex-col gap-2">
+              <Form {...formCreate}>
+                <FormField
+                  control={formCreate.control}
+                  name="nama"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-archivo">
+                        Nama Jenis Transaksi
+                      </FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </Form>
+              <button
+                onClick={async () => {
+                  onSubmitCreate();
+                }}
+                className="rounded-lg bg-amber-300 p-2 text-sm font-bold shadow-lg">
+                Simpan
               </button>
-            </PopoverTrigger>
-            <PopoverContent align="start">
-              <div className="flex flex-col gap-2">
-                <Form {...formCreate}>
-                  <FormField
-                    control={formCreate.control}
-                    name="nama"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="font-archivo">
-                          Nama Jenis Transaksi
-                        </FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                </Form>
-                <button
-                  onClick={async () => {
-                    onSubmitCreate();
-                  }}
-                  className="rounded-lg bg-amber-300 p-2 text-sm font-bold shadow-lg">
-                  Simpan
-                </button>
-              </div>
-            </PopoverContent>
-          </Popover>
-        </div>
-        <table className="w-full table-auto border-collapse overflow-hidden rounded-lg">
+            </div>
+          </PopoverContent>
+        </Popover>
+      </div>
+      <div className="flex flex-col gap-2">
+        <table className="w-full table-auto border-collapse border-2 border-neutral-500 text-sm">
           <thead>
             <tr className="border-b-2 border-neutral-500 bg-amber-300">
-              <th className="w-0 px-4 py-3 text-center font-semibold">No.</th>
-              <th className="px-4 py-3 text-center font-semibold">
+              <th className="w-0 px-3 py-2 text-center font-semibold">No.</th>
+              <th className="px-3 py-2 text-center font-semibold">
                 Nama Jenis Transaksi
               </th>
-              <th className="px-4 py-2 text-center font-semibold"></th>
+              <th className="px-3 py-2 text-center font-semibold"></th>
             </tr>
           </thead>
           <tbody>
@@ -166,15 +166,16 @@ export const JenisTransaksi = () => {
 
                 return (
                   <tr key={id} className="border-b even:bg-neutral-50">
-                    <td className="p-3 text-center">{index + 1}.</td>
-                    <td className="p-2">{nama}</td>
-                    <td className="p-2 text-center">
-                      <div className="flex items-center justify-end gap-4">
+                    <td className="border-2 border-neutral-500 p-2 text-center">
+                      {index + 1}.
+                    </td>
+                    <td className="border-2 border-neutral-500 p-2">{nama}</td>
+                    <td className="w-1/12 border-2 border-neutral-500 p-2 text-center">
+                      <div className="flex items-center justify-center gap-2">
                         <Popover>
                           <PopoverTrigger>
-                            <button className="flex items-center gap-2 rounded-lg bg-neutral-500 p-2 text-white">
-                              <Edit05 className="flex-shrink-0 text-sm text-white" />
-                              <p className="text-sm">Edit</p>
+                            <button className="flex items-center gap-2 rounded-lg bg-amber-300 p-2 text-white">
+                              <Edit className="flex-shrink-0 text-sm text-neutral-900" />
                             </button>
                           </PopoverTrigger>
                           <PopoverContent>
@@ -213,7 +214,6 @@ export const JenisTransaksi = () => {
                           }}
                           className="flex items-center gap-2 rounded-lg bg-red-500 p-2 text-white">
                           <Delete className="flex-shrink-0 text-sm text-white" />
-                          <p className="text-sm">Hapus</p>
                         </button>
                       </div>
                     </td>

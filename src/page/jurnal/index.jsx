@@ -8,7 +8,7 @@ import React, {
 import { useReactToPrint } from "react-to-print";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { id } from "date-fns/locale";
+import { id, tr } from "date-fns/locale";
 import axios from "axios";
 
 import { cn } from "../../utils/cn";
@@ -128,10 +128,10 @@ export const Jurnal = () => {
                     selected={tanggalAwal}
                     onSelect={setTanggalAwal}
                     initialFocus
-                    disabled={{
-                      after: new Date(),
-                      before: new Date(oldestDate),
-                    }}
+                    // disabled={{
+                    //   after: new Date(),
+                    //   before: new Date(oldestDate),
+                    // }}
                   />
                 </PopoverContent>
               </Popover>
@@ -160,10 +160,10 @@ export const Jurnal = () => {
                     selected={tanggalAkhir}
                     onSelect={setTanggalAkhir}
                     initialFocus
-                    disabled={{
-                      after: new Date(),
-                      before: new Date(oldestDate),
-                    }}
+                    // disabled={{
+                    //   after: new Date(),
+                    //   before: new Date(oldestDate),
+                    // }}
                   />
                 </PopoverContent>
               </Popover>
@@ -205,37 +205,21 @@ export const Jurnal = () => {
           </button>
         </div>
         <div>
-          <table className="w-full table-auto border-collapse rounded-lg border-2 border-neutral-500 text-sm">
+          <table className="w-full border-collapse rounded-lg border-2 border-neutral-500 text-sm">
             <thead>
-              <tr className="border-b-2 bg-amber-300">
-                <th className="border-2 border-neutral-500 p-3 text-center">
-                  Tanggal
-                </th>
-                <th className="border-2 border-neutral-500 p-3 text-center">
-                  Transaksi
-                </th>
-                <th className="border-2 border-neutral-500 p-3 text-center">
-                  Nama Akun
-                </th>
-                <th className="border-2 border-neutral-500 p-3 text-center">
-                  Keterangan
-                </th>
-                <th className="border-2 border-neutral-500 p-3 text-center">
-                  Jumlah
-                </th>
-                <th className="border-2 border-neutral-500 p-3 text-center">
-                  Akun
-                </th>
-                <th className="border-2 border-neutral-500 p-3 text-center">
-                  Debet
-                </th>
-                <th className="border-2 border-neutral-500 p-3 text-center">
-                  Kredit
-                </th>
+              <tr className="bg-amber-300">
+                <th className="p-2 text-center">Tanggal</th>
+                <th className="p-2 text-center">Transaksi</th>
+                <th className="p-2 text-center">Nama Akun</th>
+                <th className="p-2 text-center">Keterangan</th>
+                <th className="p-2 text-center">Jumlah</th>
+                <th className="p-2 text-center">Akun</th>
+                <th className="p-2 text-center">Debet</th>
+                <th className="p-2 text-center">Kredit</th>
               </tr>
             </thead>
             <tbody>
-              {!!transaksiData &&
+              {!!transaksiData && transaksiData.length !== 0 ? (
                 transaksiData.map((item, index) => {
                   const { id } = item;
 
@@ -387,7 +371,16 @@ export const Jurnal = () => {
                       )}
                     </Fragment>
                   );
-                })}
+                })
+              ) : (
+                <tr>
+                  <td
+                    colSpan={20}
+                    className="border-2 border-neutral-500 p-4 text-center text-sm text-neutral-900">
+                    Data Kosong
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
@@ -469,37 +462,21 @@ const DokumenJurnal = forwardRef((props, ref) => {
             </div>
           )}
         </div>
-        <table className="w-full table-auto border-collapse rounded-lg border-2 text-[8pt]">
+        <table className="w-full border-collapse rounded-lg border-2 border-neutral-500 text-[8pt]">
           <thead>
-            <tr className="border-b-2 bg-amber-300">
-              <th className="border-2 border-neutral-500 px-4 py-3 text-center">
-                Tanggal
-              </th>
-              <th className="border-2 border-neutral-500 px-4 py-3 text-center">
-                Transaksi
-              </th>
-              <th className="border-2 border-neutral-500 px-4 py-3 text-center">
-                Nama Akun
-              </th>
-              <th className="border-2 border-neutral-500 px-4 py-3 text-center">
-                Keterangan
-              </th>
-              <th className="border-2 border-neutral-500 px-4 py-3 text-center">
-                Jumlah
-              </th>
-              <th className="border-2 border-neutral-500 px-4 py-3 text-center">
-                Akun
-              </th>
-              <th className="border-2 border-neutral-500 px-4 py-3 text-center">
-                Debet
-              </th>
-              <th className="border-2 border-neutral-500 px-4 py-3 text-center">
-                Kredit
-              </th>
+            <tr className="border bg-amber-300">
+              <th className="px-3 py-2 text-center">Tanggal</th>
+              <th className="px-3 py-2 text-center">Transaksi</th>
+              <th className="px-3 py-2 text-center">Nama Akun</th>
+              <th className="px-3 py-2 text-center">Keterangan</th>
+              <th className="px-3 py-2 text-center">Jumlah</th>
+              <th className="px-3 py-2 text-center">Akun</th>
+              <th className="px-3 py-2 text-center">Debet</th>
+              <th className="px-3 py-2 text-center">Kredit</th>
             </tr>
           </thead>
           <tbody>
-            {!!transaksiData &&
+            {!!transaksiData && transaksiData.length !== 0 ? (
               transaksiData.map((item, index) => {
                 const { id } = item;
 
@@ -652,7 +629,16 @@ const DokumenJurnal = forwardRef((props, ref) => {
                     )}
                   </Fragment>
                 );
-              })}
+              })
+            ) : (
+              <tr>
+                <td
+                  colSpan={20}
+                  className="border-2 border-neutral-500 p-4 text-center text-neutral-900">
+                  Data Kosong
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

@@ -255,10 +255,10 @@ export const RekapJurnal = () => {
                     selected={tanggalAwal}
                     onSelect={setTanggalAwal}
                     initialFocus
-                    disabled={{
-                      after: new Date(),
-                      before: new Date(oldestDate),
-                    }}
+                    // disabled={{
+                    //   after: new Date(),
+                    //   before: new Date(oldestDate),
+                    // }}
                   />
                 </PopoverContent>
               </Popover>
@@ -287,10 +287,10 @@ export const RekapJurnal = () => {
                     selected={tanggalAkhir}
                     onSelect={setTanggalAkhir}
                     initialFocus
-                    disabled={{
-                      after: new Date(),
-                      before: new Date(oldestDate),
-                    }}
+                    // disabled={{
+                    //   after: new Date(),
+                    //   before: new Date(oldestDate),
+                    // }}
                   />
                 </PopoverContent>
               </Popover>
@@ -327,7 +327,7 @@ export const RekapJurnal = () => {
               </tr>
             </thead>
             <tbody>
-              {!!rekapJurnalData &&
+              {!!rekapJurnalData && rekapJurnalData.length !== 0 ? (
                 rekapJurnalData.map((data) => {
                   const {
                     namaAkunTransaksi,
@@ -347,7 +347,16 @@ export const RekapJurnal = () => {
                       </td>
                     </tr>
                   );
-                })}
+                })
+              ) : (
+                <tr>
+                  <td
+                    colSpan={20}
+                    className="border-2 border-neutral-500 p-4 text-center text-sm text-neutral-900">
+                    Data Kosong
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
@@ -432,7 +441,7 @@ const DokumenRekapJurnal = forwardRef((props, ref) => {
           )}
         </div>
         <div>
-          <table className="w-full border-collapse border-2 border-neutral-500 text-sm">
+          <table className="w-full border-collapse border-2 border-neutral-500 text-[8pt]">
             <thead className="bg-amber-300">
               <tr>
                 <th
@@ -456,7 +465,7 @@ const DokumenRekapJurnal = forwardRef((props, ref) => {
               </tr>
             </thead>
             <tbody>
-              {!!rekapJurnalData &&
+              {!!rekapJurnalData && rekapJurnalData.length !== 0 ? (
                 rekapJurnalData.map((data) => {
                   const {
                     namaAkunTransaksi,
@@ -476,7 +485,16 @@ const DokumenRekapJurnal = forwardRef((props, ref) => {
                       </td>
                     </tr>
                   );
-                })}
+                })
+              ) : (
+                <tr>
+                  <td
+                    colSpan={20}
+                    className="border-2 border-neutral-500 p-4 text-center text-neutral-900">
+                    Data Kosong
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

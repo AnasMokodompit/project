@@ -671,55 +671,6 @@ export const Akun = () => {
                             </div>
                           </DialogContent>
                         </Dialog>
-                        {/* <Popover>
-                          <PopoverTrigger>
-                            <button className="flex items-center gap-2 rounded-lg bg-amber-300 p-2 text-white">
-                              <Edit className="flex-shrink-0 text-sm text-neutral-900" />
-                            </button>
-                          </PopoverTrigger>
-                          <PopoverContent>
-                            <div className="flex flex-col gap-2">
-                              <Form {...form}>
-                                <FormField
-                                  control={form.control}
-                                  name="kode"
-                                  render={({ field }) => (
-                                    <FormItem>
-                                      <FormLabel className="font-archivo">
-                                        Kode
-                                      </FormLabel>
-                                      <FormControl>
-                                        <Input {...field} />
-                                      </FormControl>
-                                    </FormItem>
-                                  )}
-                                />
-                                <FormField
-                                  control={form.control}
-                                  name="nama"
-                                  render={({ field }) => (
-                                    <FormItem>
-                                      <FormLabel className="font-archivo">
-                                        Nama Akun Transaksi
-                                      </FormLabel>
-                                      <FormControl>
-                                        <Input {...field} />
-                                      </FormControl>
-                                    </FormItem>
-                                  )}
-                                />
-                              </Form>
-                              <button
-                                onClick={async () => {
-                                  setNamaAkunTransaksiID(id);
-                                  onSubmitUpdate();
-                                }}
-                                className="rounded-lg bg-amber-300 p-2 text-sm font-bold shadow-lg">
-                                Perbarui
-                              </button>
-                            </div>
-                          </PopoverContent>
-                        </Popover> */}
                         <button
                           onClick={() => {
                             setNamaAkunTransaksiID(id);
