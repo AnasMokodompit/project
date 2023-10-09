@@ -19,6 +19,10 @@ import { LabaRugi } from "./page/laba-rugi";
 import { SaldoAwal } from "./page/saldo-awal";
 import { RekapJurnal } from "./page/rekap-jurnal";
 import { Pesan } from "./page/pesan";
+import { PenjualanLangsung } from "./page/laporan-pajak/penjualan-langsung";
+import { PenjualanWeb } from "./page/laporan-pajak/penjualan-web";
+import { PengadaanMeubel as LaporanPajakPengadaanMeubel } from "./page/laporan-pajak/pengadaan-meubel";
+import { PengadaanMeubel as PenjualanPengadaanMeubel } from "./page/penjualan/pengadaan-meubel";
 
 // Layouts
 import { LayoutSidebar } from "./layouts";
@@ -33,19 +37,37 @@ function App() {
         <Route path="/beranda" element={<Beranda />} />
         <Route path="/customer" element={<Customer />} />
         <Route element={<LayoutSidebar />}>
-          <Route path="/jenis-transaksi" element={<JenisTransaksi />} />
-          <Route path="/order" element={<OrderAdmin />} />
-          <Route path="/product" element={<ProductAdmin />} />
-          <Route path="/akun" element={<Akun />} />
-          <Route path="/jurnal" element={<Jurnal />} />
-          <Route path="/transaksi" element={<Transaksi />} />
-          <Route path="/order/custom" element={<PesananCustom />} />
-          <Route path="/bahan-baku" element={<PersediaanBahanBaku />} />
-          <Route path="/posisi-keuangan" element={<PosisiKeuangan />} />
-          <Route path="/laba-rugi" element={<LabaRugi />} />
-          <Route path="/saldo-awal" element={<SaldoAwal />} />
-          <Route path="/rekap-jurnal" element={<RekapJurnal />} />
           <Route path="/pesan" element={<Pesan />} />
+          <Route path="/keuangan">
+            <Route path="akun" element={<Akun />} />
+            <Route path="saldo-awal" element={<SaldoAwal />} />
+            <Route path="jenis-transaksi" element={<JenisTransaksi />} />
+            <Route path="transaksi" element={<Transaksi />} />
+            <Route path="jurnal" element={<Jurnal />} />
+            <Route path="rekap-jurnal" element={<RekapJurnal />} />
+            <Route path="posisi-keuangan" element={<PosisiKeuangan />} />
+            <Route path="laba-rugi" element={<LabaRugi />} />
+          </Route>
+          <Route path="/laporan-pajak">
+            <Route path="penjualan-langsung" element={<PenjualanLangsung />} />
+            <Route path="penjualan-web" element={<PenjualanWeb />} />
+            <Route
+              path="pengadaan-meubel"
+              element={<LaporanPajakPengadaanMeubel />}
+            />
+          </Route>
+          <Route path="/penjualan">
+            <Route path="pesanan" element={<OrderAdmin />} />
+            <Route path="pesanan-custom" element={<PesananCustom />} />
+            <Route
+              path="pengadaan-meubel"
+              element={<PenjualanPengadaanMeubel />}
+            />
+          </Route>
+          <Route path="/produksi">
+            <Route path="produk" element={<ProductAdmin />} />
+            <Route path="bahan-baku" element={<PersediaanBahanBaku />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

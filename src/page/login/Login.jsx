@@ -30,7 +30,7 @@ function Login() {
           // document.cookie = "REFRESH_TOKEN=" + res.data.data.token
           const decode = jwt(res.data.data.token);
           if (decode.rolesId === 1) {
-            navigate("/product");
+            navigate("/produksi/produk");
           } else {
             navigate("/");
           }

@@ -126,6 +126,8 @@ export const LabaRugi = () => {
       saldoPendapatanBunga - saldoBebanBunga;
     const saldoTotalLabaRugiUsaha =
       saldoTotalLabaRugiOperasi - saldoTotalPendapatanDanBebanLainLain;
+    const saldoTotalLabaRugiUsahaPPh1 = 0.005 * saldoTotalLabaRugiUsaha;
+    const saldoTotalLabaRugiUsahaPPh2 = 0.5 * 0.22 * saldoTotalLabaRugiUsaha;
 
     // console.log(labaRugiData);
 
@@ -576,6 +578,26 @@ export const LabaRugi = () => {
                     colSpan={1}
                     className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalLabaRugiUsaha)}
+                  </td>
+                </tr>
+                <tr className="border-2 border-neutral-500 bg-amber-300">
+                  <td colSpan={3} className="px-4 py-1 text-left font-bold">
+                    PPh 0.5%
+                  </td>
+                  <td
+                    colSpan={1}
+                    className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle">
+                    {convertIDRCurrency(saldoTotalLabaRugiUsahaPPh1)}
+                  </td>
+                </tr>
+                <tr className="border-2 border-neutral-500 bg-amber-300">
+                  <td colSpan={3} className="px-4 py-1 text-left font-bold">
+                    PPh 50%
+                  </td>
+                  <td
+                    colSpan={1}
+                    className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle">
+                    {convertIDRCurrency(saldoTotalLabaRugiUsahaPPh2)}
                   </td>
                 </tr>
               </tbody>

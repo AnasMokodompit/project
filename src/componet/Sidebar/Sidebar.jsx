@@ -108,7 +108,7 @@ function Sidebar({ nameSdiber }) {
               <AccordionContent>
                 <ul className="flex w-full flex-col gap-4">
                   <NavLink
-                    to="/akun"
+                    to="/keuangan/akun"
                     className="transition-colors hover:text-amber-300 hover:no-underline">
                     <div className="flex items-center gap-3">
                       <CoinsStacked01 className="flex-shrink-0 text-2xl" />
@@ -116,7 +116,7 @@ function Sidebar({ nameSdiber }) {
                     </div>
                   </NavLink>
                   <NavLink
-                    to="/saldo-awal"
+                    to="/keuangan/saldo-awal"
                     className="transition-colors hover:text-amber-300 hover:no-underline">
                     <div className="flex items-center gap-3">
                       <Coins04 className="flex-shrink-0 text-2xl" />
@@ -124,7 +124,7 @@ function Sidebar({ nameSdiber }) {
                     </div>
                   </NavLink>
                   <NavLink
-                    to="/jenis-transaksi"
+                    to="/keuangan/jenis-transaksi"
                     className="transition-colors hover:text-amber-300 hover:no-underline">
                     <div className="flex items-center gap-3">
                       <Coins03 className="flex-shrink-0 text-2xl" />
@@ -132,7 +132,7 @@ function Sidebar({ nameSdiber }) {
                     </div>
                   </NavLink>
                   <NavLink
-                    to="/transaksi"
+                    to="/keuangan/transaksi"
                     className="transition-colors hover:text-amber-300 hover:no-underline">
                     <div className="flex items-center gap-3">
                       <CoinSwap02 className="flex-shrink-0 text-2xl" />
@@ -140,7 +140,7 @@ function Sidebar({ nameSdiber }) {
                     </div>
                   </NavLink>
                   <NavLink
-                    to="/jurnal"
+                    to="/keuangan/jurnal"
                     className="transition-colors hover:text-amber-300 hover:no-underline">
                     <div className="flex items-center gap-3">
                       <CreditCard01 className="flex-shrink-0 text-2xl" />
@@ -148,7 +148,7 @@ function Sidebar({ nameSdiber }) {
                     </div>
                   </NavLink>
                   <NavLink
-                    to="/rekap-jurnal"
+                    to="/keuangan/rekap-jurnal"
                     className="transition-colors hover:text-amber-300 hover:no-underline">
                     <div className="flex items-center gap-3">
                       <CreditCardCheck className="flex-shrink-0 text-2xl" />
@@ -156,7 +156,7 @@ function Sidebar({ nameSdiber }) {
                     </div>
                   </NavLink>
                   <NavLink
-                    to="/posisi-keuangan"
+                    to="/keuangan/posisi-keuangan"
                     className="transition-colors hover:text-amber-300 hover:no-underline">
                     <div className="flex items-center gap-3">
                       <CoinsHand className="flex-shrink-0 text-2xl" />
@@ -164,7 +164,7 @@ function Sidebar({ nameSdiber }) {
                     </div>
                   </NavLink>
                   <NavLink
-                    to="/laba-rugi"
+                    to="/keuangan/laba-rugi"
                     className="transition-colors hover:text-amber-300 hover:no-underline">
                     <div className="flex items-center gap-3">
                       <Scales02 className="flex-shrink-0 text-2xl" />
@@ -177,6 +177,42 @@ function Sidebar({ nameSdiber }) {
             <AccordionItem value="item-2">
               <AccordionTrigger className="hover:no-underline focus:outline-none active:outline-none">
                 <div className="flex items-center gap-3">
+                  <CoinsHand className="flex-shrink-0 text-2xl" />
+                  <p>Laporan Pajak</p>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <ul className="flex w-full flex-col gap-4">
+                  <NavLink
+                    to="/laporan-pajak/penjualan-web"
+                    className="transition-colors hover:text-amber-300 hover:no-underline">
+                    <div className="flex items-center gap-3">
+                      <CoinsStacked01 className="flex-shrink-0 text-2xl" />
+                      <p>Penjualan Web</p>
+                    </div>
+                  </NavLink>
+                  <NavLink
+                    to="/laporan-pajak/penjualan-langsung"
+                    className="transition-colors hover:text-amber-300 hover:no-underline">
+                    <div className="flex items-center gap-3">
+                      <CoinsStacked01 className="flex-shrink-0 text-2xl" />
+                      <p>Penjualan Langsung</p>
+                    </div>
+                  </NavLink>
+                  <NavLink
+                    to="/laporan-pajak/pengadaan-meubel"
+                    className="transition-colors hover:text-amber-300 hover:no-underline">
+                    <div className="flex items-center gap-3">
+                      <CoinsStacked01 className="flex-shrink-0 text-2xl" />
+                      <p>Pengadaan Meubel</p>
+                    </div>
+                  </NavLink>
+                </ul>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-3">
+              <AccordionTrigger className="hover:no-underline focus:outline-none active:outline-none">
+                <div className="flex items-center gap-3">
                   <ShoppingCart02 className="flex-shrink-0 text-2xl" />
                   <p>Penjualan</p>
                 </div>
@@ -184,7 +220,7 @@ function Sidebar({ nameSdiber }) {
               <AccordionContent>
                 <ul className="flex w-full flex-col gap-4">
                   <NavLink
-                    to="/order"
+                    to="/penjualan/pesanan"
                     className="transition-colors hover:text-amber-300 hover:no-underline">
                     <div className="flex items-center gap-3">
                       <CreditCardPlus className="flex-shrink-0 text-2xl" />
@@ -192,17 +228,25 @@ function Sidebar({ nameSdiber }) {
                     </div>
                   </NavLink>
                   <NavLink
-                    to="/order/custom"
+                    to="/penjualan/pesanan-custom"
                     className="transition-colors hover:text-amber-300 hover:no-underline">
                     <div className="flex items-center gap-3">
                       <CreditCardEdit className="flex-shrink-0 text-2xl" />
                       <p>Pesanan Custom</p>
                     </div>
                   </NavLink>
+                  <NavLink
+                    to="/penjualan/pengadaan-meubel"
+                    className="transition-colors hover:text-amber-300 hover:no-underline">
+                    <div className="flex items-center gap-3">
+                      <CreditCardPlus className="flex-shrink-0 text-2xl" />
+                      <p>Pengadaan Meubel</p>
+                    </div>
+                  </NavLink>
                 </ul>
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value="item-3">
+            <AccordionItem value="item-4">
               <AccordionTrigger className="hover:no-underline focus:outline-none active:outline-none">
                 <div className="flex items-center gap-3">
                   <Building07 className="flex-shrink-0 text-2xl" />
@@ -212,19 +256,19 @@ function Sidebar({ nameSdiber }) {
               <AccordionContent>
                 <ul className="flex w-full flex-col gap-4">
                   <NavLink
-                    to="/bahan-baku"
-                    className="transition-colors hover:text-amber-300 hover:no-underline">
-                    <div className="flex items-center gap-3">
-                      <Server01 className="flex-shrink-0 text-2xl" />
-                      <p>Persediaan Bahan Baku</p>
-                    </div>
-                  </NavLink>
-                  <NavLink
-                    to="/product"
+                    to="/produksi/produk"
                     className="transition-colors hover:text-amber-300 hover:no-underline">
                     <div className="flex items-center gap-3">
                       <Box className="flex-shrink-0 text-2xl" />
                       <p>Produk</p>
+                    </div>
+                  </NavLink>
+                  <NavLink
+                    to="/produksi/bahan-baku"
+                    className="transition-colors hover:text-amber-300 hover:no-underline">
+                    <div className="flex items-center gap-3">
+                      <Server01 className="flex-shrink-0 text-2xl" />
+                      <p>Persediaan Bahan Baku</p>
                     </div>
                   </NavLink>
                 </ul>
