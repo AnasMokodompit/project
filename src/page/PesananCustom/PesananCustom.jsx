@@ -416,7 +416,8 @@ const handleSearchBahanBaku = (e) => {
         nama: namaPemesan,
         nomor: nomorPemesan,
         email: emailPemesan,
-        alamat: alamatPemesan
+        alamat: alamatPemesan,
+        status: 1
       },
       order: dataPesananCustom,
     }

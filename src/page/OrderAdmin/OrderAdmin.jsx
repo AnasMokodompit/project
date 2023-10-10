@@ -524,7 +524,7 @@ function OrderAdmin() {
                               <div className={style.imgOrder}>
                                 <img
                                   src={
-                                    data?.products?.product_images[0].url_image
+                                    data?.products?.product_images[0]?.url_image
                                   }
                                   alt=""
                                 />

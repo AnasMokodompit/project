@@ -101,6 +101,7 @@ function Navbar() {
       email: email,
       noHp: noHp,
       alamat: alamat,
+      status: 0
     };
     axios
       .post(`${process.env.REACT_APP_BASE_API}/orders`, data)
