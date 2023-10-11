@@ -478,7 +478,11 @@ export const PengadaanMeubel = () => {
                             </button>
                           </div>
                         </div>
-                        <button className="absolute right-2 top-2 rounded-lg bg-red-500 p-1 text-white">
+                        <button
+                          onClick={() => {
+                            orderDataDraf.slice(index - 1, 1);
+                          }}
+                          className="absolute right-2 top-2 rounded-lg bg-red-500 p-1 text-white">
                           <X className="text-base" />
                         </button>
                       </div>

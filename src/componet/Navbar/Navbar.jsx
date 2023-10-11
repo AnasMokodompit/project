@@ -16,7 +16,7 @@ import {
   kurangOrder,
   saveOrder,
   tambahMeterOrder,
-  kurangMeterOrder
+  kurangMeterOrder,
 } from "../../config/actions/OrderAction";
 
 // Icons
@@ -84,11 +84,11 @@ function Navbar() {
 
   const hendleTambahMeterOrder = (id, harga) => {
     dispatch(tambahMeterOrder({ id: id, jumlah_meter: 1, harga: harga }));
-  }
+  };
 
   const hendleKurangMeterOrder = (id, harga) => {
     dispatch(kurangMeterOrder({ id: id, jumlah_meter: 1, harga: harga }));
-  }
+  };
 
   const hendleHapusOrder = (id) => {
     dispatch(deleteOrder({ id: id }));
@@ -101,7 +101,7 @@ function Navbar() {
       email: email,
       noHp: noHp,
       alamat: alamat,
-      status: 0
+      status: 0,
     };
     axios
       .post(`${process.env.REACT_APP_BASE_API}/orders`, data)
@@ -169,181 +169,20 @@ function Navbar() {
 
   return (
     <div className="flex flex-col gap-10">
-      {/*
-            <div className={fix ? `${style.navbar} ${style.fixed}` : `${style.navbar} ${style.nonFixed}`}>
-        {posisionNavbar === "" && (
-          <ul className={style.navbarContent}>
-            <img className={style.ImgNavbar} src={ImgNavbar} alt="" />
-            <li>
-              <Link
-                className={activeNavbar === "hero" ? style.activeNavbar : ""}
-                to="hero"
-                spy={true}
-                smooth={true}
-                offset={-100}
-                duration={500}
-                onClick={() => setActiveNavbar("hero")}>
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                className={activeNavbar === "tentang" ? style.activeNavbar : ""}
-                to="tentang"
-                spy={true}
-                smooth={true}
-                offset={-100}
-                duration={500}
-                onClick={() => setActiveNavbar("tentang")}>
-                Tentang
-              </Link>
-            </li>
-            <li>
-              <Link
-                className={activeNavbar === "contactus" ? style.activeNavbar : ""}
-                to="contactus"
-                spy={true}
-                smooth={true}
-                offset={-150}
-                duration={500}
-                onClick={() => setActiveNavbar("contactus")}>
-                Contact Us
-              </Link>
-            </li>
-          </ul>
-        )}
-        {posisionNavbar === "menu" && (
-          <NavLink to="/">
-            <span className={style.linkHome} onClick={() => setPosisionNavbar("")}>
-              Menu
-            </span>
-          </NavLink>
-        )}
-        <div className={style.main}>
-          {id ? (
-            <>
-              <NavLink to="/customer">
-                <span
-                  className={`material-symbols-outlined ${style.icon}`}
-                  onClick={() => setPosisionNavbar("menu")}>
-                  menu
-                </span>
-              </NavLink>
-              <NavLink to="/customer/profile">
-                <span className={`material-symbols-outlined ${style.icon}`}>person</span>
-              </NavLink>
-            </>
-          ) : (
-            <NavLink to="/login">
-              <span className={`material-symbols-outlined ${style.icon}`}>login</span>
-            </NavLink>
-          )}
-          <span className={`material-symbols-outlined ${style.icon}`}>chat</span>
-          <div className={style.Orderan}>
-            <span
-              className={`material-symbols-outlined ${style.icon}`}
-              onClick={() => hendleOpsiClick()}>
-              shopping_cart
-            </span>
-            {jumlahOrder?.length !== 0 && (
-              <span className={style.jumlah}>{jumlahOrder?.length}</span>
-            )}
-          </div>
-        </div>
-        {tampilOrderan === "1" && <DataOrder tampilOrderan={hendlePopUpOrder.bind(this)} />}
-      </div>
-      */}
-
-      {/* <div className={fix ? `${style.navbar} ${style.fixed}` : `${style.navbar} ${style.nonFixed}`}>
-        {posisionNavbar === "" && (
-          <ul className={style.navbarContent}>
-            <img className={style.ImgNavbar} src={ImgNavbar} alt="" />
-            <li>
-              <Link
-                className={activeNavbar === "hero" ? style.activeNavbar : ""}
-                to="hero"
-                spy={true}
-                smooth={true}
-                offset={-100}
-                duration={500}
-                onClick={() => setActiveNavbar("hero")}>
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                className={activeNavbar === "tentang" ? style.activeNavbar : ""}
-                to="tentang"
-                spy={true}
-                smooth={true}
-                offset={-100}
-                duration={500}
-                onClick={() => setActiveNavbar("tentang")}>
-                Tentang
-              </Link>
-            </li>
-            <li>
-              <Link
-                className={activeNavbar === "contactus" ? style.activeNavbar : ""}
-                to="contactus"
-                spy={true}
-                smooth={true}
-                offset={-150}
-                duration={500}
-                onClick={() => setActiveNavbar("contactus")}>
-                Contact Us
-              </Link>
-            </li>
-          </ul>
-        )}
-        {posisionNavbar === "menu" && (
-          <NavLink to="/">
-            <span className={style.linkHome} onClick={() => setPosisionNavbar("")}>
-              Menu
-            </span>
-          </NavLink>
-        )}
-        <div className={style.main}>
-          {id ? (
-            <>
-              <NavLink to="/customer">
-                <span
-                  className={`material-symbols-outlined ${style.icon}`}
-                  onClick={() => setPosisionNavbar("menu")}>
-                  menu
-                </span>
-              </NavLink>
-              <NavLink to="/customer/profile">
-                <span className={`material-symbols-outlined ${style.icon}`}>person</span>
-              </NavLink>
-            </>
-          ) : (
-            <NavLink to="/login">
-              <span className={`material-symbols-outlined ${style.icon}`}>login</span>
-            </NavLink>
-          )}
-          <span className={`material-symbols-outlined ${style.icon}`}>chat</span>
-          <div className={style.Orderan}>
-            <span
-              className={`material-symbols-outlined ${style.icon}`}
-              onClick={() => hendleOpsiClick()}>
-              shopping_cart
-            </span>
-            {jumlahOrder?.length !== 0 && (
-              <span className={style.jumlah}>{jumlahOrder?.length}</span>
-            )}
-          </div>
-        </div>
-        {tampilOrderan === "1" && <DataOrder tampilOrderan={hendlePopUpOrder.bind(this)} />}
-      </div> */}
-
       <nav className="fixed z-50 flex w-full items-center justify-between bg-amber-300 p-4 font-archivo text-lg">
         <div>
-          <NavLink to="/" className="flex items-center gap-4">
+          {/* <NavLink to="/" className="flex items-center gap-4">
             <Hurricane02 className="text-2xl" />
             <p className="font-archivo text-2xl font-bold uppercase">
               Talongka Jaya
             </p>
+          </NavLink> */}
+          <NavLink to="/">
+            <img
+              src="logo.png"
+              alt="Logo CV Talongka Jaya"
+              className="aspect-auto h-8"
+            />
           </NavLink>
         </div>
         <div>
@@ -418,7 +257,9 @@ function Navbar() {
                           </p>
                           <div className="flex flex-col gap-4">
                             {dataOrder?.map((data, index) => {
-                              {console.log(data)}
+                              {
+                                console.log(data);
+                              }
                               return (
                                 <div className="relative grid grid-cols-3 gap-2 rounded-lg bg-neutral-100 p-2 font-archivo shadow-sm">
                                   <div className="col-span-1 self-center">
@@ -443,55 +284,54 @@ function Navbar() {
                                               harga permeter: {data.harga}
                                             </p>
                                             <p className="flex w-max border-collapse items-center justify-between gap-3 rounded-lg">
-                                              
                                               <button
-                                                  className="flex h-5 w-5 items-center justify-center rounded-md border-2 border-neutral-500 transition-colors hover:border-amber-300 hover:bg-amber-300"
-                                                  onClick={() =>
-                                                    hendleKurangMeterOrder(
-                                                      data.id,
-                                                      data.harga,
-                                                    )
-                                                  }>
-                                                  <Minus className="text-base" />
-                                                </button>
-                                                <p className="w-3 text-center">
-                                                  {data.jumlah_meter}
-                                                </p>
-                                                <button
-                                                  className="flex h-5 w-5 items-center justify-center rounded-md border-2 border-neutral-500 transition-colors hover:border-amber-300 hover:bg-amber-300"
-                                                  onClick={() =>
-                                                    hendleTambahMeterOrder(
-                                                      data.id,
-                                                      data.harga,
-                                                    )
-                                                  }>
-                                                  <Plus className="text-base" />
-                                                </button>
-                                                <span>Meter</span>
+                                                className="flex h-5 w-5 items-center justify-center rounded-md border-2 border-neutral-500 transition-colors hover:border-amber-300 hover:bg-amber-300"
+                                                onClick={() =>
+                                                  hendleKurangMeterOrder(
+                                                    data.id,
+                                                    data.harga,
+                                                  )
+                                                }>
+                                                <Minus className="text-base" />
+                                              </button>
+                                              <p className="w-3 text-center">
+                                                {data.jumlah_meter}
+                                              </p>
+                                              <button
+                                                className="flex h-5 w-5 items-center justify-center rounded-md border-2 border-neutral-500 transition-colors hover:border-amber-300 hover:bg-amber-300"
+                                                onClick={() =>
+                                                  hendleTambahMeterOrder(
+                                                    data.id,
+                                                    data.harga,
+                                                  )
+                                                }>
+                                                <Plus className="text-base" />
+                                              </button>
+                                              <span>Meter</span>
                                             </p>
                                           </>
                                         )}
                                       </div>
                                       <p className={style.cardHarga}>
-                                        {new Intl.NumberFormat("id-ID", {
-                                          style: "currency",
-                                          currency: "IDR",
-                                        })
-                                          .format(data.jumlahHarga)
-                                        //   .replace(/(\.|,)00$/g, "")}
-                                        // {data?.name.toLowerCase() ==
-                                        // "kitcen set"
-                                        //   ? " /meter jalan"
-                                        //   : ""}
-                                        // {data?.name.toLowerCase() ==
-                                        // "set kamar tidur"
-                                        //   ? " /meter jalan"
-                                        //   : ""}
-                                        // {data?.name.toLowerCase() ==
-                                        // "backdrop / partisi ruangan / mini bar"
-                                        //   ? " /meter jalan"
-                                        //   : ""
-                                          }
+                                        {
+                                          new Intl.NumberFormat("id-ID", {
+                                            style: "currency",
+                                            currency: "IDR",
+                                          }).format(data.jumlahHarga)
+                                          //   .replace(/(\.|,)00$/g, "")}
+                                          // {data?.name.toLowerCase() ==
+                                          // "kitcen set"
+                                          //   ? " /meter jalan"
+                                          //   : ""}
+                                          // {data?.name.toLowerCase() ==
+                                          // "set kamar tidur"
+                                          //   ? " /meter jalan"
+                                          //   : ""}
+                                          // {data?.name.toLowerCase() ==
+                                          // "backdrop / partisi ruangan / mini bar"
+                                          //   ? " /meter jalan"
+                                          //   : ""
+                                        }
                                       </p>
                                       <div className="flex w-max border-collapse items-center justify-between gap-3 rounded-lg">
                                         <button

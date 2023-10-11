@@ -640,7 +640,10 @@ const DokumenPosisiKeuangan = forwardRef((props, ref) => {
     return (
       <section ref={ref}>
         <style>{setStyles()}</style>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 font-archivo">
+          <div className="flex w-full items-center justify-center">
+            <img src="/logo-kop.png" alt="" className="aspect-auto h-24" />
+          </div>
           <div className="flex items-center justify-between">
             <div>
               <p className="font-archivo text-xl font-bold">

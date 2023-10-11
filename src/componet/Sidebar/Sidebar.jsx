@@ -90,8 +90,15 @@ function Sidebar({ nameSdiber }) {
     return (
       <div className="relative flex h-full w-full flex-col items-center gap-3 bg-neutral-100 py-4 font-archivo">
         <div className="flex w-full items-center justify-center">
-          <Link to="/" className="text-lg font-bold">
+          {/* <Link to="/" className="text-lg font-bold">
             CV Talongka Jaya
+          </Link> */}
+          <Link to="/">
+            <img
+              src="/logo.png"
+              alt="Logo CV Talongka Jaya"
+              className="aspect-auto h-8"
+            />
           </Link>
         </div>
         <div
