@@ -12,7 +12,9 @@ function ProductAdmin() {
   const [dataProduct, setDataProduct] = useState([]);
   const [dataCategories, setDataCategories] = useState([]);
   const [popUpProduct, setPopUpProduct] = useState(false);
-  const [show, setShow] = useState(5);
+  const [show, setShow] = useState(10);
+  const [namaProdukSearch, setNamaProdukSearch] = useState("")
+  const [KategoriProdukSearch, setKategoriProdukSearch] = useState()
   const [aksi, setAksi] = useState("");
 
   //
@@ -41,7 +43,7 @@ function ProductAdmin() {
 
   const hendleGetAllProduct = async () => {
     await axios
-      .get(`${process.env.REACT_APP_BASE_API}/products?row=${show}`)
+      .get(`${process.env.REACT_APP_BASE_API}/products?row=${show}&search=${namaProdukSearch}&category=${KategoriProdukSearch}`)
       .then((res) => {
         setDataProduct(res.data.data);
         console.log(res.data.data);
@@ -439,7 +441,7 @@ function ProductAdmin() {
   useEffect(() => {
     hendleGetAllProduct();
     hendleGetAllCategory();
-  }, [show]);
+  }, [show, namaProdukSearch, KategoriProdukSearch]);
 
   return (
     <div className={style.container}>
@@ -460,7 +462,7 @@ function ProductAdmin() {
         <div className={style.buttonSearchAndRow}>
           <div className={style.entitas}>
             <span>Show</span>
-            <select name="" id="" onChange={(e) => setShow(e.target.value)}>
+            <select name="" id="" value={show} onChange={(e) => setShow(e.target.value)}>
               <option value={5}>5</option>
               <option value={10}>10</option>
               <option value={25}>25</option>
@@ -469,17 +471,18 @@ function ProductAdmin() {
             </select>
             <span>Entitas</span>
             <div className={style.category}>
-              <select name="" id="">
+              <select name="" id="" onChange={(e) => setKategoriProdukSearch(e.target.value)}>
                 <option value="">All Category</option>
-                <option value="">Meja</option>
-                <option value="">Kursi</option>
-                <option value="">Lemari</option>
+                  {dataCategories.length !== 0 &&
+                    dataCategories.map((data, key) => {
+                      return <option key={key} value={data.id}>{data.name}</option>;
+                    })}
               </select>
             </div>
           </div>
           <div className={style.navbarHome}>
             <div className={`${style.item} ${style.search}`}>
-              <input type="text" placeholder="Search Name" />
+              <input type="text" placeholder="Search Name" onChange={(e) => setNamaProdukSearch(e.target.value)}/>
               <span className="material-symbols-outlined">search</span>
             </div>
           </div>
