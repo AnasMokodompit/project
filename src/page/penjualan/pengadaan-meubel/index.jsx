@@ -45,6 +45,7 @@ import PlusCircle from "../../../Asset/icons/untitled-ui-icons/line/components/P
 import X from "../../../Asset/icons/untitled-ui-icons/line/components/X";
 import Plus from "../../../Asset/icons/untitled-ui-icons/line/components/Plus";
 import Minus from "../../../Asset/icons/untitled-ui-icons/line/components/Minus";
+import { set } from "date-fns";
 
 export const PengadaanMeubel = () => {
   const { dataLogin } = useSelector((tes) => tes.userReducer);
@@ -112,8 +113,11 @@ export const PengadaanMeubel = () => {
   });
 
   const { mutate } = useMutation({
-    mutationFn: async () => {
-      return axios.post(`${process.env.REACT_APP_BASE_API}/pengadaanMeubel`);
+    mutationFn: async (data) => {
+      return axios.post(
+        `${process.env.REACT_APP_BASE_API}/pengadaanMeubel`,
+        data,
+      );
     },
     onSuccess: (data) => {
       console.log(data.data.data);
@@ -154,7 +158,15 @@ export const PengadaanMeubel = () => {
   };
 
   const onSubmit = (data) => {
-    console.log({
+    // console.log({
+    //   user: {
+    //     ...data,
+    //     status: 2,
+    //   },
+    //   order: orderDataDraf,
+    // });
+
+    mutate({
       user: {
         ...data,
         status: 2,
@@ -163,7 +175,9 @@ export const PengadaanMeubel = () => {
     });
   };
 
-  // console.log(produkDataBySelectCombobox);
+  // console.log(produkDataBySelectCombobox);\
+
+  // console.log(orderDataDraf);
 
   return (
     <section className="font-archivo">
@@ -439,7 +453,7 @@ export const PengadaanMeubel = () => {
                         <div className="flex-shrink-0">
                           <img
                             src={urlGambar}
-                            className="block h-24 w-16 rounded-lg"
+                            className="block h-24 w-16 rounded-lg object-cover"
                           />
                         </div>
                         <div className="flex flex-col gap-2">
@@ -480,7 +494,10 @@ export const PengadaanMeubel = () => {
                         </div>
                         <button
                           onClick={() => {
-                            orderDataDraf.slice(index - 1, 1);
+                            const newOrderDataDraf = orderDataDraf.filter(
+                              (order) => order !== data,
+                            );
+                            setOrderDataDraf(newOrderDataDraf);
                           }}
                           className="absolute right-2 top-2 rounded-lg bg-red-500 p-1 text-white">
                           <X className="text-base" />

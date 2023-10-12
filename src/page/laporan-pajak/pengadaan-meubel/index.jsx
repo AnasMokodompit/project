@@ -1,7 +1,9 @@
 import { useState, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
+import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { id } from "date-fns/locale";
+import axios from "axios";
 
 import { cn } from "../../../utils/cn";
 
@@ -29,6 +31,16 @@ export const PengadaanMeubel = () => {
     documentTitle: `Laporan Pajak Penjualan Langsung`,
     bodyClass: "bg-white",
   });
+
+  // const {} = useQuery({
+  //   queryKey: ["laporan-pajak-pengadaan-meubel", tanggalAwal, tanggalAkhir],
+  //   queryFn: async () => {
+  //     return axios.get(`${process.env.REACT_APP_BASE_API}/pengadaanMeubel`);
+  //   },
+  //   onSuccess: (data) => {
+  //     console.log(data.data.data);
+  //   },
+  // });
 
   return (
     <section className="font-archivo">
