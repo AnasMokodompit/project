@@ -23,6 +23,7 @@ import Refresh from "../../../Asset/icons/untitled-ui-icons/line/components/Refr
 export const PengadaanMeubel = () => {
   const [tanggalAwal, setTanggalAwal] = useState();
   const [tanggalAkhir, setTanggalAkhir] = useState();
+  const [pengadaanMeubel, setPengadaanMeubel] = useState()
 
   const refLaporanPajakPengadaanMeubel = useRef();
 
@@ -32,15 +33,24 @@ export const PengadaanMeubel = () => {
     bodyClass: "bg-white",
   });
 
-  // const {} = useQuery({
-  //   queryKey: ["laporan-pajak-pengadaan-meubel", tanggalAwal, tanggalAkhir],
-  //   queryFn: async () => {
-  //     return axios.get(`${process.env.REACT_APP_BASE_API}/pengadaanMeubel`);
-  //   },
-  //   onSuccess: (data) => {
-  //     console.log(data.data.data);
-  //   },
-  // });
+  const {} = useQuery({
+    queryKey: ["laporan-pajak-pengadaan-meubel", tanggalAwal, tanggalAkhir],
+    queryFn: async () => {
+      return axios.get(`${process.env.REACT_APP_BASE_API}/laporanPajak/penjualanMeubel?page=1&row=10`);
+    },
+    onSuccess: (data) => {
+      setPengadaanMeubel(data.data.data?.getDataOrdertAll)
+      console.log(data.data.data.getDataOrdertAll);
+    },
+  });
+
+  const optionsTime = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "Asia/Makassar",
+  };
+  const formatterTime = new Intl.DateTimeFormat("id-ID", optionsTime);
 
   return (
     <section className="font-archivo">
@@ -141,10 +151,72 @@ export const PengadaanMeubel = () => {
                 <th className="px-3 py-2 text-center">PPh 22</th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+              {!!pengadaanMeubel && pengadaanMeubel.length !== 0 ? (
+                pengadaanMeubel.map((item, index) => {
+                  // console.log(item)
+
+                  const {
+                    id,
+                    Price,
+                    pajakOrder: { DPP, PPN, PPh_22 },
+                    product_Orders,
+                    created_at: tanggal,
+                  } = item;
+
+                  return (
+                    <tr key={id}>
+                      <td className="border-2 border-neutral-500 p-2">
+                        {formatterTime.format(new Date(tanggal))}
+                      </td>
+                      <td className="border-2 border-neutral-500 p-2">
+                        <div className="flex gap-1">
+                          {!!product_Orders &&
+                            product_Orders.map((data) => {
+                              console.log(data)
+                              const {
+                                jumlah,
+                                products: { name: nama },
+                              } = data;
+                              return (
+                                <p className="after:content-[',']">{`${nama} : ${jumlah}`}</p>
+                              );
+                            })}
+                        </div>
+                      </td>
+                      <td className="border-2 border-neutral-500 p-2 text-center">
+                        {convertIDRCurrency(Price)}
+                      </td>
+                      <td className="border-2 border-neutral-500 p-2 text-center">
+                        {convertIDRCurrency(DPP)}
+                      </td>
+                      <td className="border-2 border-neutral-500 p-2 text-center">
+                        {convertIDRCurrency(PPN)}
+                      </td>
+                      <td className="border-2 border-neutral-500 p-2 text-center">
+                        {convertIDRCurrency(PPh_22)}
+                      </td>
+                    </tr>
+                  )
+
+                })
+              ) : ""}
+            </tbody>
           </table>
         </div>
       </div>
     </section>
   );
 };
+
+function convertIDRCurrency(value) {
+  const optionsCurrency = {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  };
+  const formatterCurrency = new Intl.NumberFormat("id-ID", optionsCurrency);
+  const convertValue = formatterCurrency.format(value);
+  return convertValue;
+}

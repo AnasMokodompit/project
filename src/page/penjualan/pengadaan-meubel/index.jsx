@@ -121,33 +121,39 @@ export const PengadaanMeubel = () => {
     },
     onSuccess: (data) => {
       console.log(data.data.data);
+      alert('Data Berhasil Ditambahkan')
     },
   });
 
   const onSubmitAddProduk = (data) => {
+    // return console.log(data, produkDataBySelectCombobox)
     const { Deskripsi_produk, harga, ukuran } = data;
 
     const {
       name,
       categories: { id: kategoryId, name: namaKategori },
       product_images,
+      IsPermeter,
     } = produkDataBySelectCombobox;
 
-    setOrderDataDraf([
-      ...orderDataDraf,
-      {
-        name,
-        ukuran,
-        harga,
-        Deskripsi_produk,
-        kategoryId,
-        namaKategori,
-        product_images,
-        jumlah: 1,
-        jumlahHarga: harga,
-        bahanBakuProduk: [...bahanBakuProdukDataDraf],
-      },
-    ]);
+    const option = {
+      name,
+      ukuran,
+      harga,
+      Deskripsi_produk,
+      kategoryId,
+      namaKategori,
+      product_images,
+      jumlah: 1,
+      jumlahHarga: harga,
+      bahanBakuProduk: [...bahanBakuProdukDataDraf],
+    };
+
+    if (IsPermeter == true) {
+      option.jumlah_meter = 1;
+    }
+
+    setOrderDataDraf([...orderDataDraf, option]);
 
     formAddProduk.reset({
       id: null,
@@ -156,6 +162,90 @@ export const PengadaanMeubel = () => {
       harga: 0,
     });
   };
+
+
+  const hendleTambahOrder = (name, Deskripsi_produk) => {
+    const dataPermeterTambah = orderDataDraf.filter(
+      (item) => (item.name == name && item.Deskripsi_produk == Deskripsi_produk && item.jumlah_meter)
+    );
+
+    const itemIndexTambah = orderDataDraf.findIndex(
+      (item) => item.name == name && item.Deskripsi_produk == Deskripsi_produk,
+    );
+    
+    const newArrayDataOrder = [...orderDataDraf];
+    if (itemIndexTambah >= 0 && dataPermeterTambah.length !== 0) {
+      newArrayDataOrder[itemIndexTambah].jumlah += 1;
+      newArrayDataOrder[itemIndexTambah].jumlahHarga = (newArrayDataOrder[itemIndexTambah].harga * newArrayDataOrder[itemIndexTambah].jumlah_meter) * newArrayDataOrder[itemIndexTambah].jumlah ;
+
+      setOrderDataDraf(newArrayDataOrder);
+    }
+    else if (itemIndexTambah >= 0) {
+      newArrayDataOrder[itemIndexTambah].jumlah += 1;
+      newArrayDataOrder[itemIndexTambah].jumlahHarga += newArrayDataOrder[itemIndexTambah].harga;
+
+      setOrderDataDraf(newArrayDataOrder);
+    }
+  };
+
+
+  const hendleKurangOrder = (name, Deskripsi_produk) => {
+    const dataPermeterTambah = orderDataDraf.filter(
+      (item) => (item.name == name && item.Deskripsi_produk == Deskripsi_produk && item.jumlah_meter)
+    );
+
+    const itemIndexTambah = orderDataDraf.findIndex(
+      (item) => item.name == name && item.Deskripsi_produk == Deskripsi_produk,
+    );
+
+    const newArrayDataOrder = [...orderDataDraf];
+    if (itemIndexTambah >= 0  && newArrayDataOrder[itemIndexTambah].jumlah > 1 && dataPermeterTambah.length !== 0) {
+      newArrayDataOrder[itemIndexTambah].jumlah -= 1;
+      newArrayDataOrder[itemIndexTambah].jumlahHarga = (newArrayDataOrder[itemIndexTambah].harga * newArrayDataOrder[itemIndexTambah].jumlah_meter) * newArrayDataOrder[itemIndexTambah].jumlah ;
+
+      setOrderDataDraf(newArrayDataOrder);
+
+    }
+    else if (itemIndexTambah >= 0 && newArrayDataOrder[itemIndexTambah].jumlah > 1) {
+      newArrayDataOrder[itemIndexTambah].jumlah -= 1;
+      newArrayDataOrder[itemIndexTambah].jumlahHarga -= newArrayDataOrder[itemIndexTambah].harga;
+
+      setOrderDataDraf(newArrayDataOrder);
+    }else{
+      setOrderDataDraf(orderDataDraf.filter(item => item.name !== name && item.Deskripsi_produk !== Deskripsi_produk) )
+    }
+  };
+
+  const hendleTambahMeterOrder = (name, Deskripsi_produk, harga) => {
+    const itemIndexTambah = orderDataDraf.findIndex(
+      (item) => item.name == name && item.Deskripsi_produk == Deskripsi_produk,
+    );
+
+    if (itemIndexTambah >= 0) {
+      const newArrayDataOrder = [...orderDataDraf];
+      newArrayDataOrder[itemIndexTambah].jumlah_meter += 1;
+      newArrayDataOrder[itemIndexTambah].jumlahHarga = (newArrayDataOrder[itemIndexTambah].harga * newArrayDataOrder[itemIndexTambah].jumlah_meter) * newArrayDataOrder[itemIndexTambah].jumlah ;
+
+      setOrderDataDraf(newArrayDataOrder);
+    }
+  }
+
+  const hendleKurangMeterOrder = (name, Deskripsi_produk, harga) => {
+    const itemIndexTambah = orderDataDraf.findIndex(
+      (item) => item.name == name && item.Deskripsi_produk == Deskripsi_produk,
+    );
+    
+    const newArrayDataOrder = [...orderDataDraf];
+  
+    if (itemIndexTambah >= 0 && newArrayDataOrder[itemIndexTambah].jumlah > 1) {
+      newArrayDataOrder[itemIndexTambah].jumlah_meter -= 1;
+      newArrayDataOrder[itemIndexTambah].jumlahHarga = (newArrayDataOrder[itemIndexTambah].harga * newArrayDataOrder[itemIndexTambah].jumlah_meter) * newArrayDataOrder[itemIndexTambah].jumlah;
+  
+      setOrderDataDraf(newArrayDataOrder);
+    }else{
+      setOrderDataDraf(orderDataDraf.filter(item => item.name !== name && item.Deskripsi_produk !== Deskripsi_produk) )
+    }
+  }
 
   const onSubmit = (data) => {
     // console.log({
@@ -436,7 +526,7 @@ export const PengadaanMeubel = () => {
                 <p className="text-lg font-bold">Pembeli</p>
                 {!!orderDataDraf &&
                   orderDataDraf.map((data, index) => {
-                    // console.log(data);
+                    console.log(data);
                     const {
                       name,
                       namaKategori,
@@ -444,6 +534,9 @@ export const PengadaanMeubel = () => {
                       Deskripsi_produk,
                       jumlahHarga,
                       product_images,
+                      jumlah,
+                      jumlah_meter,
+                      harga
                     } = data;
 
                     const urlGambar = product_images[0]?.url_image;
@@ -479,15 +572,66 @@ export const PengadaanMeubel = () => {
                               </tr>
                             </tbody>
                           </table>
+                          {jumlah_meter && (
+                            <>
+                              <tr></tr>
+                              <p className="text-xs font-bold">
+                                harga permeter: {harga}
+                              </p>
+                              <p className="flex w-max border-collapse items-center justify-between gap-3 rounded-lg">
+                                <button
+                                  className="flex h-5 w-5 items-center justify-center rounded-md border-2 border-neutral-500 transition-colors hover:border-amber-300 hover:bg-amber-300"
+                                  onClick={() =>
+                                    hendleKurangMeterOrder(
+                                      name,
+                                      Deskripsi_produk,
+                                      harga,
+                                    )
+                                  }
+                                  >
+                                  <Minus className="text-base" />
+                                </button>
+                                <p className="w-3 text-center">
+                                  {data.jumlah_meter}
+                                </p>
+                                <button
+                                  className="flex h-5 w-5 items-center justify-center rounded-md border-2 border-neutral-500 transition-colors hover:border-amber-300 hover:bg-amber-300"
+                                  onClick={() =>
+                                    hendleTambahMeterOrder(
+                                      name,
+                                      Deskripsi_produk,
+                                      harga,
+                                    )
+                                  }
+                                  >
+                                  <Plus className="text-base" />
+                                </button>
+                                <span>Meter</span>
+                              </p>
+                            </>
+                          )}
                           <p className="text-sm">
                             {convertIDRCurrency(jumlahHarga)}
                           </p>
                           <div className="flex flex-shrink-0 gap-4">
-                            <button className="rounded-lg border-2 border-neutral-500 p-1">
+                            <button className="rounded-lg border-2 border-neutral-500 p-1"
+                              onClick={() =>
+                                hendleKurangOrder(
+                                  name,
+                                  Deskripsi_produk,
+                                )
+                              }
+                            >
                               <Minus className="text-sm" />
                             </button>
-                            <p>2</p>
-                            <button className="rounded-lg border-2 border-neutral-500 p-1">
+                            <p>{jumlah}</p>
+                            <button className="rounded-lg border-2 border-neutral-500 p-1"
+                              onClick={() =>
+                                hendleTambahOrder(
+                                  name,
+                                  Deskripsi_produk,
+                                )
+                              }>
                               <Plus className="text-sm" />
                             </button>
                           </div>
