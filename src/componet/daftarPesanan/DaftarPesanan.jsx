@@ -79,7 +79,7 @@ function DaftarPesanan() {
       );
     },
     onSuccess: () => {
-      alert(`Gambar Berhasil DI Kirim`);
+      alert(`Bukti pembayaran Berhasil DI Kirim`);
       hendleOrderByCustemers();
       hendleCekOrderProductById(id);
     },
@@ -335,7 +335,8 @@ function DaftarPesanan() {
                         color: "blue",
                         fontStyle: "italic",
                       }}>
-                      Menunggu Konfirmasi Toko, Untuk Lanjut Ke Pembayaran
+                      Menunggu Konfirmasi CV.Talongka Jaya, Untuk Lanjut Ke
+                      Pembayaran
                     </p>
                   </div>
                 )}

@@ -668,7 +668,7 @@ function OrderAdmin() {
                               <span>Bukti Bayar Lunas</span>
                               <div className={style.item}>
                                 {isPembayaranLunas === true ? (
-                                  <p>Terverivikasi</p>
+                                  <p>Terverifikasi</p>
                                 ) : (
                                   <input
                                     type="checkbox"
@@ -690,7 +690,7 @@ function OrderAdmin() {
                               <span>Bukti Bayar 30%</span>
                               <div className={style.item}>
                                 {isPembayaranDP === true ? (
-                                  <p>Terverivikasi</p>
+                                  <p>Terverifikasi</p>
                                 ) : (
                                   <input
                                     type="checkbox"

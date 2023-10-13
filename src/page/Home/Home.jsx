@@ -1,4 +1,5 @@
 import Navbar from "./../../componet/Navbar/Navbar";
+import Marquee from "../../componet/marquee/Marquee";
 import Sidebar from "./../../componet/Sidebar/Sidebar";
 import Content from "./../../componet/Content/Content";
 import Carousel from "./../../componet/Carousel/Carousel";
@@ -31,9 +32,11 @@ function Home() {
   return (
     <div className="flex flex-col gap-12 font-archivo">
       <Navbar />
-      <div className="container mt-24">
+
+      <div className="container mt-5">
         {/* <Sidebar nameSdiber={hendleCekProductByContent.bind(this)} /> */}
-        <div className="flex flex-col gap-12">
+        <div className="flex flex-col gap-2">
+          <Marquee />
           <Carousel />
           {/* <Jumbotron /> */}
           <Content product={sidebarIdData} />

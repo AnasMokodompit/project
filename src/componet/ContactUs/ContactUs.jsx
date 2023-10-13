@@ -23,13 +23,13 @@ function Contact() {
     axios
       .post(`${process.env.REACT_APP_BASE_API}/contactUs`, data)
       .then(() => {
-        alert("Pesan Berhasil Dikirim")
+        alert("Pesan Berhasil Dikirim");
         setNamaLengkap("");
         setEmail("");
         setPesan("");
       })
       .catch((err) => {
-        alert("Pesan Gagal Dikirim")
+        alert("Pesan Gagal Dikirim");
         console.log(err);
       });
   };
@@ -53,7 +53,10 @@ function Contact() {
             <MarkerPin01 className="text-xl" />
             <div>
               <p className="font-bold">Alamat</p>
-              <p>Jl. Raya Leilem Kabupaten Minahasa</p>
+              <p>
+                Jl. Perkebunan Talongka, Desa Leilem, Kec. Sonder,Kab.
+                Minahasa-Sulut
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-4">
@@ -107,7 +110,8 @@ function Contact() {
               value={pesan}
               onChange={(e) => setPesan(e.target.value)}></textarea>
           </div>
-          <input className="flex cursor-pointer items-center justify-center rounded-lg bg-amber-300 p-2 text-lg"
+          <input
+            className="flex cursor-pointer items-center justify-center rounded-lg bg-amber-300 p-2 text-lg"
             type="submit"
             value="Kirim"
             onClick={() => hendleSumbitContactUs()}

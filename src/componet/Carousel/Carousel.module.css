@@ -32,7 +32,7 @@
   border: 1px solid gray;
   cursor: pointer;
   margin: auto;
-  margin-top: 10px;
+  /* margin-top: 0px; */
 }
 
 .Carousel .content .detail input:hover {
