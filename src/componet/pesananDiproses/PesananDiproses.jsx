@@ -77,7 +77,7 @@ function PesananDiproses() {
       );
     },
     onSuccess: () => {
-      alert(`Gambar Berhasil DI Kirim`);
+      alert(`Bukti Pembayaran Berhasil DI Kirim`);
       hendleOrderByCustemers();
       hendleCekOrderProductById(id);
     },

@@ -2,16 +2,16 @@ import style from "./Footer.module.css";
 
 function Footer() {
   return (
-    <div className="flex flex-col items-center gap-2 bg-neutral-400 p-5 text-white">
+    <div className="flex flex-col items-center gap-2 bg-neutral-400 p-3 text-white">
       <img
-        src="logo.png"
+        src="logo1.png"
         alt="Logo CV Talongka Jaya"
         className="aspect-auto h-20"
       />
       {/* <h3>CV Talongka Jaya</h3> */}
       <p>
-        Menyediakan Bebagai Product, dan Pebeli Bisa Melakukan Pesanan sesuai
-        dengan keiginan
+        Menyediakan Bebagai Product, dan pembeli bisa melakukan pesanan sesuai
+        dengan keinginan
       </p>
       <ul className="flex gap-4">
         <li>
