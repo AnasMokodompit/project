@@ -25,7 +25,7 @@ function Customer() {
     if (!!isLogin) {
       const decode = jwt(dataLogin?.dataLogin?.token);
       axios
-        .get(`http://localhost:3000/api/v1.0/users/${decode.id}`)
+        .get(`${process.env.REACT_APP_BASE_API}/users/${decode.id}`)
         .then((res) => {
           // console.log(res.data.data)
           setDataUser(res.data.data);

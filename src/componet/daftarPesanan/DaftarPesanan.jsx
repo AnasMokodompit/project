@@ -30,7 +30,7 @@ function DaftarPesanan() {
 
     axios
       .get(
-        `http://localhost:3000/api/v1.0/productOrder/customers/${idProdutOrder}`,
+        `${process.env.REACT_APP_BASE_API}/productOrder/customers/${idProdutOrder}`,
         {
           headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
         },
@@ -53,7 +53,7 @@ function DaftarPesanan() {
       const decode = jwt(dataLogin?.dataLogin?.token);
       axios
         .get(
-          `http://localhost:3000/api/v1.0/productOrder/customers?statusKategori=Daftar Pesanan`,
+          `${process.env.REACT_APP_BASE_API}/productOrder/customers?statusKategori=Daftar Pesanan`,
           {
             headers: { Authorization: `Bearer ${dataLogin?.dataLogin?.token}` },
           },
@@ -71,7 +71,7 @@ function DaftarPesanan() {
   const { mutate: mutateUploadBuktiBayar, isLoading } = useMutation({
     mutationFn: async (data) => {
       return await axios.post(
-        `http://localhost:3000/api/v1.0/buktiBayar`,
+        `${process.envREACT_APP_BASE_API}/buktiBayar`,
         data,
         {
           headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },

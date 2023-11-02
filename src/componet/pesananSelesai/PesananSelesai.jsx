@@ -33,7 +33,7 @@ function PesananSelesai() {
 
     axios
       .get(
-        `http://localhost:3000/api/v1.0/productOrder/customers/${idProdutOrder}`,
+        `${process.env.REACT_APP_BASE_API}/productOrder/customers/${idProdutOrder}`,
         {
           headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
         },
@@ -56,7 +56,7 @@ function PesananSelesai() {
       const decode = jwt(dataLogin?.dataLogin?.token);
       axios
         .get(
-          `http://localhost:3000/api/v1.0/productOrder/customers?statusKategori=Pesanan Selesai`,
+          `${process.env.REACT_APP_BASE_API}/productOrder/customers?statusKategori=Pesanan Selesai`,
           {
             headers: { Authorization: `Bearer ${dataLogin?.dataLogin?.token}` },
           },
@@ -74,7 +74,7 @@ function PesananSelesai() {
   const { mutate: mutateUploadBuktiBayar, isLoading } = useMutation({
     mutationFn: async (data) => {
       return await axios.post(
-        `http://localhost:3000/api/v1.0/buktiBayar`,
+        `${process.env.REACT_APP_BASE_API}/buktiBayar`,
         data,
         {
           headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
@@ -118,7 +118,7 @@ function PesananSelesai() {
       komentar: komentarReview,
     };
     axios
-      .post(`http://localhost:3000/api/v1.0/reviewProduk`, data, {
+      .post(`${process.env.REACT_APP_BASE_API}/reviewProduk`, data, {
         headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
       })
       .then((res) => {

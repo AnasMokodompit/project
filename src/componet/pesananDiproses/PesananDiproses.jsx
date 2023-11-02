@@ -28,7 +28,7 @@ function PesananDiproses() {
 
     axios
       .get(
-        `http://localhost:3000/api/v1.0/productOrder/customers/${idProdutOrder}`,
+        `${process.env.REACT_APP_BASE_API}/productOrder/customers/${idProdutOrder}`,
         {
           headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
         },
@@ -51,7 +51,7 @@ function PesananDiproses() {
       const decode = jwt(dataLogin?.dataLogin?.token);
       axios
         .get(
-          `http://localhost:3000/api/v1.0/productOrder/customers?statusKategori=Pesanan Diproses`,
+          `${process.env.REACT_APP_BASE_API}/productOrder/customers?statusKategori=Pesanan Diproses`,
           {
             headers: { Authorization: `Bearer ${dataLogin?.dataLogin?.token}` },
           },
@@ -69,7 +69,7 @@ function PesananDiproses() {
   const { mutate: mutateUploadBuktiBayar, isLoading } = useMutation({
     mutationFn: async (data) => {
       return await axios.post(
-        `http://localhost:3000/api/v1.0/buktiBayar`,
+        `${process.env.REACT_APP_BASE_API}/buktiBayar`,
         data,
         {
           headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
@@ -150,7 +150,7 @@ function PesananDiproses() {
 
         axios
           .patch(
-            `http://localhost:3000/api/v1.0/productOrder/ProdukOrderTerima/${idProdutOrder}`,
+            `${process.env.REACT_APP_BASE_API}/productOrder/ProdukOrderTerima/${idProdutOrder}`,
             data,
             {
               headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },

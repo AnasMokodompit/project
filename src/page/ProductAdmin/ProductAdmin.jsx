@@ -133,7 +133,7 @@ function ProductAdmin() {
 
 
       axios
-        .post(`http://localhost:3000/api/v1.0/products`, formData, {
+        .post(`${process.env.REACT_APP_BASE_API}/products`, formData, {
           headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
         })
         .then((res) => {
@@ -146,7 +146,7 @@ function ProductAdmin() {
         });
     } else {
       axios
-        .patch(`http://localhost:3000/api/v1.0/products/${id}`, formData, {
+        .patch(`${process.env.REACT_APP_BASE_API}/products/${id}`, formData, {
           headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
         })
         .then((res) => {
@@ -182,7 +182,7 @@ function ProductAdmin() {
 
   const hendleEditProduct = (id) => {
     axios
-      .get(`http://localhost:3000/api/v1.0/products/${id}`, {
+      .get(`${process.env.REACT_APP_BASE_API}/products/${id}`, {
         headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
       })
       .then((res) => {
@@ -202,7 +202,7 @@ function ProductAdmin() {
 
   const hendleDeleteProduct = (idDelete) => {
     axios
-      .delete(`http://localhost:3000/api/v1.0/products/${idDelete}`, {
+      .delete(`${process.env.REACT_APP_BASE_API}/products/${idDelete}`, {
         headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
       })
       .then((res) => {

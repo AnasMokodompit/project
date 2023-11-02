@@ -53,7 +53,7 @@ function OrderAdmin() {
     // const decode = jwt(dataLogin.dataLogin.token)
 
     axios
-      .get(`http://localhost:3000/api/v1.0/orders`)
+      .get(`${process.env.REACT_APP_BASE_API}/orders`)
       .then((res) => {
         console.log(res.data.data);
         setDataOrder(res.data.data);
@@ -70,7 +70,7 @@ function OrderAdmin() {
     };
     axios
       .patch(
-        `http://localhost:3000/api/v1.0/productOrder/ProdukOrderTerima/${idProdutOrder}`,
+        `${process.env.REACT_APP_BASE_API}/productOrder/ProdukOrderTerima/${idProdutOrder}`,
         data,
         { headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` } },
       )
@@ -101,7 +101,7 @@ function OrderAdmin() {
 
     axios
       .patch(
-        `http://localhost:3000/api/v1.0/productOrder/${id_Product_order}`,
+        `${process.env.REACT_APP_BASE_API}/productOrder/${id_Product_order}`,
         { status: status },
         { headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` } },
       )
@@ -143,7 +143,7 @@ function OrderAdmin() {
 
     axios
       .get(
-        `http://localhost:3000/api/v1.0/productOrder/customers?order_id=${id_order}&id_user=${id_user}`,
+        `${process.env.REACT_APP_BASE_API}/productOrder/customers?order_id=${id_order}&id_user=${id_user}`,
         { headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` } },
       )
       .then((res) => {
@@ -194,7 +194,7 @@ function OrderAdmin() {
     // return console.log(data, statusTransaksi)
 
     axios
-      .patch(`http://localhost:3000/api/v1.0/orders/${idOrder}`, {
+      .patch(`${process.env.REACT_APP_BASE_API}/orders/${idOrder}`, {
         statusTransaksi: statusTransaksi,
       })
       .then((res) => {
@@ -205,7 +205,7 @@ function OrderAdmin() {
       });
 
     axios
-      .post(`http://localhost:3000/api/v1.0/transaksi`, data)
+      .post(`${process.env.REACT_APP_BASE_API}/transaksi`, data)
       .then((res) => {
         console.log(res.data.data);
 
@@ -220,7 +220,7 @@ function OrderAdmin() {
   const hendleCekProdukOrder = (id_order) => {
     axios
       .get(
-        `http://localhost:3000/api/v1.0/productOrder/ProdukOrderTerima?id_orders=${id_order}`,
+        `${process.env.REACT_APP_BASE_API}/productOrder/ProdukOrderTerima?id_orders=${id_order}`,
         { headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` } },
       )
       .then((res) => {
@@ -235,7 +235,7 @@ function OrderAdmin() {
     setIdProdukOrder(idProdukOrderCek);
     axios
       .get(
-        `http://localhost:3000/api/v1.0/productOrder/customers/${idProdukOrderCek}`,
+        `${process.env.REACT_APP_BASE_API}/productOrder/customers/${idProdukOrderCek}`,
         { headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` } },
       )
       .then((res) => {

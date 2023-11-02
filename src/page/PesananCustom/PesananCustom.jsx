@@ -47,7 +47,7 @@ function PesananCustom() {
 
     axios
       .get(
-        `http://localhost:3000/api/v1.0/products?search=${e.target.value}`,
+        `${process.env.REACT_APP_BASE_API}/products?search=${e.target.value}`,
       )
       .then((res) => {
         console.log(res.data.data);
@@ -67,7 +67,7 @@ function PesananCustom() {
 
     // return console.log(e.target.id)
     axios
-      .get(`http://localhost:3000/api/v1.0/products/${e.target.id}`)
+      .get(`${process.env.REACT_APP_BASE_API}/products/${e.target.id}`)
       .then((res) => {
         console.log(res.data.data);
         setUkuranProduct(res.data.data.ukuran);
