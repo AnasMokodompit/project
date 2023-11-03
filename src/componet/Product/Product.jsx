@@ -123,7 +123,7 @@ function Product({ product }) {
       {/* <FormOrder/> */}
       {product.length === 0
         ? dataProduct.map((data, key) => {
-            // console.log(data)
+            console.log(data)
             return (
               <div
                 key={key}

@@ -20,7 +20,7 @@ function Login() {
     };
 
     axios
-      .post(`http://localhost:3000/api/v1.0/users/login`, login)
+      .post(`${process.env.REACT_APP_BASE_API}/users/login`, login)
       .then((res) => {
         console.log("Berhasil");
         dispatch(UserLogin(email, password));
