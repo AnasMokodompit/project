@@ -475,6 +475,14 @@ export const SaldoAwal = () => {
                     </tr>
                   );
                 })}
+              <tr className="bg-amber-300">
+                <td colSpan={2} className="p-2 font-bold">
+                  Total
+                </td>
+                <td className="p-2 text-right">Rp 0</td>
+                <td className="p-2 text-right">Rp 0</td>
+                <td></td>
+              </tr>
             </tbody>
           </table>
         </div>

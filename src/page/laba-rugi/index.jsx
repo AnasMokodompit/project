@@ -580,7 +580,7 @@ export const LabaRugi = () => {
                     {convertIDRCurrency(saldoTotalLabaRugiUsaha)}
                   </td>
                 </tr>
-                <tr className="border-2 border-neutral-500 bg-amber-300">
+                {/* <tr className="border-2 border-neutral-500 bg-amber-300">
                   <td colSpan={3} className="px-4 py-1 text-left font-bold">
                     PPh 0.5%
                   </td>
@@ -599,7 +599,7 @@ export const LabaRugi = () => {
                     className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalLabaRugiUsahaPPh2)}
                   </td>
-                </tr>
+                </tr> */}
               </tbody>
             </table>
           </div>

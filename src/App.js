@@ -23,6 +23,8 @@ import { PenjualanLangsung } from "./page/laporan-pajak/penjualan-langsung";
 import { PenjualanWeb } from "./page/laporan-pajak/penjualan-web";
 import { PengadaanMeubel as LaporanPajakPengadaanMeubel } from "./page/laporan-pajak/pengadaan-meubel";
 import { PengadaanMeubel as PenjualanPengadaanMeubel } from "./page/penjualan/pengadaan-meubel";
+import { PPhTarif1 } from "./page/laporan-pajak/pph-tarif-1";
+import { PPhTarif2 } from "./page/laporan-pajak/pph-tarif-2";
 
 // Layouts
 import { LayoutSidebar } from "./layouts";
@@ -55,6 +57,8 @@ function App() {
               path="pengadaan-meubel"
               element={<LaporanPajakPengadaanMeubel />}
             />
+            <Route path="pph-tarif-1" element={<PPhTarif1 />} />
+            <Route path="pph-tarif-2" element={<PPhTarif2 />} />
           </Route>
           <Route path="/penjualan">
             <Route path="pesanan" element={<OrderAdmin />} />

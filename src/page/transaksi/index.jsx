@@ -2,6 +2,8 @@ import { useState, useEffect, Fragment } from "react";
 import { useForm } from "react-hook-form";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
+import { format } from "date-fns";
+import { id } from "date-fns/locale";
 
 import axios from "axios";
 
@@ -10,6 +12,7 @@ import Sidebar from "../../componet/Sidebar/Sidebar";
 import { cn } from "../../utils/cn";
 
 import { Button, buttonVariants } from "../../componet/button";
+import { Calendar } from "../../componet/calendar";
 import {
   Command,
   CommandEmpty,
@@ -35,6 +38,7 @@ import {
 import { ScrollArea } from "../../componet/scroll-area";
 import { Textarea } from "../../componet/textarea";
 
+import CalendarIcon from "../../Asset/icons/untitled-ui-icons/line/components/Calendar";
 import Check from "../../Asset/icons/untitled-ui-icons/line/components/Check";
 import ChevronSelectorVertical from "../../Asset/icons/untitled-ui-icons/line/components/ChevronSelectorVertical";
 
@@ -263,6 +267,46 @@ export const Transaksi = () => {
         <div className="flex flex-col gap-4">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <FormField
+                control={form.control}
+                name="tanggal_transaksi"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Tanggal Transaksi</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "p-3 text-left font-normal",
+                              !field.value && "text-muted-foreground",
+                            )}>
+                            {field.value ? (
+                              format(field.value, "PPP", { locale: id })
+                            ) : (
+                              <span>Pilih Tanggal</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          // disabled={(date) =>
+                          //   date > new Date() || date < new Date("1900-01-01")
+                          // }
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="id_jenis_transaksi"

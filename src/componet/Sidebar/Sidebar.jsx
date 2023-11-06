@@ -191,6 +191,22 @@ function Sidebar({ nameSdiber }) {
               <AccordionContent>
                 <ul className="flex w-full flex-col gap-4">
                   <NavLink
+                    to="/laporan-pajak/pph-tarif-1"
+                    className="transition-colors hover:text-amber-300 hover:no-underline">
+                    <div className="flex items-center gap-3">
+                      <CoinsStacked01 className="flex-shrink-0 text-2xl" />
+                      <p>PPh 25 Tarif 0.5%</p>
+                    </div>
+                  </NavLink>
+                  <NavLink
+                    to="/laporan-pajak/pph-tarif-2"
+                    className="transition-colors hover:text-amber-300 hover:no-underline">
+                    <div className="flex items-center gap-3">
+                      <CoinsStacked01 className="flex-shrink-0 text-2xl" />
+                      <p>PPh 25 Tarif 50% x 22%</p>
+                    </div>
+                  </NavLink>
+                  <NavLink
                     to="/laporan-pajak/penjualan-web"
                     className="transition-colors hover:text-amber-300 hover:no-underline">
                     <div className="flex items-center gap-3">

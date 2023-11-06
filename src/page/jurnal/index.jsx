@@ -8,7 +8,7 @@ import React, {
 import { useReactToPrint } from "react-to-print";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { id, tr } from "date-fns/locale";
+import { id } from "date-fns/locale";
 import axios from "axios";
 
 import { cn } from "../../utils/cn";
@@ -29,6 +29,7 @@ import Minus from "../../Asset/icons/untitled-ui-icons/line/components/Minus";
 import Refresh from "../../Asset/icons/untitled-ui-icons/line/components/RefreshCw04";
 import ChevronLeft from "../../Asset/icons/untitled-ui-icons/line/components/ChevronLeft";
 import ChevronRight from "../../Asset/icons/untitled-ui-icons/line/components/ChevronRight";
+import ChevronDown from "../../Asset/icons/untitled-ui-icons/line/components/ChevronDown";
 
 export const Jurnal = () => {
   const [transaksiData, setTransaksiData] = useState();
@@ -43,6 +44,28 @@ export const Jurnal = () => {
     documentTitle: `Jurnal`,
     bodyClass: "bg-white",
   });
+
+  const [isSortingTanggal, setIsSortingTanggal] = useState(false);
+
+  const handleSortingTanggal = () => {
+    const sortedData = [...transaksiData];
+
+    sortedData.sort((a, b) => {
+      const dateA = new Date(a.tanggal);
+      const dateB = new Date(b.tanggal);
+
+      if (!isSortingTanggal) {
+        return dateA - dateB;
+      } else {
+        return dateB - dateA;
+      }
+    });
+
+    setTransaksiData(sortedData);
+    setIsSortingTanggal(!isSortingTanggal);
+  };
+
+  console.log(transaksiData);
 
   const { refetch } = useQuery({
     queryKey: ["transaksi"],
@@ -208,7 +231,20 @@ export const Jurnal = () => {
           <table className="w-full border-collapse rounded-lg border-2 border-neutral-500 text-sm">
             <thead>
               <tr className="bg-amber-300">
-                <th className="p-2 text-center">Tanggal</th>
+                <th className="p-2 text-center">
+                  <div className="flex w-full items-center justify-center gap-4">
+                    <p>Tanggal</p>
+                    <button
+                      onClick={() => handleSortingTanggal()}
+                      className="flex h-6 w-6 items-center justify-center rounded-lg bg-amber-100">
+                      <ChevronDown
+                        className={cn("transition-all", {
+                          "rotate-180": isSortingTanggal,
+                        })}
+                      />
+                    </button>
+                  </div>
+                </th>
                 <th className="p-2 text-center">Transaksi</th>
                 <th className="p-2 text-center">Nama Akun</th>
                 <th className="p-2 text-center">Keterangan</th>
@@ -222,8 +258,6 @@ export const Jurnal = () => {
               {!!transaksiData && transaksiData.length !== 0 ? (
                 transaksiData.map((item, index) => {
                   const { id } = item;
-
-                  console.log(item);
 
                   return (
                     <Fragment key={id}>
@@ -256,7 +290,10 @@ export const Jurnal = () => {
                               : 2
                           }
                           className="border-2 border-neutral-500 px-4 py-1 text-left">
-                          {item.namaAkunTransaksiDalamJenisTransaksi.nama}
+                          {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                          "Pendapatan DP"
+                            ? "Pendapatan"
+                            : item.namaAkunTransaksiDalamJenisTransaksi.nama}
                         </td>
                         <td
                           rowSpan={
@@ -381,6 +418,15 @@ export const Jurnal = () => {
                   </td>
                 </tr>
               )}
+              <tr className="bg-amber-300">
+                <td colSpan={4} className="p-2 font-bold">
+                  Total
+                </td>
+                <td className="p-2 text-right">Rp 0</td>
+                <td className="p-2 text-right"></td>
+                <td className="p-2 text-right">Rp 0</td>
+                <td className="p-2 text-right">Rp 0</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -517,7 +563,10 @@ const DokumenJurnal = forwardRef((props, ref) => {
                             : 2
                         }
                         className="border-2 border-neutral-500 px-4 py-1 text-left">
-                        {item.namaAkunTransaksiDalamJenisTransaksi.nama}
+                        {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                        "Pendapatan DP"
+                          ? "Pendapatan"
+                          : item.namaAkunTransaksiDalamJenisTransaksi.nama}
                       </td>
                       <td
                         rowSpan={

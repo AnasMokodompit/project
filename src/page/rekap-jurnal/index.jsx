@@ -357,6 +357,11 @@ export const RekapJurnal = () => {
                   </td>
                 </tr>
               )}
+              <tr className="bg-amber-300">
+                <td className="p-2 font-bold">Total</td>
+                <td className="p-2 text-right">Rp 0</td>
+                <td className="p-2 text-right">Rp 0</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -498,6 +503,11 @@ const DokumenRekapJurnal = forwardRef((props, ref) => {
                   </td>
                 </tr>
               )}
+              <tr className="bg-amber-300">
+                <td className="p-2 font-bold">Total</td>
+                <td className="p-2 text-right">Rp 0</td>
+                <td className="p-2 text-right">Rp 0</td>
+              </tr>
             </tbody>
           </table>
         </div>
