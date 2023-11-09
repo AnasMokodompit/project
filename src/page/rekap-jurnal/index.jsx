@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, forwardRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useReactToPrint } from "react-to-print";
 import { format } from "date-fns";
-import { id } from "date-fns/locale";
+import { da, id } from "date-fns/locale";
 import axios from "axios";
 
 import { cn } from "../../utils/cn";
@@ -169,6 +169,8 @@ const Akun = [
 
 export const RekapJurnal = () => {
   const [tanggalAwal, setTanggalAwal] = useState();
+  const [jumlahDebit, setJumlahDebit] = useState()
+  const [jumlahKredit, setJumlahKredit] = useState()
   const [tanggalAkhir, setTanggalAkhir] = useState();
   const [rekapJurnalData, setRekapJurnalData] = useState();
   const [oldestDate, setOldestDate] = useState();
@@ -205,6 +207,8 @@ export const RekapJurnal = () => {
       const Array2 = data.data.data;
 
       setOldestDate(data.data.data[5]?.oldestDate);
+      setJumlahDebit(data.data.data[Array2.length - 1]?.jumlahDebit)
+      setJumlahKredit(data.data.data[Array2.length - 1]?.jumlahKredit)
       const Combine = combineArrays(Akun, Array2);
       setRekapJurnalData(Combine);
     },
@@ -218,6 +222,7 @@ export const RekapJurnal = () => {
 
   return (
     <section className="font-archivo text-neutral-800">
+      {console.log(jumlahDebit)}
       <div className="flex flex-col gap-4">
         <div>
           <h1 className="text-2xl font-bold">Rekap Jurnal</h1>
@@ -359,8 +364,8 @@ export const RekapJurnal = () => {
               )}
               <tr className="bg-amber-300">
                 <td className="p-2 font-bold">Total</td>
-                <td className="p-2 text-right">Rp 0</td>
-                <td className="p-2 text-right">Rp 0</td>
+                <td className="p-2 text-right">{convertIDRCurrency(jumlahDebit)}</td>
+                <td className="p-2 text-right">{convertIDRCurrency(jumlahKredit)}</td>
               </tr>
             </tbody>
           </table>

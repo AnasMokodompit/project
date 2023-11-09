@@ -71,6 +71,8 @@ const Akun = [
 
 export const SaldoAwal = () => {
   const [saldoAwalData, setSaldoAwalData] = useState();
+  const [jumlahDebit, setJumlahDebit] = useState()
+  const [jumlahKredit, setJumlahKredit] = useState()
   const [saldoAwalID, setSaldoAwalID] = useState();
 
   const formCreate = useForm({});
@@ -85,7 +87,9 @@ export const SaldoAwal = () => {
     },
     onSuccess: (data) => {
       // console.log(data.data.data);
-      setSaldoAwalData(data.data.data);
+      setSaldoAwalData(data.data.data.SaldoAwal);
+      setJumlahDebit(data.data.data.Total.Debit)
+      setJumlahKredit(data.data.data.Total.Kredit)
     },
   });
 
@@ -479,8 +483,8 @@ export const SaldoAwal = () => {
                 <td colSpan={2} className="p-2 font-bold">
                   Total
                 </td>
-                <td className="p-2 text-right">Rp 0</td>
-                <td className="p-2 text-right">Rp 0</td>
+                <td className="p-2 text-right">{convertIDRCurrency(jumlahDebit)}</td>
+                <td className="p-2 text-right">{convertIDRCurrency(jumlahKredit)}</td>
                 <td></td>
               </tr>
             </tbody>

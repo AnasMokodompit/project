@@ -33,6 +33,7 @@ import ChevronDown from "../../Asset/icons/untitled-ui-icons/line/components/Che
 
 export const Jurnal = () => {
   const [transaksiData, setTransaksiData] = useState();
+  const [jumlah, setJumlah] = useState()
   const [tanggalAwal, setTanggalAwal] = useState();
   const [tanggalAkhir, setTanggalAkhir] = useState();
   const [oldestDate, setOldestDate] = useState();
@@ -97,6 +98,7 @@ export const Jurnal = () => {
     onSuccess: (data) => {
       setTransaksiData(data.data.data.listTransaksi);
       setOldestDate(data.data.data.oldestDate);
+      setJumlah(data.data.data.jumlah)
     },
   });
 
@@ -422,10 +424,10 @@ export const Jurnal = () => {
                 <td colSpan={4} className="p-2 font-bold">
                   Total
                 </td>
-                <td className="p-2 text-right">Rp 0</td>
+                <td className="p-2 text-right">{convertIDRCurrency(jumlah)}</td>
                 <td className="p-2 text-right"></td>
-                <td className="p-2 text-right">Rp 0</td>
-                <td className="p-2 text-right">Rp 0</td>
+                <td className="p-2 text-right">{convertIDRCurrency(jumlah)}</td>
+                <td className="p-2 text-right">{convertIDRCurrency(jumlah)}</td>
               </tr>
             </tbody>
           </table>
