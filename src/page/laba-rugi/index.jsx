@@ -517,18 +517,28 @@ export const LabaRugi = () => {
     const saldoPendapatanBunga = labaRugiData[4]?.akun[0]?.saldo;
     const saldoBebanBunga = labaRugiData[4]?.akun[1]?.saldo;
 
-    const saldoTotalHargaPokokPenjualan =
-      saldoAwalPersediaanBahanBaku + saldoAwalPersediaanBarangJadi;
     const saldoTotalBiayaProduksi =
       saldoBiayaBahanBaku + saldoUpahPekerja + saldoBiayaBahanPembantu;
+
+    const saldoBarangSiapDijual =
+      saldoAwalPersediaanBahanBaku +
+      saldoAwalPersediaanBarangJadi +
+      saldoTotalBiayaProduksi;
+
     const saldoTotalPersediaan =
       saldoPersediaanBahanBaku - saldoPersediaanBarangJadi;
+
     const saldoTotalHargaPokokPenjualanFinal =
-      saldoTotalHargaPokokPenjualan +
-      saldoTotalBiayaProduksi +
-      saldoPersediaanBahanBaku;
+      saldoBarangSiapDijual +
+      saldoPersediaanBahanBaku +
+      saldoPersediaanBarangJadi;
+
+    const saldoTotalHargaPokokPenjualan =
+      saldoAwalPersediaanBahanBaku + saldoAwalPersediaanBarangJadi;
+
     const saldoTotalLabaRugiKotor =
       saldoPendapatan - saldoTotalHargaPokokPenjualanFinal;
+
     const saldoTotalBiayaOperasional =
       saldoBiayaTransport +
       saldoBiayaGajiPegawai +
@@ -542,10 +552,13 @@ export const LabaRugi = () => {
       saldoBiayaPenyusutanMesin +
       saldoBiayaPenyusutanKendaraan +
       saldoBiayaPenyusutanGedung;
+
     const saldoTotalLabaRugiOperasi =
       saldoTotalLabaRugiKotor - saldoTotalBiayaOperasional;
+
     const saldoTotalPendapatanDanBebanLainLain =
       saldoPendapatanBunga - saldoBebanBunga;
+
     const saldoTotalLabaRugiUsaha =
       saldoTotalLabaRugiOperasi - saldoTotalPendapatanDanBebanLainLain;
     const saldoTotalLabaRugiUsahaPPh1 = 0.005 * saldoTotalLabaRugiUsaha;
@@ -815,7 +828,7 @@ export const LabaRugi = () => {
                   </td>
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle"></td>
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle">
-                    {convertIDRCurrency(0)}
+                    {convertIDRCurrency(saldoBarangSiapDijual)}
                   </td>
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
@@ -839,19 +852,17 @@ export const LabaRugi = () => {
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoPersediaanBarangJadi)}
                   </td>
-                  <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle">
-                    {convertIDRCurrency(saldoTotalPersediaan)}
-                  </td>
+                  <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle"></td>
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
-                {/* <tr>
+                <tr>
                   <td className="border-2 border-neutral-500 px-4 py-1 text-left align-middle"></td>
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle"></td>
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalPersediaan)}
                   </td>
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle"></td>
-                </tr> */}
+                </tr>
                 <tr className="border-2 border-neutral-500 bg-amber-300">
                   <td colSpan={3} className="px-4 py-1 text-left font-bold">
                     Harga Pokok Penjualan
@@ -1179,18 +1190,28 @@ const DokumenLabaRugi = forwardRef((props, ref) => {
     const saldoPendapatanBunga = labaRugiData[4]?.akun[0]?.saldo;
     const saldoBebanBunga = labaRugiData[4]?.akun[1]?.saldo;
 
-    const saldoTotalHargaPokokPenjualan =
-      saldoAwalPersediaanBahanBaku + saldoAwalPersediaanBarangJadi;
     const saldoTotalBiayaProduksi =
       saldoBiayaBahanBaku + saldoUpahPekerja + saldoBiayaBahanPembantu;
+
+    const saldoBarangSiapDijual =
+      saldoAwalPersediaanBahanBaku +
+      saldoAwalPersediaanBarangJadi +
+      saldoTotalBiayaProduksi;
+
     const saldoTotalPersediaan =
       saldoPersediaanBahanBaku - saldoPersediaanBarangJadi;
+
     const saldoTotalHargaPokokPenjualanFinal =
-      saldoTotalHargaPokokPenjualan +
-      saldoTotalBiayaProduksi +
-      saldoPersediaanBahanBaku;
+      saldoBarangSiapDijual +
+      saldoPersediaanBahanBaku +
+      saldoPersediaanBarangJadi;
+
+    const saldoTotalHargaPokokPenjualan =
+      saldoAwalPersediaanBahanBaku + saldoAwalPersediaanBarangJadi;
+
     const saldoTotalLabaRugiKotor =
       saldoPendapatan - saldoTotalHargaPokokPenjualanFinal;
+
     const saldoTotalBiayaOperasional =
       saldoBiayaTransport +
       saldoBiayaGajiPegawai +
@@ -1204,12 +1225,17 @@ const DokumenLabaRugi = forwardRef((props, ref) => {
       saldoBiayaPenyusutanMesin +
       saldoBiayaPenyusutanKendaraan +
       saldoBiayaPenyusutanGedung;
+
     const saldoTotalLabaRugiOperasi =
       saldoTotalLabaRugiKotor - saldoTotalBiayaOperasional;
+
     const saldoTotalPendapatanDanBebanLainLain =
       saldoPendapatanBunga - saldoBebanBunga;
+
     const saldoTotalLabaRugiUsaha =
       saldoTotalLabaRugiOperasi - saldoTotalPendapatanDanBebanLainLain;
+    const saldoTotalLabaRugiUsahaPPh1 = 0.005 * saldoTotalLabaRugiUsaha;
+    const saldoTotalLabaRugiUsahaPPh2 = 0.5 * 0.22 * saldoTotalLabaRugiUsaha;
 
     // console.log(labaRugiData);
 
@@ -1382,19 +1408,17 @@ const DokumenLabaRugi = forwardRef((props, ref) => {
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoPersediaanBarangJadi)}
                   </td>
-                  <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle">
-                    {convertIDRCurrency(saldoTotalPersediaan)}
-                  </td>
+                  <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle"></td>
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
-                {/* <tr>
+                <tr>
                   <td className="border-2 border-neutral-500 px-4 py-1 text-left align-middle"></td>
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle"></td>
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalPersediaan)}
                   </td>
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle"></td>
-                </tr> */}
+                </tr>
                 <tr className="border-2 border-neutral-500 bg-amber-300">
                   <td colSpan={3} className="px-4 py-1 text-left font-bold">
                     Harga Pokok Penjualan
