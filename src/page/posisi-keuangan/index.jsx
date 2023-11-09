@@ -444,6 +444,18 @@ export const PosisiKeuangan = () => {
     bodyClass: "bg-white",
   });
 
+  const hendleTutupBukuAkhirTahun = () => {
+    axios
+      .patch(`${process.env.REACT_APP_BASE_API}/saldoAkunTransaksi/tutupBuku`)
+      .then((res) => {
+        alert("Buku Tahun Ini Selesai")
+        // console.log(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   const { refetch } = useQuery({
     queryKey: ["posisi-keuangan", { tanggalAwal, tanggalAkhir }],
     queryFn: async () => {
@@ -615,6 +627,12 @@ export const PosisiKeuangan = () => {
                 onClick={handlePrintLaporanPosisiKeuangan}
                 className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border-2 border-neutral-500 bg-amber-300 p-2">
                 <Printer />
+              </button>
+
+              <button
+                onClick={hendleTutupBukuAkhirTahun}
+                className="flex h-10 w-30 flex-shrink-0 items-center justify-center rounded-lg border-2 border-neutral-500 bg-amber-300 p-2">
+                Tutup Buku
               </button>
             </div>
             <div className="flex items-center gap-2">
