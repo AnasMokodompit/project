@@ -526,7 +526,7 @@ export const LabaRugi = () => {
       saldoTotalBiayaProduksi;
 
     const saldoTotalPersediaan =
-      saldoPersediaanBahanBaku - saldoPersediaanBarangJadi;
+      saldoPersediaanBahanBaku + saldoPersediaanBarangJadi;
 
     const saldoTotalHargaPokokPenjualanFinal =
       saldoBarangSiapDijual +
@@ -1199,7 +1199,7 @@ const DokumenLabaRugi = forwardRef((props, ref) => {
       saldoTotalBiayaProduksi;
 
     const saldoTotalPersediaan =
-      saldoPersediaanBahanBaku - saldoPersediaanBarangJadi;
+      saldoPersediaanBahanBaku + saldoPersediaanBarangJadi;
 
     const saldoTotalHargaPokokPenjualanFinal =
       saldoBarangSiapDijual +
