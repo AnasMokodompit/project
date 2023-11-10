@@ -9,6 +9,7 @@ import { cn } from "../../../utils/cn";
 
 import { Button } from "../../../componet/button";
 import { Calendar } from "../../../componet/calendar";
+import { Input } from "../../../componet/input";
 import {
   Popover,
   PopoverContent,
@@ -21,6 +22,8 @@ import Minus from "../../../Asset/icons/untitled-ui-icons/line/components/Minus"
 import Refresh from "../../../Asset/icons/untitled-ui-icons/line/components/RefreshCw04";
 
 export const PPhTarif2 = () => {
+  const [valueTarif1, setValueTarif1] = useState(50);
+  const [valueTarif2, setValueTarif2] = useState(22);
   const [tanggalAwal, setTanggalAwal] = useState();
   const [tanggalAkhir, setTanggalAkhir] = useState();
   const [labaRugiData, setLabaRugiData] = useState();
@@ -118,15 +121,18 @@ export const PPhTarif2 = () => {
       saldoPendapatanBunga - saldoBebanBunga;
     const saldoTotalLabaRugiUsaha =
       saldoTotalLabaRugiOperasi - saldoTotalPendapatanDanBebanLainLain;
-    const saldoTotalLabaRugiUsahaPPh1 = 0.005 * saldoTotalLabaRugiUsaha;
-    const saldoTotalLabaRugiUsahaPPh2 = 0.5 * 0.22 * saldoTotalLabaRugiUsaha;
+
+    const saldoTotalLabaRugiUsahaPPh2 =
+      (valueTarif1 / 100) * (valueTarif2 / 100) * saldoTotalLabaRugiUsaha;
 
     return (
       <section className="font-archivo">
         <div className="flex flex-col gap-4">
           <div>
             <p className="text-xs font-bold leading-none">Laporan Pajak</p>
-            <h1 className="text-2xl font-bold">PPh 25 Tarif 50% x 22%</h1>
+            <h1 className="text-2xl font-bold">
+              PPh 25 Tarif {valueTarif1}% x {valueTarif2}%
+            </h1>
           </div>
           <div className="flex justify-between gap-4 rounded-lg border-2 border-neutral-500 bg-neutral-100 p-3">
             <div className="flex items-center gap-2">
@@ -211,13 +217,42 @@ export const PPhTarif2 = () => {
           <div>
             <table className="w-full table-auto border-collapse rounded-lg border-2 border-neutral-500 text-sm">
               <tbody>
-                <tr className="border-2 border-neutral-500 bg-amber-300">
-                  <td colSpan={3} className="p-3 text-left font-bold">
-                    PPh 25 Tarif 50% x 22%
+                <tr className="border-2 border-neutral-500">
+                  <td colSpan={3} className="p-3 text-left">
+                    <div className="flex items-center gap-2">
+                      <p>PPh 25 Tarif</p>
+                      <div className="relative">
+                        <Input
+                          className="w-24 py-1 pr-4 text-right"
+                          type="number"
+                          value={valueTarif1}
+                          onChange={(event) => {
+                            setValueTarif1(event.target.value);
+                          }}
+                        />
+                        <p className="absolute right-1 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                          %
+                        </p>
+                      </div>
+                      <p>x</p>
+                      <div className="relative">
+                        <Input
+                          className="w-24 py-1 pr-4 text-right"
+                          type="number"
+                          value={valueTarif2}
+                          onChange={(event) => {
+                            setValueTarif2(event.target.value);
+                          }}
+                        />
+                        <p className="absolute right-1 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                          %
+                        </p>
+                      </div>
+                    </div>
                   </td>
                   <td
                     colSpan={1}
-                    className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle font-bold">
+                    className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalLabaRugiUsahaPPh2)}
                   </td>
                 </tr>
@@ -227,6 +262,8 @@ export const PPhTarif2 = () => {
           <div style={{ display: "none" }}>
             <DokumenPPhTarif2
               ref={refLaporanPPhTarif2}
+              valueTarif1={valueTarif1}
+              valueTarif2={valueTarif2}
               tanggalAwal={tanggalAwal}
               tanggalAkhir={tanggalAkhir}
             />
@@ -240,6 +277,8 @@ export const PPhTarif2 = () => {
 const DokumenPPhTarif2 = forwardRef((props, ref) => {
   const [labaRugiData, setLabaRugiData] = useState();
 
+  const valueTarif1 = props?.valueTarif1;
+  const valueTarif2 = props?.valueTarif2;
   const tanggalAwal = props?.tanggalAwal;
   const tanggalAkhir = props?.tanggalAkhir;
 
@@ -339,10 +378,9 @@ const DokumenPPhTarif2 = forwardRef((props, ref) => {
       saldoPendapatanBunga - saldoBebanBunga;
     const saldoTotalLabaRugiUsaha =
       saldoTotalLabaRugiOperasi - saldoTotalPendapatanDanBebanLainLain;
-    const saldoTotalLabaRugiUsahaPPh1 = 0.005 * saldoTotalLabaRugiUsaha;
-    const saldoTotalLabaRugiUsahaPPh2 = 0.5 * 0.22 * saldoTotalLabaRugiUsaha;
 
-    // console.log(labaRugiData);
+    const saldoTotalLabaRugiUsahaPPh2 =
+      (valueTarif1 / 100) * (valueTarif2 / 100) * saldoTotalLabaRugiUsaha;
 
     return (
       <section ref={ref}>
@@ -354,7 +392,9 @@ const DokumenPPhTarif2 = forwardRef((props, ref) => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-bold leading-none">Laporan Pajak</p>
-              <h1 className="text-2xl font-bold">PPh 25 Tarif 50% x 22%</h1>
+              <h1 className="text-2xl font-bold">
+                PPh 25 Tarif {valueTarif1}% x {valueTarif2}%
+              </h1>
             </div>
             {!!tanggalAwal && !!tanggalAkhir && (
               <div className="flex items-center gap-2">
@@ -372,13 +412,13 @@ const DokumenPPhTarif2 = forwardRef((props, ref) => {
           <div className="flex flex-col gap-12">
             <table className="w-full table-auto border-collapse rounded-lg border-2 border-neutral-500 text-sm">
               <tbody>
-                <tr className="border-2 border-neutral-500 bg-amber-300">
-                  <td colSpan={3} className="p-3 text-left font-bold">
-                    PPh 25 Tarif 50% x 22%
+                <tr className="border-2 border-neutral-500">
+                  <td colSpan={3} className="p-3 text-left">
+                    PPh 25 Tarif {valueTarif1}% x {valueTarif2}%
                   </td>
                   <td
                     colSpan={1}
-                    className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle font-bold">
+                    className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalLabaRugiUsahaPPh2)}
                   </td>
                 </tr>

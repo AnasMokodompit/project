@@ -167,6 +167,7 @@ export const Transaksi = () => {
       id_nama_akun_jenis_transaksi,
       jumlah: jumlahHarga,
       keterangan,
+      tanggal,
     } = data;
 
     const id_bahan_baku = data?.bahanBaku?.id_bahan_baku;
@@ -174,15 +175,6 @@ export const Transaksi = () => {
     const satuan = data?.bahanBaku?.satuan;
 
     try {
-      // mutate({
-      //   ...data,
-      //   jumlah: Number(data.jumlah),
-      // });
-      // console.log({
-      //   ...data,
-      //   jumlah: Number(data.jumlah),
-      // });
-      // mutate(data);
       if (!!isBiayaBahanBaku) {
         mutate({
           bahanBaku: [
@@ -196,20 +188,7 @@ export const Transaksi = () => {
           id_nama_akun_jenis_transaksi,
           jumlah: Number(jumlahHarga),
           keterangan,
-        });
-
-        console.log({
-          bahanBaku: [
-            {
-              id_bahan_baku,
-              jumlah: Number(jumlah),
-              satuan,
-            },
-          ],
-          id_jenis_transaksi,
-          id_nama_akun_jenis_transaksi,
-          jumlah: Number(jumlahHarga),
-          keterangan,
+          tanggal,
         });
       } else {
         mutate({
@@ -217,15 +196,12 @@ export const Transaksi = () => {
           id_nama_akun_jenis_transaksi,
           jumlah: Number(jumlahHarga),
           keterangan,
+          tanggal,
         });
-        // console.log(data);
       }
     } catch (error) {
       console.log(error);
     }
-    //  finally {
-    //   form.reset();
-    // }
   };
 
   const restrictAlphabet = (event) => {
@@ -269,7 +245,7 @@ export const Transaksi = () => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
                 control={form.control}
-                name="tanggal_transaksi"
+                name="tanggal"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
                     <FormLabel>Tanggal Transaksi</FormLabel>

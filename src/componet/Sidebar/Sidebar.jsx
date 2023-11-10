@@ -195,7 +195,7 @@ function Sidebar({ nameSdiber }) {
                     className="transition-colors hover:text-amber-300 hover:no-underline">
                     <div className="flex items-center gap-3">
                       <CoinsStacked01 className="flex-shrink-0 text-2xl" />
-                      <p>PPh 25 Tarif 0.5%</p>
+                      <p>PPh 25 Tipe 1</p>
                     </div>
                   </NavLink>
                   <NavLink
@@ -203,7 +203,7 @@ function Sidebar({ nameSdiber }) {
                     className="transition-colors hover:text-amber-300 hover:no-underline">
                     <div className="flex items-center gap-3">
                       <CoinsStacked01 className="flex-shrink-0 text-2xl" />
-                      <p>PPh 25 Tarif 50% x 22%</p>
+                      <p>PPh 25 Tipe 2</p>
                     </div>
                   </NavLink>
                   <NavLink

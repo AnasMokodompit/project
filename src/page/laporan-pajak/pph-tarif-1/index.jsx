@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, forwardRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useReactToPrint } from "react-to-print";
-import { format } from "date-fns";
+import { format, set } from "date-fns";
 import { id } from "date-fns/locale";
 import axios from "axios";
 
@@ -9,6 +9,7 @@ import { cn } from "../../../utils/cn";
 
 import { Button } from "../../../componet/button";
 import { Calendar } from "../../../componet/calendar";
+import { Input } from "../../../componet/input";
 import {
   Popover,
   PopoverContent,
@@ -24,6 +25,7 @@ export const PPhTarif1 = () => {
   const [tanggalAwal, setTanggalAwal] = useState();
   const [tanggalAkhir, setTanggalAkhir] = useState();
   const [labaRugiData, setLabaRugiData] = useState();
+  const [valueTarif1, setValueTarif1] = useState(0.5);
   const refLaporanPPhTarif1 = useRef();
 
   const handlePrintLaporanLabaRugi = useReactToPrint({
@@ -112,21 +114,25 @@ export const PPhTarif1 = () => {
       saldoBiayaPenyusutanMesin +
       saldoBiayaPenyusutanKendaraan +
       saldoBiayaPenyusutanGedung;
+
     const saldoTotalLabaRugiOperasi =
       saldoTotalLabaRugiKotor - saldoTotalBiayaOperasional;
+
     const saldoTotalPendapatanDanBebanLainLain =
       saldoPendapatanBunga - saldoBebanBunga;
+
     const saldoTotalLabaRugiUsaha =
       saldoTotalLabaRugiOperasi - saldoTotalPendapatanDanBebanLainLain;
-    const saldoTotalLabaRugiUsahaPPh1 = 0.005 * saldoTotalLabaRugiUsaha;
-    const saldoTotalLabaRugiUsahaPPh2 = 0.5 * 0.22 * saldoTotalLabaRugiUsaha;
+
+    const saldoTotalLabaRugiUsahaPPh1 =
+      (valueTarif1 / 100) * saldoTotalLabaRugiUsaha;
 
     return (
       <section className="font-archivo">
         <div className="flex flex-col gap-4">
           <div>
             <p className="text-xs font-bold leading-none">Laporan Pajak</p>
-            <h1 className="text-2xl font-bold">PPh 25 Tarif 0.5%</h1>
+            <h1 className="text-2xl font-bold">PPh 25 Tarif {valueTarif1}%</h1>
           </div>
           <div className="flex justify-between gap-4 rounded-lg border-2 border-neutral-500 bg-neutral-100 p-3">
             <div className="flex items-center gap-2">
@@ -161,10 +167,9 @@ export const PPhTarif1 = () => {
                       selected={tanggalAwal}
                       onSelect={setTanggalAwal}
                       initialFocus
-                      // disabled={{
-                      //   after: new Date(),
-                      //   before: new Date(oldestDate),
-                      // }}
+                      disabled={{
+                        after: new Date(tanggalAkhir),
+                      }}
                     />
                   </PopoverContent>
                 </Popover>
@@ -193,10 +198,9 @@ export const PPhTarif1 = () => {
                       selected={tanggalAkhir}
                       onSelect={setTanggalAkhir}
                       initialFocus
-                      // disabled={{
-                      //   after: new Date(),
-                      //   before: new Date(oldestDate),
-                      // }}
+                      disabled={{
+                        before: new Date(tanggalAwal),
+                      }}
                     />
                   </PopoverContent>
                 </Popover>
@@ -211,13 +215,28 @@ export const PPhTarif1 = () => {
           <div>
             <table className="w-full table-auto border-collapse rounded-lg border-2 border-neutral-500 text-sm">
               <tbody>
-                <tr className="border-2 border-neutral-500 bg-amber-300">
-                  <td colSpan={3} className="p-3 text-left font-bold">
-                    PPh 25 Tarif 0.5%
+                <tr className="border-2 border-neutral-500 ">
+                  <td colSpan={3} className="p-3 text-left">
+                    <div className="flex items-center gap-2">
+                      <p>PPh 25 Tarif</p>
+                      <div className="relative">
+                        <Input
+                          className="w-24 py-1 pr-4 text-right"
+                          type="number"
+                          value={valueTarif1}
+                          onChange={(event) => {
+                            setValueTarif1(event.target.value);
+                          }}
+                        />
+                        <p className="absolute right-1 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                          %
+                        </p>
+                      </div>
+                    </div>
                   </td>
                   <td
                     colSpan={1}
-                    className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle font-bold">
+                    className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalLabaRugiUsahaPPh1)}
                   </td>
                 </tr>
@@ -227,6 +246,7 @@ export const PPhTarif1 = () => {
           <div style={{ display: "none" }}>
             <DokumenPPhTarif1
               ref={refLaporanPPhTarif1}
+              valueTarif1={valueTarif1}
               tanggalAwal={tanggalAwal}
               tanggalAkhir={tanggalAkhir}
             />
@@ -240,6 +260,7 @@ export const PPhTarif1 = () => {
 const DokumenPPhTarif1 = forwardRef((props, ref) => {
   const [labaRugiData, setLabaRugiData] = useState();
 
+  const valueTarif1 = props?.valueTarif1;
   const tanggalAwal = props?.tanggalAwal;
   const tanggalAkhir = props?.tanggalAkhir;
 
@@ -339,8 +360,8 @@ const DokumenPPhTarif1 = forwardRef((props, ref) => {
       saldoPendapatanBunga - saldoBebanBunga;
     const saldoTotalLabaRugiUsaha =
       saldoTotalLabaRugiOperasi - saldoTotalPendapatanDanBebanLainLain;
-    const saldoTotalLabaRugiUsahaPPh1 = 0.005 * saldoTotalLabaRugiUsaha;
-    const saldoTotalLabaRugiUsahaPPh2 = 0.5 * 0.22 * saldoTotalLabaRugiUsaha;
+    const saldoTotalLabaRugiUsahaPPh1 =
+      (valueTarif1 / 100) * saldoTotalLabaRugiUsaha;
 
     // console.log(labaRugiData);
 
@@ -354,7 +375,9 @@ const DokumenPPhTarif1 = forwardRef((props, ref) => {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs font-bold leading-none">Laporan Pajak</p>
-              <h1 className="text-2xl font-bold">PPh 25 Tarif 0.5%</h1>
+              <h1 className="text-2xl font-bold">
+                PPh 25 Tarif {valueTarif1}%
+              </h1>
             </div>
             {!!tanggalAwal && !!tanggalAkhir && (
               <div className="flex items-center gap-2">
@@ -372,13 +395,13 @@ const DokumenPPhTarif1 = forwardRef((props, ref) => {
           <div className="flex flex-col gap-12">
             <table className="w-full table-auto border-collapse rounded-lg border-2 border-neutral-500 text-sm">
               <tbody>
-                <tr className="border-2 border-neutral-500 bg-amber-300">
-                  <td colSpan={3} className="p-3 text-left font-bold">
-                    PPh 25 Tarif 0.5%
+                <tr className="border-2 border-neutral-500">
+                  <td colSpan={3} className="p-3 text-left">
+                    PPh 25 Tarif {valueTarif1}%
                   </td>
                   <td
                     colSpan={1}
-                    className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle font-bold">
+                    className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoTotalLabaRugiUsahaPPh1)}
                   </td>
                 </tr>
