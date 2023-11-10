@@ -71,9 +71,11 @@ const Akun = [
 
 export const SaldoAwal = () => {
   const [saldoAwalData, setSaldoAwalData] = useState();
-  const [jumlahDebit, setJumlahDebit] = useState()
-  const [jumlahKredit, setJumlahKredit] = useState()
+  const [jumlahDebit, setJumlahDebit] = useState();
+  const [jumlahKredit, setJumlahKredit] = useState();
   const [saldoAwalID, setSaldoAwalID] = useState();
+
+  console.log(saldoAwalData);
 
   const formCreate = useForm({});
   const formUpdate = useForm({});
@@ -86,10 +88,43 @@ export const SaldoAwal = () => {
       );
     },
     onSuccess: (data) => {
-      // console.log(data.data.data);
-      setSaldoAwalData(data.data.data.SaldoAwal);
-      setJumlahDebit(data.data.data.Total.Debit)
-      setJumlahKredit(data.data.data.Total.Kredit)
+      function transformData(inputData) {
+        const transformedData = inputData.map((item) => {
+          const {
+            id,
+            kode_nama_akun_transaksi,
+            tanggal,
+            updated_at,
+            namaAkunTransaksi: {
+              nama,
+              keteranganNamaAkunTransaksi: { saldoNormal },
+            },
+          } = item;
+
+          const transformedItem = {
+            id,
+            kode: kode_nama_akun_transaksi,
+            nama,
+            tanggal,
+            updated_at,
+            debit: saldoNormal === "Debit" ? item.saldo : 0,
+            kredit: saldoNormal === "Kredit" ? item.saldo : 0,
+            tipe: saldoNormal,
+          };
+
+          return transformedItem;
+        });
+
+        transformedData.sort((a, b) => a.kode.localeCompare(b.kode));
+
+        return transformedData;
+      }
+
+      const modifiedData = transformData(data.data.data.SaldoAwal);
+
+      setSaldoAwalData(modifiedData);
+      setJumlahDebit(data.data.data.Total.Debit);
+      setJumlahKredit(data.data.data.Total.Kredit);
     },
   });
 
@@ -133,145 +168,12 @@ export const SaldoAwal = () => {
           <h1 className="text-2xl font-bold">Saldo Awal</h1>
         </div>
         <div className="flex flex-col gap-2">
-          {/* <div>
-            <Popover>
-              <PopoverTrigger>
-                <button className="flex w-max items-center gap-1 rounded-lg border-2 border-neutral-500 bg-amber-300 px-3 py-2 text-sm font-bold">
-                  <Plus className="text-sm" />
-                  Buat
-                </button>
-              </PopoverTrigger>
-              <PopoverContent
-                align="start"
-                className="border-2 border-neutral-500">
-                <div className="flex flex-col gap-4">
-                  <p className="font-archivo text-sm font-bold">
-                    Buat Saldo Awal
-                  </p>
-                  <Form {...formCreate}>
-                    <form
-                      onSubmit={formCreate.handleSubmit(onSubmitCreate)}
-                      className="flex flex-col gap-4">
-                      <FormField
-                        control={formCreate.control}
-                        name="language"
-                        render={({ field }) => (
-                          <FormItem className="flex flex-col">
-                            <FormLabel>Akun</FormLabel>
-                            <Popover>
-                              <PopoverTrigger asChild>
-                                <FormControl>
-                                  <Button
-                                    variant="outline"
-                                    role="combobox"
-                                    className={cn(
-                                      "relative w-full justify-between font-normal",
-                                      !field.value && "text-muted-foreground",
-                                    )}>
-                                    {field.value
-                                      ? languages.find(
-                                          (language) =>
-                                            language.value === field.value,
-                                        )?.label
-                                      : "Pilih Akun"}
-                                    <ChevronSelectorVertical className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                  </Button>
-                                </FormControl>
-                              </PopoverTrigger>
-                              <PopoverContent
-                                align="start"
-                                side="right"
-                                className="w-full border-2 border-neutral-500 p-0">
-                                <Command>
-                                  <CommandInput placeholder="Search framework..." />
-                                  <CommandEmpty>
-                                    No framework found.
-                                  </CommandEmpty>
-                                  <ScrollArea className="h-32">
-                                    <CommandGroup>
-                                      {languages.map((language) => (
-                                        <CommandItem
-                                          value={language.label}
-                                          key={language.value}
-                                          onSelect={() => {
-                                            formCreate.setValue(
-                                              "language",
-                                              language.value,
-                                            );
-                                          }}>
-                                          <Check
-                                            className={cn(
-                                              "mr-2 h-4 w-4",
-                                              language.value === field.value
-                                                ? "opacity-100"
-                                                : "opacity-0",
-                                            )}
-                                          />
-                                          {language.label}
-                                        </CommandItem>
-                                      ))}
-                                    </CommandGroup>
-                                  </ScrollArea>
-                                </Command>
-                              </PopoverContent>
-                            </Popover>
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={formCreate.control}
-                        name="debit"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Debit</FormLabel>
-                            <FormControl>
-                              <div className="relative">
-                                <p className="absolute bottom-0 left-3 top-0 m-auto flex items-center font-archivo text-sm">
-                                  Rp.
-                                </p>
-                                <Input
-                                  {...field}
-                                  onKeyDown={restrictAlphabet}
-                                  className="px-10 pr-3 text-right"
-                                />
-                              </div>
-                            </FormControl>
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={formCreate.control}
-                        name="kredit"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Kredit</FormLabel>
-                            <FormControl>
-                              <div className="relative">
-                                <p className="absolute bottom-0 left-3 top-0 m-auto flex items-center font-archivo text-sm">
-                                  Rp.
-                                </p>
-                                <Input
-                                  {...field}
-                                  onKeyDown={restrictAlphabet}
-                                  className="px-10 pr-3 text-right"
-                                />
-                              </div>
-                            </FormControl>
-                          </FormItem>
-                        )}
-                      />
-                      <Button>Simpan</Button>
-                    </form>
-                  </Form>
-                </div>
-              </PopoverContent>
-            </Popover>
-          </div> */}
           <table className="w-full border-collapse border-2 border-neutral-500 text-sm">
             <thead className="bg-amber-300">
               <tr>
-                <th className="w-1/12 px-3 py-2 text-center">Tanggal</th>
-                <th className="w-7/12 px-3 py-2 text-center">Nama Akun</th>
+                <th className="w-2/12 px-3 py-2 text-center">Tanggal</th>
+                <th className="px-3 py-2 text-center">Kode</th>
+                <th className="w-6/12 px-3 py-2 text-center">Nama Akun</th>
                 <th className="w-2/12 px-3 py-2 text-center">Debit</th>
                 <th className="w-2/12 px-3 py-2 text-center">Kredit</th>
                 <th className="w-0 px-3 py-2 text-center"></th>
@@ -280,30 +182,38 @@ export const SaldoAwal = () => {
             <tbody>
               {!!saldoAwalData &&
                 saldoAwalData.map((data) => {
-                  // console.log(data);
-
                   const {
                     id,
-                    namaAkunTransaksi: { nama },
-                    saldo,
+                    kode,
+                    nama,
+                    debit,
+                    kredit,
+                    tipe,
                     updated_at: tanggal,
                   } = data;
                   return (
                     <tr id={id}>
-                      <td className="border-2 border-neutral-500 p-2">
+                      <td className="border-2 border-neutral-500 p-2 text-center">
                         {formatterTime.format(new Date(tanggal))}
+                      </td>
+                      <td className="border-2 border-neutral-500 p-2">
+                        {kode}
                       </td>
                       <td className="border-2 border-neutral-500 p-2">
                         {nama}
                       </td>
                       <td className="border-2 border-neutral-500 p-2 text-right">
-                        {nama !== "Modal Pemilik"
-                          ? convertIDRCurrency(saldo)
+                        {tipe === "Debit" && debit === 0
+                          ? convertIDRCurrency(debit)
+                          : debit !== 0
+                          ? convertIDRCurrency(debit)
                           : ""}
                       </td>
                       <td className="border-2 border-neutral-500 p-2 text-right">
-                        {nama === "Modal Pemilik"
-                          ? convertIDRCurrency(saldo)
+                        {tipe === "Kredit" && kredit === 0
+                          ? convertIDRCurrency(kredit)
+                          : kredit !== 0
+                          ? convertIDRCurrency(kredit)
                           : ""}
                       </td>
                       <td className="border-2 border-neutral-500 p-2">
@@ -331,119 +241,6 @@ export const SaldoAwal = () => {
                                       onSubmitUpdate,
                                     )}
                                     className="flex flex-col gap-4">
-                                    {/* <FormField
-                                      control={formUpdate.control}
-                                      name="language"
-                                      render={({ field }) => (
-                                        <FormItem className="flex flex-col">
-                                          <FormLabel>Akun</FormLabel>
-                                          <Popover>
-                                            <PopoverTrigger asChild>
-                                              <FormControl>
-                                                <Button
-                                                  variant="outline"
-                                                  role="combobox"
-                                                  className={cn(
-                                                    "relative w-full justify-between",
-                                                    !field.value &&
-                                                      "text-muted-foreground",
-                                                  )}>
-                                                  {field.value
-                                                    ? languages.find(
-                                                        (language) =>
-                                                          language.value ===
-                                                          field.value,
-                                                      )?.label
-                                                    : "Pilih Akun"}
-                                                  <ChevronSelectorVertical className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                                </Button>
-                                              </FormControl>
-                                            </PopoverTrigger>
-                                            <PopoverContent
-                                              align="start"
-                                              side="right"
-                                              className="w-full border-2 border-neutral-500 p-0">
-                                              <Command>
-                                                <CommandInput placeholder="Search framework..." />
-                                                <CommandEmpty>
-                                                  No framework found.
-                                                </CommandEmpty>
-                                                <ScrollArea className="h-32">
-                                                  <CommandGroup>
-                                                    {languages.map(
-                                                      (language) => (
-                                                        <CommandItem
-                                                          value={language.label}
-                                                          key={language.value}
-                                                          onSelect={() => {
-                                                            formUpdate.setValue(
-                                                              "language",
-                                                              language.value,
-                                                            );
-                                                          }}>
-                                                          <Check
-                                                            className={cn(
-                                                              "mr-2 h-4 w-4",
-                                                              language.value ===
-                                                                field.value
-                                                                ? "opacity-100"
-                                                                : "opacity-0",
-                                                            )}
-                                                          />
-                                                          {language.label}
-                                                        </CommandItem>
-                                                      ),
-                                                    )}
-                                                  </CommandGroup>
-                                                </ScrollArea>
-                                              </Command>
-                                            </PopoverContent>
-                                          </Popover>
-                                        </FormItem>
-                                      )}
-                                    />
-                                    <FormField
-                                      control={formUpdate.control}
-                                      name="debit"
-                                      render={({ field }) => (
-                                        <FormItem>
-                                          <FormLabel>Debit</FormLabel>
-                                          <FormControl>
-                                            <div className="relative">
-                                              <p className="absolute bottom-0 left-3 top-0 m-auto flex items-center font-archivo text-sm">
-                                                Rp.
-                                              </p>
-                                              <Input
-                                                {...field}
-                                                onKeyDown={restrictAlphabet}
-                                                className="px-10 pr-3 text-right"
-                                              />
-                                            </div>
-                                          </FormControl>
-                                        </FormItem>
-                                      )}
-                                    />
-                                    <FormField
-                                      control={formUpdate.control}
-                                      name="kredit"
-                                      render={({ field }) => (
-                                        <FormItem>
-                                          <FormLabel>Kredit</FormLabel>
-                                          <FormControl>
-                                            <div className="relative">
-                                              <p className="absolute bottom-0 left-3 top-0 m-auto flex items-center font-archivo text-sm">
-                                                Rp.
-                                              </p>
-                                              <Input
-                                                {...field}
-                                                onKeyDown={restrictAlphabet}
-                                                className="px-10 pr-3 text-right"
-                                              />
-                                            </div>
-                                          </FormControl>
-                                        </FormItem>
-                                      )}
-                                    /> */}
                                     <FormField
                                       control={formUpdate.control}
                                       name="saldo"
@@ -471,20 +268,21 @@ export const SaldoAwal = () => {
                               </div>
                             </PopoverContent>
                           </Popover>
-                          {/* <button className="h-8 w-8 flex-shrink-0 items-center gap-2 overflow-hidden rounded-lg border-2 border-red-500 bg-red-500 p-2 text-white transition-colors">
-                            <Delete />
-                          </button> */}
                         </div>
                       </td>
                     </tr>
                   );
                 })}
               <tr className="bg-amber-300">
-                <td colSpan={2} className="p-2 font-bold">
+                <td colSpan={3} className="p-2 font-bold">
                   Total
                 </td>
-                <td className="p-2 text-right">{convertIDRCurrency(jumlahDebit)}</td>
-                <td className="p-2 text-right">{convertIDRCurrency(jumlahKredit)}</td>
+                <td className="p-2 text-right">
+                  {convertIDRCurrency(jumlahDebit)}
+                </td>
+                <td className="p-2 text-right">
+                  {convertIDRCurrency(jumlahKredit)}
+                </td>
                 <td></td>
               </tr>
             </tbody>
