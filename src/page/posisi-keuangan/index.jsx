@@ -437,6 +437,7 @@ export const PosisiKeuangan = () => {
   const [tanggalAwal, setTanggalAwal] = useState();
   const [tanggalAkhir, setTanggalAkhir] = useState();
   const [posisiKeuanganData, setPosisiKeuanganData] = useState();
+  const [labaRugiData, setLabaRugiData] = useState();
   const refLaporanPosisiKeuangan = useRef();
   const handlePrintLaporanPosisiKeuangan = useReactToPrint({
     content: () => refLaporanPosisiKeuangan.current,
@@ -448,15 +449,15 @@ export const PosisiKeuangan = () => {
     axios
       .patch(`${process.env.REACT_APP_BASE_API}/saldoAkunTransaksi/tutupBuku`)
       .then((res) => {
-        alert("Buku Tahun Ini Selesai")
+        alert("Buku Tahun Ini Selesai");
         // console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
-  const { refetch } = useQuery({
+  const { refetch: refetchPosisiKeuangan } = useQuery({
     queryKey: ["posisi-keuangan", { tanggalAwal, tanggalAkhir }],
     queryFn: async () => {
       let tanggalAkhirModified = new Date(tanggalAkhir).setHours(23, 59, 59);
@@ -477,11 +478,112 @@ export const PosisiKeuangan = () => {
     },
   });
 
+  const { refetch: refetchLabaRugi } = useQuery({
+    queryKey: ["laba-rugi", { tahunPeriode, tanggalAwal, tanggalAkhir }],
+    queryFn: async () => {
+      if (!!tanggalAwal && !!tanggalAkhir) {
+        let modifiedHour = new Date(tanggalAkhir);
+        modifiedHour.setHours(23, 59, 59, 999);
+
+        setTanggalAkhir(modifiedHour);
+        return await axios.get(
+          `${process.env.REACT_APP_BASE_API}/saldoAkunTransaksi/labaRugi`,
+          {
+            params: {
+              firstDate: tanggalAwal,
+              lastDate: tanggalAkhir,
+            },
+          },
+        );
+      } else {
+        return await axios.get(
+          `${process.env.REACT_APP_BASE_API}/saldoAkunTransaksi/labaRugi`,
+          {
+            params: {
+              year: tahunPeriode,
+            },
+          },
+        );
+      }
+    },
+    onSuccess: (data) => {
+      setLabaRugiData(data.data.data.labaRugi);
+    },
+  });
+
   useEffect(() => {
-    refetch();
+    refetchPosisiKeuangan();
+    refetchLabaRugi();
   }, [tahunPeriode, tanggalAwal, tanggalAkhir]);
 
-  if (!!posisiKeuanganData) {
+  if (!!posisiKeuanganData && !!labaRugiData) {
+    //// Laba Rugi ////
+    const saldoPendapatan = labaRugiData[0]?.akun[0]?.saldo;
+    const saldoAwalPersediaanBahanBaku = labaRugiData[1]?.akun[0]?.saldo;
+    const saldoAwalPersediaanBarangJadi = labaRugiData[1]?.akun[1]?.saldo;
+    const saldoBiayaBahanBaku = labaRugiData[2]?.akun[0]?.saldo;
+    const saldoUpahPekerja = labaRugiData[2]?.akun[1]?.saldo;
+    const saldoBiayaBahanPembantu = labaRugiData[2]?.akun[2]?.saldo;
+    const saldoBiayaTransport = labaRugiData[3]?.akun[0]?.saldo;
+    const saldoBiayaGajiPegawai = labaRugiData[3]?.akun[1]?.saldo;
+    const saldoBiayaPerlengkapan = labaRugiData[3]?.akun[2]?.saldo;
+    const saldoBiayaSewa = labaRugiData[3]?.akun[3]?.saldo;
+    const saldoBiayaTelepon = labaRugiData[3]?.akun[4]?.saldo;
+    const saldoBiayaListrik = labaRugiData[3]?.akun[5]?.saldo;
+    const saldoBiayaATMATK = labaRugiData[3]?.akun[6]?.saldo;
+    const saldoBiayaLainLain = labaRugiData[3]?.akun[7]?.saldo;
+    const saldoBiayaPenyusutanPeralatan = labaRugiData[3]?.akun[8]?.saldo;
+    const saldoBiayaPenyusutanMesin = labaRugiData[3]?.akun[9]?.saldo;
+    const saldoBiayaPenyusutanKendaraan = labaRugiData[3]?.akun[10]?.saldo;
+    const saldoBiayaPenyusutanGedung = labaRugiData[3]?.akun[11]?.saldo;
+    const saldoPendapatanBunga = labaRugiData[4]?.akun[0]?.saldo;
+    const saldoBebanBunga = labaRugiData[4]?.akun[1]?.saldo;
+
+    const saldoTotalBiayaProduksi =
+      saldoBiayaBahanBaku + saldoUpahPekerja + saldoBiayaBahanPembantu;
+
+    const saldoBarangSiapDijual =
+      saldoAwalPersediaanBahanBaku +
+      saldoAwalPersediaanBarangJadi +
+      saldoTotalBiayaProduksi;
+
+    const saldoTotalPersediaan =
+      labaRugiData[2]?.akun[3]?.saldo + labaRugiData[2]?.akun[4]?.saldo;
+
+    const saldoTotalHargaPokokPenjualanFinal =
+      saldoBarangSiapDijual -
+      (labaRugiData[2]?.akun[3]?.saldo + labaRugiData[2]?.akun[4]?.saldo);
+
+    const saldoTotalHargaPokokPenjualan =
+      saldoAwalPersediaanBahanBaku + saldoAwalPersediaanBarangJadi;
+
+    const saldoTotalLabaRugiKotor =
+      saldoPendapatan - saldoTotalHargaPokokPenjualanFinal;
+
+    const saldoTotalBiayaOperasional =
+      saldoBiayaTransport +
+      saldoBiayaGajiPegawai +
+      saldoBiayaPerlengkapan +
+      saldoBiayaSewa +
+      saldoBiayaTelepon +
+      saldoBiayaListrik +
+      saldoBiayaATMATK +
+      saldoBiayaLainLain +
+      saldoBiayaPenyusutanPeralatan +
+      saldoBiayaPenyusutanMesin +
+      saldoBiayaPenyusutanKendaraan +
+      saldoBiayaPenyusutanGedung;
+
+    const saldoTotalLabaRugiOperasi =
+      saldoTotalLabaRugiKotor - saldoTotalBiayaOperasional;
+
+    const saldoTotalPendapatanDanBebanLainLain =
+      saldoPendapatanBunga - saldoBebanBunga;
+
+    const saldoTotalLabaRugiUsaha =
+      saldoTotalLabaRugiOperasi - saldoTotalPendapatanDanBebanLainLain;
+
+    //// Posisi Keuangan ////
     // Aktiva Lancar
     const saldoKas = posisiKeuanganData.posisiKeuangan[0]?.akun[0]?.saldo;
     const saldoPiutangUsaha =
@@ -523,7 +625,8 @@ export const PosisiKeuangan = () => {
 
     // Modal
     const saldoModalPemilik =
-      posisiKeuanganData.posisiKeuangan[4]?.akun[0]?.saldo;
+      posisiKeuanganData.posisiKeuangan[4]?.akun[0]?.saldo +
+      saldoTotalLabaRugiUsaha;
 
     // Total
     const saldoTotalAktivaLancar =
@@ -540,8 +643,6 @@ export const PosisiKeuangan = () => {
     const saldoTotalAktiva = saldoTotalAktivaLancar + saldoTotalAktivaTetap;
     const saldoTotalKewajiban = saldoUtangUsaha + saldoUtangBank;
     const saldoTotalKewajibanDanModal = saldoTotalKewajiban + saldoModalPemilik;
-
-    const oldestDate = new Date(posisiKeuanganData?.oldestDate);
 
     return (
       <section className="font-archivo">
@@ -631,7 +732,7 @@ export const PosisiKeuangan = () => {
 
               <button
                 onClick={hendleTutupBukuAkhirTahun}
-                className="flex h-10 w-30 flex-shrink-0 items-center justify-center rounded-lg border-2 border-neutral-500 bg-amber-300 p-2">
+                className="w-30 flex h-10 flex-shrink-0 items-center justify-center rounded-lg border-2 border-neutral-500 bg-amber-300 p-2">
                 Tutup Buku
               </button>
             </div>
@@ -1031,11 +1132,12 @@ export const PosisiKeuangan = () => {
 
 const DokumenPosisiKeuangan = forwardRef((props, ref) => {
   const [posisiKeuanganData, setPosisiKeuanganData] = useState();
+  const [labaRugiData, setLabaRugiData] = useState();
   const tanggalAwal = props?.tanggalAwal;
   const tanggalAkhir = props?.tanggalAkhir;
   const tahunPeriode = props?.tahunPeriode;
 
-  const { refetch } = useQuery({
+  const { refetchPosisiKeuangan } = useQuery({
     queryKey: ["posisi-keuangan", "dokumen", { tanggalAwal, tanggalAkhir }],
     queryFn: async () => {
       if (!!tanggalAwal && !!tanggalAkhir) {
@@ -1056,6 +1158,38 @@ const DokumenPosisiKeuangan = forwardRef((props, ref) => {
     },
   });
 
+  const { refetch: refetchLabaRugi } = useQuery({
+    queryKey: ["laba-rugi", { tahunPeriode, tanggalAwal, tanggalAkhir }],
+    queryFn: async () => {
+      if (!!tanggalAwal && !!tanggalAkhir) {
+        let modifiedHour = new Date(tanggalAkhir);
+        modifiedHour.setHours(23, 59, 59, 999);
+
+        return await axios.get(
+          `${process.env.REACT_APP_BASE_API}/saldoAkunTransaksi/labaRugi`,
+          {
+            params: {
+              firstDate: tanggalAwal,
+              lastDate: tanggalAkhir,
+            },
+          },
+        );
+      } else {
+        return await axios.get(
+          `${process.env.REACT_APP_BASE_API}/saldoAkunTransaksi/labaRugi`,
+          {
+            params: {
+              year: tahunPeriode,
+            },
+          },
+        );
+      }
+    },
+    onSuccess: (data) => {
+      setLabaRugiData(data.data.data.labaRugi);
+    },
+  });
+
   const optionsTime = {
     year: "numeric",
     month: "long",
@@ -1070,7 +1204,74 @@ const DokumenPosisiKeuangan = forwardRef((props, ref) => {
     }`;
   };
 
-  if (!!posisiKeuanganData) {
+  if (!!posisiKeuanganData && !!labaRugiData) {
+    //// Laba Rugi ////
+    const saldoPendapatan = labaRugiData[0]?.akun[0]?.saldo;
+    const saldoAwalPersediaanBahanBaku = labaRugiData[1]?.akun[0]?.saldo;
+    const saldoAwalPersediaanBarangJadi = labaRugiData[1]?.akun[1]?.saldo;
+    const saldoBiayaBahanBaku = labaRugiData[2]?.akun[0]?.saldo;
+    const saldoUpahPekerja = labaRugiData[2]?.akun[1]?.saldo;
+    const saldoBiayaBahanPembantu = labaRugiData[2]?.akun[2]?.saldo;
+    const saldoBiayaTransport = labaRugiData[3]?.akun[0]?.saldo;
+    const saldoBiayaGajiPegawai = labaRugiData[3]?.akun[1]?.saldo;
+    const saldoBiayaPerlengkapan = labaRugiData[3]?.akun[2]?.saldo;
+    const saldoBiayaSewa = labaRugiData[3]?.akun[3]?.saldo;
+    const saldoBiayaTelepon = labaRugiData[3]?.akun[4]?.saldo;
+    const saldoBiayaListrik = labaRugiData[3]?.akun[5]?.saldo;
+    const saldoBiayaATMATK = labaRugiData[3]?.akun[6]?.saldo;
+    const saldoBiayaLainLain = labaRugiData[3]?.akun[7]?.saldo;
+    const saldoBiayaPenyusutanPeralatan = labaRugiData[3]?.akun[8]?.saldo;
+    const saldoBiayaPenyusutanMesin = labaRugiData[3]?.akun[9]?.saldo;
+    const saldoBiayaPenyusutanKendaraan = labaRugiData[3]?.akun[10]?.saldo;
+    const saldoBiayaPenyusutanGedung = labaRugiData[3]?.akun[11]?.saldo;
+    const saldoPendapatanBunga = labaRugiData[4]?.akun[0]?.saldo;
+    const saldoBebanBunga = labaRugiData[4]?.akun[1]?.saldo;
+
+    const saldoTotalBiayaProduksi =
+      saldoBiayaBahanBaku + saldoUpahPekerja + saldoBiayaBahanPembantu;
+
+    const saldoBarangSiapDijual =
+      saldoAwalPersediaanBahanBaku +
+      saldoAwalPersediaanBarangJadi +
+      saldoTotalBiayaProduksi;
+
+    const saldoTotalPersediaan =
+      labaRugiData[2]?.akun[3]?.saldo + labaRugiData[2]?.akun[4]?.saldo;
+
+    const saldoTotalHargaPokokPenjualanFinal =
+      saldoBarangSiapDijual -
+      (labaRugiData[2]?.akun[3]?.saldo + labaRugiData[2]?.akun[4]?.saldo);
+
+    const saldoTotalHargaPokokPenjualan =
+      saldoAwalPersediaanBahanBaku + saldoAwalPersediaanBarangJadi;
+
+    const saldoTotalLabaRugiKotor =
+      saldoPendapatan - saldoTotalHargaPokokPenjualanFinal;
+
+    const saldoTotalBiayaOperasional =
+      saldoBiayaTransport +
+      saldoBiayaGajiPegawai +
+      saldoBiayaPerlengkapan +
+      saldoBiayaSewa +
+      saldoBiayaTelepon +
+      saldoBiayaListrik +
+      saldoBiayaATMATK +
+      saldoBiayaLainLain +
+      saldoBiayaPenyusutanPeralatan +
+      saldoBiayaPenyusutanMesin +
+      saldoBiayaPenyusutanKendaraan +
+      saldoBiayaPenyusutanGedung;
+
+    const saldoTotalLabaRugiOperasi =
+      saldoTotalLabaRugiKotor - saldoTotalBiayaOperasional;
+
+    const saldoTotalPendapatanDanBebanLainLain =
+      saldoPendapatanBunga - saldoBebanBunga;
+
+    const saldoTotalLabaRugiUsaha =
+      saldoTotalLabaRugiOperasi - saldoTotalPendapatanDanBebanLainLain;
+
+    //// Posisi Keuangan ////
     // Aktiva Lancar
     const saldoKas = posisiKeuanganData.posisiKeuangan[0]?.akun[0]?.saldo;
     const saldoPiutangUsaha =
@@ -1112,7 +1313,8 @@ const DokumenPosisiKeuangan = forwardRef((props, ref) => {
 
     // Modal
     const saldoModalPemilik =
-      posisiKeuanganData.posisiKeuangan[4]?.akun[0]?.saldo;
+      posisiKeuanganData.posisiKeuangan[4]?.akun[0]?.saldo +
+      saldoTotalLabaRugiUsaha;
 
     // Total
     const saldoTotalAktivaLancar =
