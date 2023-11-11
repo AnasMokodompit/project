@@ -529,9 +529,8 @@ export const LabaRugi = () => {
       saldoPersediaanBahanBaku + saldoPersediaanBarangJadi;
 
     const saldoTotalHargaPokokPenjualanFinal =
-      saldoBarangSiapDijual +
-      saldoPersediaanBahanBaku +
-      saldoPersediaanBarangJadi;
+      saldoBarangSiapDijual -
+      (saldoPersediaanBahanBaku + saldoPersediaanBarangJadi);
 
     const saldoTotalHargaPokokPenjualan =
       saldoAwalPersediaanBahanBaku + saldoAwalPersediaanBarangJadi;
@@ -1202,9 +1201,8 @@ const DokumenLabaRugi = forwardRef((props, ref) => {
       saldoPersediaanBahanBaku + saldoPersediaanBarangJadi;
 
     const saldoTotalHargaPokokPenjualanFinal =
-      saldoBarangSiapDijual +
-      saldoPersediaanBahanBaku +
-      saldoPersediaanBarangJadi;
+      saldoBarangSiapDijual -
+      (saldoPersediaanBahanBaku + saldoPersediaanBarangJadi);
 
     const saldoTotalHargaPokokPenjualan =
       saldoAwalPersediaanBahanBaku + saldoAwalPersediaanBarangJadi;
