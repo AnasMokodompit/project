@@ -614,12 +614,13 @@ export const PosisiKeuangan = () => {
     const saldoKas = posisiKeuanganData.posisiKeuangan[0]?.akun[0]?.saldo;
     const saldoPiutangUsaha =
       posisiKeuanganData.posisiKeuangan[0]?.akun[1]?.saldo;
+    const saldoPiutang = posisiKeuanganData.posisiKeuangan[0]?.akun[2]?.saldo;
     const saldoPersediaanBarangJadi =
-      posisiKeuanganData.posisiKeuangan[0]?.akun[2]?.saldo;
-    const saldoPersediaanBahanBaku =
       posisiKeuanganData.posisiKeuangan[0]?.akun[3]?.saldo;
-    const saldoPersediaanBahanPembantu =
+    const saldoPersediaanBahanBaku =
       posisiKeuanganData.posisiKeuangan[0]?.akun[4]?.saldo;
+    const saldoPersediaanBahanPembantu =
+      posisiKeuanganData.posisiKeuangan[0]?.akun[5]?.saldo;
 
     // Aktiva Tetap
     const saldoTanah = posisiKeuanganData.posisiKeuangan[1]?.akun[0]?.saldo;
@@ -658,6 +659,7 @@ export const PosisiKeuangan = () => {
     const saldoTotalAktivaLancar =
       saldoKas +
       saldoPiutangUsaha +
+      saldoPiutang +
       saldoPersediaanBarangJadi +
       saldoPersediaanBahanBaku +
       saldoPersediaanBahanPembantu;
@@ -863,6 +865,16 @@ export const PosisiKeuangan = () => {
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle"></td>
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoPiutangUsaha)}
+                  </td>
+                  <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                </tr>
+                <tr className="border-2 border-neutral-500">
+                  <td className="border-2 border-neutral-500 px-4 py-1 text-left align-middle">
+                    Piutang
+                  </td>
+                  <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle">
+                    {convertIDRCurrency(saldoPiutang)}
                   </td>
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
@@ -1308,12 +1320,13 @@ const DokumenPosisiKeuangan = forwardRef((props, ref) => {
     const saldoKas = posisiKeuanganData.posisiKeuangan[0]?.akun[0]?.saldo;
     const saldoPiutangUsaha =
       posisiKeuanganData.posisiKeuangan[0]?.akun[1]?.saldo;
+    const saldoPiutang = posisiKeuanganData.posisiKeuangan[0]?.akun[2]?.saldo;
     const saldoPersediaanBarangJadi =
-      posisiKeuanganData.posisiKeuangan[0]?.akun[2]?.saldo;
-    const saldoPersediaanBahanBaku =
       posisiKeuanganData.posisiKeuangan[0]?.akun[3]?.saldo;
-    const saldoPersediaanBahanPembantu =
+    const saldoPersediaanBahanBaku =
       posisiKeuanganData.posisiKeuangan[0]?.akun[4]?.saldo;
+    const saldoPersediaanBahanPembantu =
+      posisiKeuanganData.posisiKeuangan[0]?.akun[5]?.saldo;
 
     // Aktiva Tetap
     const saldoTanah = posisiKeuanganData.posisiKeuangan[1]?.akun[0]?.saldo;
@@ -1352,6 +1365,7 @@ const DokumenPosisiKeuangan = forwardRef((props, ref) => {
     const saldoTotalAktivaLancar =
       saldoKas +
       saldoPiutangUsaha +
+      saldoPiutang +
       saldoPersediaanBarangJadi +
       saldoPersediaanBahanBaku +
       saldoPersediaanBahanPembantu;
@@ -1432,6 +1446,16 @@ const DokumenPosisiKeuangan = forwardRef((props, ref) => {
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle"></td>
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle">
                     {convertIDRCurrency(saldoPiutangUsaha)}
+                  </td>
+                  <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                </tr>
+                <tr>
+                  <td className="border-2 border-neutral-500 px-4 py-1 text-left align-middle">
+                    Piutang
+                  </td>
+                  <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle"></td>
+                  <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle">
+                    {convertIDRCurrency(saldoPiutang)}
                   </td>
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
