@@ -24,416 +24,417 @@ import Printer from "../../Asset/icons/untitled-ui-icons/line/components/Printer
 import Minus from "../../Asset/icons/untitled-ui-icons/line/components/Minus";
 import Refresh from "../../Asset/icons/untitled-ui-icons/line/components/RefreshCw04";
 
-const tahun = [
-  {
-    label: 2000,
-    value: 2000,
-  },
-  {
-    label: 2001,
-    value: 2001,
-  },
-  {
-    label: 2002,
-    value: 2002,
-  },
-  {
-    label: 2003,
-    value: 2003,
-  },
-  {
-    label: 2004,
-    value: 2004,
-  },
-  {
-    label: 2005,
-    value: 2005,
-  },
-  {
-    label: 2006,
-    value: 2006,
-  },
-  {
-    label: 2007,
-    value: 2007,
-  },
-  {
-    label: 2008,
-    value: 2008,
-  },
-  {
-    label: 2009,
-    value: 2009,
-  },
-  {
-    label: 2010,
-    value: 2010,
-  },
-  {
-    label: 2011,
-    value: 2011,
-  },
-  {
-    label: 2012,
-    value: 2012,
-  },
-  {
-    label: 2013,
-    value: 2013,
-  },
-  {
-    label: 2014,
-    value: 2014,
-  },
-  {
-    label: 2015,
-    value: 2015,
-  },
-  {
-    label: 2016,
-    value: 2016,
-  },
-  {
-    label: 2017,
-    value: 2017,
-  },
-  {
-    label: 2018,
-    value: 2018,
-  },
-  {
-    label: 2019,
-    value: 2019,
-  },
-  {
-    label: 2020,
-    value: 2020,
-  },
-  {
-    label: 2021,
-    value: 2021,
-  },
-  {
-    label: 2022,
-    value: 2022,
-  },
-  {
-    label: 2023,
-    value: 2023,
-  },
-  {
-    label: 2024,
-    value: 2024,
-  },
-  {
-    label: 2025,
-    value: 2025,
-  },
-  {
-    label: 2026,
-    value: 2026,
-  },
-  {
-    label: 2027,
-    value: 2027,
-  },
-  {
-    label: 2028,
-    value: 2028,
-  },
-  {
-    label: 2029,
-    value: 2029,
-  },
-  {
-    label: 2030,
-    value: 2030,
-  },
-  {
-    label: 2031,
-    value: 2031,
-  },
-  {
-    label: 2032,
-    value: 2032,
-  },
-  {
-    label: 2033,
-    value: 2033,
-  },
-  {
-    label: 2034,
-    value: 2034,
-  },
-  {
-    label: 2035,
-    value: 2035,
-  },
-  {
-    label: 2036,
-    value: 2036,
-  },
-  {
-    label: 2037,
-    value: 2037,
-  },
-  {
-    label: 2038,
-    value: 2038,
-  },
-  {
-    label: 2039,
-    value: 2039,
-  },
-  {
-    label: 2040,
-    value: 2040,
-  },
-  {
-    label: 2041,
-    value: 2041,
-  },
-  {
-    label: 2042,
-    value: 2042,
-  },
-  {
-    label: 2043,
-    value: 2043,
-  },
-  {
-    label: 2044,
-    value: 2044,
-  },
-  {
-    label: 2045,
-    value: 2045,
-  },
-  {
-    label: 2046,
-    value: 2046,
-  },
-  {
-    label: 2047,
-    value: 2047,
-  },
-  {
-    label: 2048,
-    value: 2048,
-  },
-  {
-    label: 2049,
-    value: 2049,
-  },
-  {
-    label: 2050,
-    value: 2050,
-  },
-  {
-    label: 2051,
-    value: 2051,
-  },
-  {
-    label: 2052,
-    value: 2052,
-  },
-  {
-    label: 2053,
-    value: 2053,
-  },
-  {
-    label: 2054,
-    value: 2054,
-  },
-  {
-    label: 2055,
-    value: 2055,
-  },
-  {
-    label: 2056,
-    value: 2056,
-  },
-  {
-    label: 2057,
-    value: 2057,
-  },
-  {
-    label: 2058,
-    value: 2058,
-  },
-  {
-    label: 2059,
-    value: 2059,
-  },
-  {
-    label: 2060,
-    value: 2060,
-  },
-  {
-    label: 2061,
-    value: 2061,
-  },
-  {
-    label: 2062,
-    value: 2062,
-  },
-  {
-    label: 2063,
-    value: 2063,
-  },
-  {
-    label: 2064,
-    value: 2064,
-  },
-  {
-    label: 2065,
-    value: 2065,
-  },
-  {
-    label: 2066,
-    value: 2066,
-  },
-  {
-    label: 2067,
-    value: 2067,
-  },
-  {
-    label: 2068,
-    value: 2068,
-  },
-  {
-    label: 2069,
-    value: 2069,
-  },
-  {
-    label: 2070,
-    value: 2070,
-  },
-  {
-    label: 2071,
-    value: 2071,
-  },
-  {
-    label: 2072,
-    value: 2072,
-  },
-  {
-    label: 2073,
-    value: 2073,
-  },
-  {
-    label: 2074,
-    value: 2074,
-  },
-  {
-    label: 2075,
-    value: 2075,
-  },
-  {
-    label: 2076,
-    value: 2076,
-  },
-  {
-    label: 2077,
-    value: 2077,
-  },
-  {
-    label: 2078,
-    value: 2078,
-  },
-  {
-    label: 2079,
-    value: 2079,
-  },
-  {
-    label: 2080,
-    value: 2080,
-  },
-  {
-    label: 2081,
-    value: 2081,
-  },
-  {
-    label: 2082,
-    value: 2082,
-  },
-  {
-    label: 2083,
-    value: 2083,
-  },
-  {
-    label: 2084,
-    value: 2084,
-  },
-  {
-    label: 2085,
-    value: 2085,
-  },
-  {
-    label: 2086,
-    value: 2086,
-  },
-  {
-    label: 2087,
-    value: 2087,
-  },
-  {
-    label: 2088,
-    value: 2088,
-  },
-  {
-    label: 2089,
-    value: 2089,
-  },
-  {
-    label: 2090,
-    value: 2090,
-  },
-  {
-    label: 2091,
-    value: 2091,
-  },
-  {
-    label: 2092,
-    value: 2092,
-  },
-  {
-    label: 2093,
-    value: 2093,
-  },
-  {
-    label: 2094,
-    value: 2094,
-  },
-  {
-    label: 2095,
-    value: 2095,
-  },
-  {
-    label: 2096,
-    value: 2096,
-  },
-  {
-    label: 2097,
-    value: 2097,
-  },
-  {
-    label: 2098,
-    value: 2098,
-  },
-  {
-    label: 2099,
-    value: 2099,
-  },
-  {
-    label: 2100,
-    value: 2100,
-  },
-];
+// const tahun = [
+//   {
+//     label: 2000,
+//     value: 2000,
+//   },
+//   {
+//     label: 2001,
+//     value: 2001,
+//   },
+//   {
+//     label: 2002,
+//     value: 2002,
+//   },
+//   {
+//     label: 2003,
+//     value: 2003,
+//   },
+//   {
+//     label: 2004,
+//     value: 2004,
+//   },
+//   {
+//     label: 2005,
+//     value: 2005,
+//   },
+//   {
+//     label: 2006,
+//     value: 2006,
+//   },
+//   {
+//     label: 2007,
+//     value: 2007,
+//   },
+//   {
+//     label: 2008,
+//     value: 2008,
+//   },
+//   {
+//     label: 2009,
+//     value: 2009,
+//   },
+//   {
+//     label: 2010,
+//     value: 2010,
+//   },
+//   {
+//     label: 2011,
+//     value: 2011,
+//   },
+//   {
+//     label: 2012,
+//     value: 2012,
+//   },
+//   {
+//     label: 2013,
+//     value: 2013,
+//   },
+//   {
+//     label: 2014,
+//     value: 2014,
+//   },
+//   {
+//     label: 2015,
+//     value: 2015,
+//   },
+//   {
+//     label: 2016,
+//     value: 2016,
+//   },
+//   {
+//     label: 2017,
+//     value: 2017,
+//   },
+//   {
+//     label: 2018,
+//     value: 2018,
+//   },
+//   {
+//     label: 2019,
+//     value: 2019,
+//   },
+//   {
+//     label: 2020,
+//     value: 2020,
+//   },
+//   {
+//     label: 2021,
+//     value: 2021,
+//   },
+//   {
+//     label: 2022,
+//     value: 2022,
+//   },
+//   {
+//     label: 2023,
+//     value: 2023,
+//   },
+//   {
+//     label: 2024,
+//     value: 2024,
+//   },
+//   {
+//     label: 2025,
+//     value: 2025,
+//   },
+//   {
+//     label: 2026,
+//     value: 2026,
+//   },
+//   {
+//     label: 2027,
+//     value: 2027,
+//   },
+//   {
+//     label: 2028,
+//     value: 2028,
+//   },
+//   {
+//     label: 2029,
+//     value: 2029,
+//   },
+//   {
+//     label: 2030,
+//     value: 2030,
+//   },
+//   {
+//     label: 2031,
+//     value: 2031,
+//   },
+//   {
+//     label: 2032,
+//     value: 2032,
+//   },
+//   {
+//     label: 2033,
+//     value: 2033,
+//   },
+//   {
+//     label: 2034,
+//     value: 2034,
+//   },
+//   {
+//     label: 2035,
+//     value: 2035,
+//   },
+//   {
+//     label: 2036,
+//     value: 2036,
+//   },
+//   {
+//     label: 2037,
+//     value: 2037,
+//   },
+//   {
+//     label: 2038,
+//     value: 2038,
+//   },
+//   {
+//     label: 2039,
+//     value: 2039,
+//   },
+//   {
+//     label: 2040,
+//     value: 2040,
+//   },
+//   {
+//     label: 2041,
+//     value: 2041,
+//   },
+//   {
+//     label: 2042,
+//     value: 2042,
+//   },
+//   {
+//     label: 2043,
+//     value: 2043,
+//   },
+//   {
+//     label: 2044,
+//     value: 2044,
+//   },
+//   {
+//     label: 2045,
+//     value: 2045,
+//   },
+//   {
+//     label: 2046,
+//     value: 2046,
+//   },
+//   {
+//     label: 2047,
+//     value: 2047,
+//   },
+//   {
+//     label: 2048,
+//     value: 2048,
+//   },
+//   {
+//     label: 2049,
+//     value: 2049,
+//   },
+//   {
+//     label: 2050,
+//     value: 2050,
+//   },
+//   {
+//     label: 2051,
+//     value: 2051,
+//   },
+//   {
+//     label: 2052,
+//     value: 2052,
+//   },
+//   {
+//     label: 2053,
+//     value: 2053,
+//   },
+//   {
+//     label: 2054,
+//     value: 2054,
+//   },
+//   {
+//     label: 2055,
+//     value: 2055,
+//   },
+//   {
+//     label: 2056,
+//     value: 2056,
+//   },
+//   {
+//     label: 2057,
+//     value: 2057,
+//   },
+//   {
+//     label: 2058,
+//     value: 2058,
+//   },
+//   {
+//     label: 2059,
+//     value: 2059,
+//   },
+//   {
+//     label: 2060,
+//     value: 2060,
+//   },
+//   {
+//     label: 2061,
+//     value: 2061,
+//   },
+//   {
+//     label: 2062,
+//     value: 2062,
+//   },
+//   {
+//     label: 2063,
+//     value: 2063,
+//   },
+//   {
+//     label: 2064,
+//     value: 2064,
+//   },
+//   {
+//     label: 2065,
+//     value: 2065,
+//   },
+//   {
+//     label: 2066,
+//     value: 2066,
+//   },
+//   {
+//     label: 2067,
+//     value: 2067,
+//   },
+//   {
+//     label: 2068,
+//     value: 2068,
+//   },
+//   {
+//     label: 2069,
+//     value: 2069,
+//   },
+//   {
+//     label: 2070,
+//     value: 2070,
+//   },
+//   {
+//     label: 2071,
+//     value: 2071,
+//   },
+//   {
+//     label: 2072,
+//     value: 2072,
+//   },
+//   {
+//     label: 2073,
+//     value: 2073,
+//   },
+//   {
+//     label: 2074,
+//     value: 2074,
+//   },
+//   {
+//     label: 2075,
+//     value: 2075,
+//   },
+//   {
+//     label: 2076,
+//     value: 2076,
+//   },
+//   {
+//     label: 2077,
+//     value: 2077,
+//   },
+//   {
+//     label: 2078,
+//     value: 2078,
+//   },
+//   {
+//     label: 2079,
+//     value: 2079,
+//   },
+//   {
+//     label: 2080,
+//     value: 2080,
+//   },
+//   {
+//     label: 2081,
+//     value: 2081,
+//   },
+//   {
+//     label: 2082,
+//     value: 2082,
+//   },
+//   {
+//     label: 2083,
+//     value: 2083,
+//   },
+//   {
+//     label: 2084,
+//     value: 2084,
+//   },
+//   {
+//     label: 2085,
+//     value: 2085,
+//   },
+//   {
+//     label: 2086,
+//     value: 2086,
+//   },
+//   {
+//     label: 2087,
+//     value: 2087,
+//   },
+//   {
+//     label: 2088,
+//     value: 2088,
+//   },
+//   {
+//     label: 2089,
+//     value: 2089,
+//   },
+//   {
+//     label: 2090,
+//     value: 2090,
+//   },
+//   {
+//     label: 2091,
+//     value: 2091,
+//   },
+//   {
+//     label: 2092,
+//     value: 2092,
+//   },
+//   {
+//     label: 2093,
+//     value: 2093,
+//   },
+//   {
+//     label: 2094,
+//     value: 2094,
+//   },
+//   {
+//     label: 2095,
+//     value: 2095,
+//   },
+//   {
+//     label: 2096,
+//     value: 2096,
+//   },
+//   {
+//     label: 2097,
+//     value: 2097,
+//   },
+//   {
+//     label: 2098,
+//     value: 2098,
+//   },
+//   {
+//     label: 2099,
+//     value: 2099,
+//   },
+//   {
+//     label: 2100,
+//     value: 2100,
+//   },
+// ];
 
 export const PosisiKeuangan = () => {
   const [openTahunPeriode, setOpenTahunPeriode] = useState(false);
   const [tahunPeriode, setTahunPeriode] = useState();
+  const [tahun, setTahun] = useState([])
   const [tanggalAwal, setTanggalAwal] = useState();
   const [tanggalAkhir, setTanggalAkhir] = useState();
   const [posisiKeuanganData, setPosisiKeuanganData] = useState();
@@ -457,6 +458,20 @@ export const PosisiKeuangan = () => {
       });
   };
 
+  const hendleGetAllTanggalTutupBuku = () => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_API}/tutupBuku`)
+      .then((res) => {
+        console.log(res.data.data)
+        setTahun(res.data.data)
+        // alert("Buku Tahun Ini Selesai");
+        // console.log(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   const { refetch: refetchPosisiKeuangan } = useQuery({
     queryKey: ["posisi-keuangan", { tanggalAwal, tanggalAkhir }],
     queryFn: async () => {
@@ -468,7 +483,7 @@ export const PosisiKeuangan = () => {
           params: {
             firstDate: tanggalAwal,
             lastDate: tanggalAkhirModified,
-            year: tahunPeriode,
+            idPeriode: tahunPeriode,
           },
         },
       );
@@ -500,7 +515,7 @@ export const PosisiKeuangan = () => {
           `${process.env.REACT_APP_BASE_API}/saldoAkunTransaksi/labaRugi`,
           {
             params: {
-              year: tahunPeriode,
+              idPeriode: tahunPeriode,
             },
           },
         );
@@ -511,9 +526,20 @@ export const PosisiKeuangan = () => {
     },
   });
 
+  const optionsTime = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "Asia/Makassar",
+  };
+
+  const formatterTime = new Intl.DateTimeFormat("id-ID", optionsTime);
+
+
   useEffect(() => {
     refetchPosisiKeuangan();
     refetchLabaRugi();
+    hendleGetAllTanggalTutupBuku()
   }, [tahunPeriode, tanggalAwal, tanggalAkhir]);
 
   if (!!posisiKeuanganData && !!labaRugiData) {
@@ -756,8 +782,14 @@ export const PosisiKeuangan = () => {
                     aria-expanded={openTahunPeriode}
                     className="w-[140px] justify-between">
                     {tahunPeriode
-                      ? tahun.find((tahun) => tahun.value === tahunPeriode)
-                          ?.label
+                      // ? tahun.find((tahun) => console.log(tahun, tahunPeriode))
+                      ? tahun.map((tahun) => {
+                          if (tahun.id === tahunPeriode) {
+                            return (
+                              formatterTime.format(new Date(tahun.tanggal))
+                            )
+                          }
+                      })
                       : "Pilih tahun"}
                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                   </Button>
@@ -767,26 +799,26 @@ export const PosisiKeuangan = () => {
                     <ScrollArea className="h-48">
                       <CommandGroup>
                         {tahun.map((tahun) => (
+                          console.log(tahun.id),
                           <CommandItem
-                            key={tahun.value}
-                            value={tahun.value}
+                            key={tahun.id}
+                            value={tahun.id}
                             onSelect={(currentValue) => {
-                              setTahunPeriode(
-                                currentValue === tahunPeriode
-                                  ? ""
-                                  : Number(currentValue),
-                              );
+                              console.log(currentValue, tahunPeriode)
+                              setTahunPeriode(Number(tahun.id));
                               setOpenTahunPeriode(false);
-                            }}>
+                            }}
+                            >
                             <Check
                               className={cn(
                                 "mr-2 h-4 w-4",
-                                tahunPeriode === tahun.value
+                                tahunPeriode == tahun.id
                                   ? "opacity-100"
                                   : "opacity-0",
                               )}
                             />
-                            {tahun.label}
+                            {/* {tahun.id} */}
+                            {formatterTime.format(new Date(tahun.tanggal))}
                           </CommandItem>
                         ))}
                       </CommandGroup>
@@ -1179,7 +1211,7 @@ const DokumenPosisiKeuangan = forwardRef((props, ref) => {
           `${process.env.REACT_APP_BASE_API}/saldoAkunTransaksi/labaRugi`,
           {
             params: {
-              year: tahunPeriode,
+              idPeriode: tahunPeriode,
             },
           },
         );

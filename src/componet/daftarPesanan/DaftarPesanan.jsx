@@ -70,8 +70,10 @@ function DaftarPesanan() {
 
   const { mutate: mutateUploadBuktiBayar, isLoading } = useMutation({
     mutationFn: async (data) => {
+
+      // return console.log(data)
       return await axios.post(
-        `${process.envREACT_APP_BASE_API}/buktiBayar`,
+        `${process.env.REACT_APP_BASE_API}/buktiBayar`,
         data,
         {
           headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
@@ -94,10 +96,15 @@ function DaftarPesanan() {
   const handleUploadBuktiBayar = (id_orders) => {
     const formData = new FormData();
 
+    console.log(id_orders)
+
     formData.append("gambarBuktiBayar", buktibayarGambar);
     formData.append("statusTransaksi", pembayaran);
     formData.append("id_orders", id_orders);
 
+    for (let val of formData.entries()) {
+      console.log(val[0]+ ', ' + val[1]); 
+    }
     mutateUploadBuktiBayar(formData);
   };
 
@@ -248,6 +255,7 @@ function DaftarPesanan() {
                         <p className={style.judulDetailPesanan}>Bukti Bayar</p>
                         {dataProductById?.orders?.buktiBayar.map(
                           (data, key) => {
+                            console.log(data)
                             return (
                               <div key={key}>
                                 <p>
