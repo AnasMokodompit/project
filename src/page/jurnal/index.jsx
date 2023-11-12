@@ -6,9 +6,10 @@ import React, {
   Fragment,
 } from "react";
 import { useReactToPrint } from "react-to-print";
-import { useQuery } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { id } from "date-fns/locale";
+import { id as indonesia } from "date-fns/locale";
 import axios from "axios";
 
 import { cn } from "../../utils/cn";
@@ -17,10 +18,18 @@ import { Button } from "../../componet/button";
 import { Calendar } from "../../componet/calendar";
 import { Input } from "../../componet/input";
 import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "../../componet/form";
+import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "../../componet/popover";
+import { Textarea } from "../../componet/textarea";
 
 import Search from "../../Asset/icons/untitled-ui-icons/line/components/SearchLg";
 import CalendarIcon from "../../Asset/icons/untitled-ui-icons/line/components/Calendar";
@@ -30,13 +39,28 @@ import Refresh from "../../Asset/icons/untitled-ui-icons/line/components/Refresh
 import ChevronLeft from "../../Asset/icons/untitled-ui-icons/line/components/ChevronLeft";
 import ChevronRight from "../../Asset/icons/untitled-ui-icons/line/components/ChevronRight";
 import ChevronDown from "../../Asset/icons/untitled-ui-icons/line/components/ChevronDown";
+import Edit from "../../Asset/icons/untitled-ui-icons/line/components/Edit03";
+import Delete from "../../Asset/icons/untitled-ui-icons/line/components/Delete";
 
 export const Jurnal = () => {
+  const formEdit = useForm({
+    defaultValues: {
+      keterangan: "",
+      jumlah: "",
+      tanggal: "",
+    },
+  });
+
   const [transaksiData, setTransaksiData] = useState();
-  const [jumlah, setJumlah] = useState()
+  const [transaskiDataSingle, setTransaksiDataSingle] = useState();
+  const [idTransaksi, setIdTransaksi] = useState();
+
+  const [jumlah, setJumlah] = useState();
   const [tanggalAwal, setTanggalAwal] = useState();
   const [tanggalAkhir, setTanggalAkhir] = useState();
+
   const [oldestDate, setOldestDate] = useState();
+
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const refJurnal = useRef();
@@ -65,8 +89,6 @@ export const Jurnal = () => {
     setTransaksiData(sortedData);
     setIsSortingTanggal(!isSortingTanggal);
   };
-
-  console.log(transaksiData);
 
   const { refetch } = useQuery({
     queryKey: ["transaksi"],
@@ -98,7 +120,32 @@ export const Jurnal = () => {
     onSuccess: (data) => {
       setTransaksiData(data.data.data.listTransaksi);
       setOldestDate(data.data.data.oldestDate);
-      setJumlah(data.data.data.jumlah)
+      setJumlah(data.data.data.jumlah);
+    },
+  });
+
+  const { mutate: updateTransaksi } = useMutation({
+    mutationFn: async (data) => {
+      return await axios.patch(
+        `${process.env.REACT_APP_BASE_API}/transaksi/${idTransaksi}`,
+        data,
+      );
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      refetch();
+    },
+  });
+
+  const { mutate: deleteTransaksi } = useMutation({
+    mutationFn: async () => {
+      await axios.delete(
+        `${process.env.REACT_APP_BASE_API}/transaksi/${idTransaksi}`,
+      );
+    },
+    onSuccess: (data) => {
+      console.log(data);
+      refetch();
     },
   });
 
@@ -111,8 +158,46 @@ export const Jurnal = () => {
   const formatterTime = new Intl.DateTimeFormat("id-ID", optionsTime);
 
   useEffect(() => {
+    function getObjectById(data, id) {
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].id === id) {
+          return data[i];
+        }
+      }
+      return null;
+    }
+
+    if (!!transaksiData) {
+      const data = getObjectById(transaksiData, idTransaksi);
+      const { jumlah, keterangan, tanggal } = data;
+      console.log({ jumlah, keterangan, tanggal: new Date(tanggal) });
+      formEdit.reset({
+        jumlah,
+        keterangan,
+        tanggal: new Date(tanggal),
+      });
+    }
+  }, [idTransaksi]);
+
+  useEffect(() => {
     refetch();
   }, [tanggalAwal, tanggalAkhir, search, page]);
+
+  const onSubmitUpdate = formEdit.handleSubmit((data) => {
+    const { keterangan, jumlah, tanggal } = data;
+
+    // console.log({
+    //   keterangan,
+    //   jumlah: Number(jumlah),
+    //   tanggal,
+    // });
+
+    updateTransaksi({
+      keterangan,
+      jumlah: Number(jumlah),
+      tanggal,
+    });
+  });
 
   return (
     <section className="flex max-w-full overflow-auto font-archivo">
@@ -141,7 +226,7 @@ export const Jurnal = () => {
                     )}>
                     <CalendarIcon className="mr-2 h-4 w-4" />
                     {tanggalAwal ? (
-                      format(tanggalAwal, "PPP", { locale: id })
+                      format(tanggalAwal, "PPP", { locale: indonesia })
                     ) : (
                       <span>Pilih tanggal</span>
                     )}
@@ -173,7 +258,7 @@ export const Jurnal = () => {
                     )}>
                     <CalendarIcon className="mr-2 h-4 w-4" />
                     {tanggalAkhir ? (
-                      format(tanggalAkhir, "PPP", { locale: id })
+                      format(tanggalAkhir, "PPP", { locale: indonesia })
                     ) : (
                       <span>Pilih tanggal</span>
                     )}
@@ -185,10 +270,6 @@ export const Jurnal = () => {
                     selected={tanggalAkhir}
                     onSelect={setTanggalAkhir}
                     initialFocus
-                    // disabled={{
-                    //   after: new Date(),
-                    //   before: new Date(oldestDate),
-                    // }}
                   />
                 </PopoverContent>
               </Popover>
@@ -254,6 +335,7 @@ export const Jurnal = () => {
                 <th className="p-2 text-center">Akun</th>
                 <th className="p-2 text-center">Debet</th>
                 <th className="p-2 text-center">Kredit</th>
+                <th className="p-2 text-center"></th>
               </tr>
             </thead>
             <tbody>
@@ -345,6 +427,129 @@ export const Jurnal = () => {
                         <td
                           rowSpan={1}
                           className="border-2 border-neutral-500 px-4 py-1 text-left align-bottom"></td>
+                        <td
+                          rowSpan={
+                            item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                            "Pendapatan DP"
+                              ? 4
+                              : 2
+                          }
+                          className="border-2 border-neutral-500 p-1 text-center">
+                          <div className="flex items-center justify-center gap-2">
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <button
+                                  className="flex items-center gap-2 rounded-lg bg-amber-300 p-2 text-white"
+                                  onClick={() => {
+                                    setIdTransaksi(id);
+                                  }}>
+                                  <Edit className="flex-shrink-0 text-sm text-neutral-900" />
+                                </button>
+                              </PopoverTrigger>
+                              <PopoverContent
+                                side="left"
+                                align="start"
+                                className="w-[32rem]">
+                                <Form {...formEdit}>
+                                  <FormField
+                                    control={formEdit.control}
+                                    name="tanggal"
+                                    render={({ field }) => (
+                                      <FormItem className="flex flex-col">
+                                        <FormLabel>Tanggal Transaksi</FormLabel>
+                                        <Popover>
+                                          <PopoverTrigger asChild>
+                                            <FormControl>
+                                              <Button
+                                                variant={"outline"}
+                                                className={cn(
+                                                  "text-left font-normal",
+                                                  !field.value &&
+                                                    "text-muted-foreground",
+                                                )}>
+                                                {field.value ? (
+                                                  format(field.value, "PPP", {
+                                                    locale: indonesia,
+                                                  })
+                                                ) : (
+                                                  <span>Pilih Tanggal</span>
+                                                )}
+                                                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                              </Button>
+                                            </FormControl>
+                                          </PopoverTrigger>
+                                          <PopoverContent
+                                            className="w-auto p-0"
+                                            align="start">
+                                            <Calendar
+                                              mode="single"
+                                              selected={field.value}
+                                              onSelect={field.onChange}
+                                              initialFocus
+                                            />
+                                          </PopoverContent>
+                                        </Popover>
+                                      </FormItem>
+                                    )}
+                                  />
+                                  <FormField
+                                    control={formEdit.control}
+                                    name="keterangan"
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormLabel>Keterangan</FormLabel>
+                                        <FormControl>
+                                          <Textarea
+                                            className="min-h-[5rem] w-full border-2 border-neutral-500 font-archivo"
+                                            {...field}
+                                          />
+                                        </FormControl>
+                                      </FormItem>
+                                    )}
+                                  />
+                                  <FormField
+                                    control={formEdit.control}
+                                    name="jumlah"
+                                    render={({ field }) => (
+                                      <FormItem>
+                                        <FormLabel>Jumlah</FormLabel>
+                                        <FormControl>
+                                          <div className="relative">
+                                            <Input
+                                              className="z-20 w-full border-2 border-neutral-500 text-right font-archivo"
+                                              {...field}
+                                              onKeyDown={restrictAlphabet}
+                                            />
+                                            <div className="absolute left-4 top-1/2 m-auto flex -translate-y-1/2 items-center">
+                                              <p className="font-archivo text-sm">
+                                                Rp.
+                                              </p>
+                                            </div>
+                                          </div>
+                                        </FormControl>
+                                      </FormItem>
+                                    )}
+                                  />
+                                  <Button
+                                    variant="sm"
+                                    className="mt-3 w-full border-2 border-neutral-500 bg-amber-300 font-bold"
+                                    onClick={() => onSubmitUpdate()}
+                                    type="submit">
+                                    Simpan Perubahan
+                                  </Button>
+                                </Form>
+                              </PopoverContent>
+                            </Popover>
+                            <button
+                              className="flex items-center gap-2 rounded-lg bg-red-500 p-2 text-white"
+                              onClick={() => {
+                                setIdTransaksi(id);
+                                deleteTransaksi();
+                              }}>
+                              <Delete className="flex-shrink-0 text-sm text-white" />
+                            </button>
+                          </div>
+                        </td>
                       </tr>
                       <tr>
                         <td
@@ -428,6 +633,7 @@ export const Jurnal = () => {
                 <td className="p-2 text-right"></td>
                 <td className="p-2 text-right">{convertIDRCurrency(jumlah)}</td>
                 <td className="p-2 text-right">{convertIDRCurrency(jumlah)}</td>
+                <td className="p-2 text-right"></td>
               </tr>
             </tbody>
           </table>
@@ -710,4 +916,22 @@ function convertIDRCurrency(value) {
   const formatterCurrency = new Intl.NumberFormat("id-ID", optionsCurrency);
   const convertValue = formatterCurrency.format(value);
   return convertValue;
+}
+
+function restrictAlphabet(event) {
+  const allowedKeys = [
+    8, 9, 13, 33, 34, 35, 36, 37, 38, 39, 40, 46, 48, 49, 50, 51, 52, 53, 54,
+    55, 56, 57, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105,
+  ];
+  const key = event.which || event.keyCode;
+  const isCtrlPressed = event.ctrlKey || event.metaKey; // Check if Ctrl key is pressed
+
+  // Check for allowed keys and Ctrl key combinations, except Ctrl + V
+  const isAllowed =
+    allowedKeys.includes(key) ||
+    (isCtrlPressed && (key === 65 || key === 67 || key === 88));
+
+  if (!isAllowed) {
+    event.preventDefault();
+  }
 }
