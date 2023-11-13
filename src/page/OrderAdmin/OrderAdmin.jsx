@@ -170,26 +170,48 @@ function OrderAdmin() {
       });
   };
 
-  const hendleTransaksi = (idOrder, statusTransaksi) => {
+  const hendleTransaksi = (idOrder, statusTransaksi, status) => {
     const data = {
       id_jenis_transaksi: 1,
       id_nama_akun_jenis_transaksi: 18,
       keterangan: keterangan,
     };
 
-    if (statusTransaksi == true && isPembayaranDP == false) {
-      setIsPembayaranLunas(true);
-      data.id_nama_akun_jenis_transaksi = 1;
-      data.jumlah = jumlah;
-    } else if (statusTransaksi == true && isPembayaranDP == true) {
-      setIsPembayaranLunas(true);
-      data.id_nama_akun_jenis_transaksi = 1;
-      data.jumlah = 0.7 * jumlah;
-    } else {
-      setIsPembayaranDP(true);
-      data.id_nama_akun_jenis_transaksi = 2;
-      data.jumlah = 0.3 * jumlah;
+
+    // return console.log(data, status)
+    if (status == 2) {
+      if (statusTransaksi == true && isPembayaranDP == false) {
+        setIsPembayaranLunas(true);
+        data.id_nama_akun_jenis_transaksi = 1;
+        data.jumlah = jumlah;
+      } else if (statusTransaksi == true && isPembayaranDP == true) {
+        setIsPembayaranLunas(true);
+        data.id_nama_akun_jenis_transaksi = 32;
+        data.jumlah = 0.7 * jumlah;
+      } else {
+        setIsPembayaranDP(true);
+        data.id_nama_akun_jenis_transaksi = 31;
+        data.jumlah = 0.3 * jumlah;
+      }
+      
+    }else{
+
+      if (statusTransaksi == true && isPembayaranDP == false) {
+        setIsPembayaranLunas(true);
+        data.id_nama_akun_jenis_transaksi = 1;
+        data.jumlah = jumlah;
+      } else if (statusTransaksi == true && isPembayaranDP == true) {
+        setIsPembayaranLunas(true);
+        data.id_nama_akun_jenis_transaksi = 1;
+        data.jumlah = 0.7 * jumlah;
+      } else {
+        setIsPembayaranDP(true);
+        data.id_nama_akun_jenis_transaksi = 2;
+        data.jumlah = 0.3 * jumlah;
+      }
+
     }
+
 
     // return console.log(data, statusTransaksi)
 
@@ -654,7 +676,7 @@ function OrderAdmin() {
                     })}
                   </>
                 )}
-                {console.log(dataBuktiBayar)}
+                {console.log(dataBuktiBayar, "TES")}
                 {dataBuktiBayar.buktiBayar?.length !== 0 && (
                   <div className={style.formOrder}>
                     {/* {console.log(isPembayaranDP, isPembayaranLunas)} */}
@@ -679,6 +701,7 @@ function OrderAdmin() {
                                       hendleTransaksi(
                                         dataBuktiBayar.id,
                                         data.statusTransaksi,
+                                        dataBuktiBayar.status
                                       )
                                     }
                                   />
@@ -701,6 +724,7 @@ function OrderAdmin() {
                                       hendleTransaksi(
                                         dataBuktiBayar.id,
                                         data.statusTransaksi,
+                                        dataBuktiBayar.status
                                       )
                                     }
                                   />
