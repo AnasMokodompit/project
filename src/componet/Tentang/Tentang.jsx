@@ -1,17 +1,22 @@
-import style from "./Tentang.module.css";
 import img from "../../Asset/Picture11.jpg";
 
-function Tentang() {
+const Tentang = () => {
   return (
-    <div id="tentang" className=" flex flex-col gap-8">
+    <div id="tentang" className="flex flex-col gap-4 px-6 lg:gap-8 lg:px-0">
       <div>
-        <p className="font-open-sans text-2xl font-bold">Tentang Kami</p>
+        <h2 className="font-open-sans text-lg font-bold md:text-xl lg:text-2xl">
+          Tentang Kami
+        </h2>
         <hr className="rounded-lg border-8 border-amber-300" />
       </div>
-      <div className="flex gap-8">
-        <img className="rounded-lg" src={img} alt="" />
+      <div className="flex flex-col gap-4 lg:flex-row">
+        <img
+          className="aspect-auto h-80 w-full rounded-lg object-cover"
+          src={img}
+          alt=""
+        />
         <div className="flex flex-col justify-center gap-4">
-          <div className="flex flex-col gap-2 text-justify">
+          <div className="flex flex-col gap-2">
             <p>
               CV. Talongka Jaya berlokasi di Desa Leilem Kecamatan Sonder
               Kabupaten Minahasa yang dikenal dengan Desa Sentra Industri dan
@@ -43,35 +48,26 @@ function Tentang() {
               Jaya, antara lain:
             </p>
             <ol>
-              <li className="list-inside list-decimal">
+              <li>
                 Berbagai jenis furniture (kostum model) untuk kebutuhan
                 perkantoran, rumah tangga, dan sekolah.
               </li>
-              <li className="list-inside list-decimal">
-                Kusen pintu dan kusen jendela serta pintu dan jendela.
-              </li>
-              <li className="list-inside list-decimal">
-                Pekerjaan untuk interior ruangan.
-              </li>
-              <li className="list-inside list-decimal">
+              <li>Kusen pintu dan kusen jendela serta pintu dan jendela.</li>
+              <li>Pekerjaan untuk interior ruangan.</li>
+              <li>
                 Pekerjaan untuk kebutuhan booth pameran, counter, pajangan, dll
               </li>
-              <li className="list-inside list-decimal">
+              <li>
                 Finishing furniture : Cat Kayu (Waterbased, Laminating HPL, Cat
-                Duko, dan Cat Semi Duko) Untuk harga disesuaikan
-                dengan bahan dan model
+                Duko, dan Cat Semi Duko) Untuk harga disesuaikan dengan bahan
+                dan model
               </li>
             </ol>
           </div>
-          {/* <input
-            className="rounded-lg bg-amber-300 p-2 text-base"
-            type="button"
-            value="Selengkapnya"
-          /> */}
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Tentang;

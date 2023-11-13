@@ -1,15 +1,12 @@
-import style from "./Footer.module.css";
-
-function Footer() {
+const Footer = () => {
   return (
-    <div className="flex flex-col items-center gap-2 bg-neutral-400 p-3 text-white">
+    <div className="flex w-full flex-col items-center gap-2 bg-neutral-400 p-6 text-white">
       <img
         src="logo1.png"
         alt="Logo CV Talongka Jaya"
-        className="aspect-auto h-20"
+        className="aspect-auto h-12"
       />
-      {/* <h3>CV Talongka Jaya</h3> */}
-      <p>
+      <p className="text-center">
         Menyediakan Bebagai Product, dan pembeli bisa melakukan pesanan sesuai
         dengan keinginan
       </p>
@@ -38,6 +35,6 @@ function Footer() {
       <p>Copyright &copy; 2023 by CV Talongka Jaya</p>
     </div>
   );
-}
+};
 
 export default Footer;

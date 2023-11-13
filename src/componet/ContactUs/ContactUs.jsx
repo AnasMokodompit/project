@@ -1,12 +1,11 @@
 import { useState } from "react";
-// import style from "./ContactUs.module.css";
 import axios from "axios";
 
 import MarkerPin01 from "../../Asset/icons/untitled-ui-icons/line/components/MarkerPin01";
 import Phone from "../../Asset/icons/untitled-ui-icons/line/components/Phone";
 import Mail01 from "../../Asset/icons/untitled-ui-icons/line/components/Mail01";
 
-function Contact() {
+const Contact = () => {
   const [namaLengkap, setNamaLengkap] = useState("");
   const [email, setEmail] = useState("");
   const [pesan, setPesan] = useState("");
@@ -35,22 +34,26 @@ function Contact() {
   };
 
   return (
-    <div id="contactus" className="flex flex-col gap-8 font-archivo">
+    <div
+      id="contactus"
+      className="flex flex-col gap-4 px-6 font-archivo lg:gap-8 lg:px-0">
       <div>
-        <p className="font-open-sans text-2xl font-bold">Kontak Kami</p>
+        <h2 className="font-open-sans text-lg font-bold md:text-xl lg:text-2xl">
+          Kontak Kami
+        </h2>
         <hr className="rounded-lg border-8 border-amber-300" />
       </div>
       <div>
         <p>
           Anda dapat menghubungi kami disetiap saat, untuk mendapatkan informasi
-          - informasi yagn dibutuhkan. Staf kami akan memberi bantuan sesuai
+          - informasi yang dibutuhkan. Staf kami akan memberi bantuan sesuai
           dengan yang anda butuhkan.
         </p>
       </div>
-      <div className="grid grid-cols-3 items-center justify-center gap-8 px-32">
-        <div className="col-span-1 flex flex-col gap-4">
+      <div className="grid w-full gap-8 lg:grid-cols-3">
+        <div className="flex flex-col gap-4 lg:col-span-1">
           <div className="flex items-center gap-4">
-            <MarkerPin01 className="text-xl" />
+            <MarkerPin01 className="flex-shrink-0 text-xl" />
             <div>
               <p className="font-bold">Alamat</p>
               <p>
@@ -60,23 +63,24 @@ function Contact() {
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <Phone className="text-xl" />
+            <Phone className="flex-shrink-0 text-xl" />
             <div>
               <p className="font-bold">Telepon</p>
               <p>+6281340096717</p>
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <Mail01 className="text-xl" />
+            <Mail01 className="flex-shrink-0 text-xl" />
             <div>
               <p className="font-bold">E-Mail</p>
               <p>deisy@gmail.com</p>
             </div>
           </div>
         </div>
-        <div className="col-span-2 flex flex-col gap-4">
-          {/* <form action="" id={style.contactForm} onSubmit={hendleSumbitContactUs}> */}
-          <p className="text-lg font-bold">Kirim Pesan</p>
+        <div className="flex flex-col gap-4 lg:col-span-2">
+          <p className="text-lg font-bold md:text-xl lg:text-2xl">
+            Kirim Pesan
+          </p>
           <div className="flex flex-col">
             <p>Nama Lengkap</p>
             <input
@@ -121,6 +125,6 @@ function Contact() {
       </div>
     </div>
   );
-}
+};
 
 export default Contact;

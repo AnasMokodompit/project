@@ -1,16 +1,13 @@
+import { useState } from "react";
+import axios from "axios";
+
 import Navbar from "./../../componet/Navbar/Navbar";
 import Marquee from "../../componet/marquee/Marquee";
-import Sidebar from "./../../componet/Sidebar/Sidebar";
 import Content from "./../../componet/Content/Content";
-import Carousel from "./../../componet/Carousel/Carousel";
+import Jumbotron from "../../componet/Jumbotron/Jumbotron";
 import Footer from "./../../componet/Footer/Footer";
 import Contact from "./../../componet/ContactUs/ContactUs";
 import Tentang from "./../../componet/Tentang/Tentang";
-import { useState } from "react";
-import axios from "axios";
-import style from "./Home.module.css";
-
-import { Jumbotron } from "../../componet/jumbotron";
 
 function Home() {
   const [sidebarIdData, setSidebarIdData] = useState([]);
@@ -25,23 +22,20 @@ function Home() {
       .catch((err) => {
         console.log(err);
       });
-
-    console.log(sidebarIdData);
   };
 
   return (
-    <div className="flex flex-col gap-12 font-archivo">
+    <div className="flex flex-col items-center justify-center gap-12 font-archivo">
       <Navbar />
-
-      <div className="container mt-5">
-        {/* <Sidebar nameSdiber={hendleCekProductByContent.bind(this)} /> */}
-        <div className="flex flex-col gap-2">
+      <div className="container mt-12 lg:px-12">
+        <div className="flex flex-col gap-8">
           <Marquee />
-          <Carousel />
-          {/* <Jumbotron /> */}
-          <Content product={sidebarIdData} />
-          <Contact />
-          <Tentang />
+          <div className="flex flex-col gap-12">
+            <Jumbotron />
+            <Content product={sidebarIdData} />
+            <Contact />
+            <Tentang />
+          </div>
         </div>
       </div>
       <Footer />
