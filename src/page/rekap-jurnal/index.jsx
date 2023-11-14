@@ -165,6 +165,18 @@ const Akun = [
     namaAkunTransaksi: "Piutang",
     tipe: "Debit",
   },
+  {
+    namaAkunTransaksi: "Hutang DPP",
+    tipe: "Debit",
+  },
+  {
+    namaAkunTransaksi: "Hutang PPN",
+    tipe: "Debit",
+  },
+  {
+    namaAkunTransaksi: "Hutang PPh 22",
+    tipe: "Debit",
+  },
 ];
 
 export const RekapJurnal = () => {
@@ -332,6 +344,7 @@ export const RekapJurnal = () => {
               </tr>
             </thead>
             <tbody>
+              {console.log(rekapJurnalData)}
               {!!rekapJurnalData && rekapJurnalData.length !== 0 ? (
                 rekapJurnalData.map((data) => {
                   const {
