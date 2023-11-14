@@ -1,7 +1,7 @@
 import style from "./Navbar.module.css";
 import ImgNavbar from "../../Asset/Img/Logo_Politeknik_Negeri_Manado.png";
 import { Link } from "react-scroll";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DataOrder from "../DataOrder/DataOrder";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
@@ -29,6 +29,7 @@ import Plus from "../../Asset/icons/untitled-ui-icons/line/components/Plus";
 import XClose from "../../Asset/icons/untitled-ui-icons/line/components/XClose";
 import Box from "../../Asset/icons/untitled-ui-icons/line/components/Box";
 import LogOut01 from "../../Asset/icons/untitled-ui-icons/line/components/LogOut01";
+import Menu05 from "../../Asset/icons/untitled-ui-icons/line/components/Menu05";
 
 // Components
 import {
@@ -48,8 +49,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../../componet/tooltip";
+import { set } from "date-fns";
 
-function Navbar() {
+const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -69,10 +71,13 @@ function Navbar() {
   const [alamat, setAlamat] = useState("");
   const [email, setEmail] = useState("");
 
-  const pathname = location?.pathname;
+  const [windowSize, setWindowSize] = useState(getWindowSize());
+  const [isSM, setIsSM] = useState(false);
+  const [isMD, setIsMD] = useState(false);
+  const [isLG, setIsLG] = useState(false);
+  const [isXL, setIsXL] = useState(false);
 
-  // let { dataOrder } = useSelector((data) => data.CvTalangkaJaya);
-  // const dispatch = useDispatch();
+  const pathname = location?.pathname;
 
   const hendleTambahOrder = (id, harga) => {
     dispatch(saveOrder({ id: id, jumlah: 1, harga: harga }));
@@ -106,7 +111,6 @@ function Navbar() {
     axios
       .post(`${process.env.REACT_APP_BASE_API}/orders`, data)
       .then((res) => {
-        console.log(res.data.data);
         alert(
           `User berhasil dibuat, Login dengan Email yang telah dimasukan dan password ${res.data.data.users.password}`,
         );
@@ -139,7 +143,6 @@ function Navbar() {
   };
 
   const hendlePopUpOrder = (valuePopUp) => {
-    console.log(valuePopUp);
     dispatch(ResetDataOrder());
     setTampilOrderan(valuePopUp);
   };
@@ -163,12 +166,24 @@ function Navbar() {
   };
 
   useEffect(() => {
+    function handleWindowResize() {
+      setWindowSize(getWindowSize());
+    }
+
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, []);
+
+  useEffect(() => {
     setJumlahOrder(dataOrder);
     hendleAccesRoleUser();
   }, [dataOrder]);
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex w-full flex-col gap-10">
       <nav className="fixed z-50 flex w-full items-center justify-between bg-amber-300 p-4 font-archivo text-lg">
         <div>
           {/* <NavLink to="/" className="flex items-center gap-4">
@@ -257,9 +272,6 @@ function Navbar() {
                           </p>
                           <div className="flex flex-col gap-4">
                             {dataOrder?.map((data, index) => {
-                              {
-                                console.log(data);
-                              }
                               return (
                                 <div className="relative grid grid-cols-3 gap-2 rounded-lg bg-neutral-100 p-2 font-archivo shadow-sm">
                                   <div className="col-span-1 self-center">
@@ -479,10 +491,64 @@ function Navbar() {
             </div>
           </TooltipProvider>
         </div>
+        {/* <div>
+          <Sheet>
+            <SheetTrigger asChild>
+              <button>
+                <Menu05 />
+              </button>
+            </SheetTrigger>
+            <SheetContent>
+              <div className="font-archivo">
+                <ul className="flex flex-col gap-2">
+                  {pathname === "/" && (
+                    <>
+                      <Link
+                        className="cursor-pointer"
+                        to="product"
+                        spy={true}
+                        smooth={true}
+                        offset={-150}
+                        duration={500}>
+                        Produk
+                      </Link>
+                      <Link
+                        className="cursor-pointer"
+                        to="contactus"
+                        spy={true}
+                        smooth={true}
+                        offset={-150}
+                        duration={500}>
+                        Kontak
+                      </Link>
+                      <Link
+                        className="cursor-pointer"
+                        to="tentang"
+                        spy={true}
+                        smooth={true}
+                        offset={-150}
+                        duration={500}>
+                        Tentang
+                      </Link>
+                    </>
+                  )}
+                </ul>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div> */}
       </nav>
-      {/* <DataOrder /> */}
     </div>
   );
+};
+
+function getWindowSize() {
+  const { clientWidth, clientHeight } = document.body;
+
+  return {
+    width: clientWidth,
+    height: clientHeight,
+  };
 }
 
 export default Navbar;
