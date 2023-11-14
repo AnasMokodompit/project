@@ -118,9 +118,9 @@ export const Jurnal = () => {
       }
     },
     onSuccess: (data) => {
-      setTransaksiData(data.data.data.listTransaksi);
-      setOldestDate(data.data.data.oldestDate);
-      setJumlah(data.data.data.jumlah);
+      setTransaksiData(data?.data?.data?.listTransaksi);
+      setOldestDate(data?.data?.data?.oldestDate);
+      setJumlah(data?.data?.data?.jumlah);
     },
   });
 
@@ -159,7 +159,7 @@ export const Jurnal = () => {
 
   useEffect(() => {
     function getObjectById(data, id) {
-      for (let i = 0; i < data.length; i++) {
+      for (let i = 0; i < data?.length; i++) {
         if (data[i].id === id) {
           return data[i];
         }
@@ -169,8 +169,11 @@ export const Jurnal = () => {
 
     if (!!transaksiData) {
       const data = getObjectById(transaksiData, idTransaksi);
-      const { jumlah, keterangan, tanggal } = data;
-      console.log({ jumlah, keterangan, tanggal: new Date(tanggal) });
+
+      const jumlah = data?.jumlah;
+      const keterangan = data?.keterangan;
+      const tanggal = data?.tanggal;
+
       formEdit.reset({
         jumlah,
         keterangan,
@@ -184,13 +187,9 @@ export const Jurnal = () => {
   }, [tanggalAwal, tanggalAkhir, search, page]);
 
   const onSubmitUpdate = formEdit.handleSubmit((data) => {
-    const { keterangan, jumlah, tanggal } = data;
-
-    // console.log({
-    //   keterangan,
-    //   jumlah: Number(jumlah),
-    //   tanggal,
-    // });
+    const jumlah = data?.jumlah;
+    const keterangan = data?.keterangan;
+    const tanggal = data?.tanggal;
 
     updateTransaksi({
       keterangan,
@@ -343,59 +342,89 @@ export const Jurnal = () => {
                 transaksiData.map((item, index) => {
                   const { id } = item;
 
+                  console.log(item);
                   return (
                     <Fragment key={id}>
                       <tr>
                         <td
                           rowSpan={
-                            item.namaAkunTransaksiDalamJenisTransaksi.nama ===
-                            "Pendapatan DP"
+                            item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                            "Pendapatan DP Meubel"
+                              ? 9
+                              : item?.namaAkunTransaksiDalamJenisTransaksi
+                                  .nama === "Pendapatan Meubel"
+                              ? 5
+                              : item?.namaAkunTransaksiDalamJenisTransaksi
+                                  .nama === "Pendapatan DP"
                               ? 4
                               : 2
                           }
                           className="border-2 border-neutral-500 px-4 py-1 text-left">
-                          {formatterTime.format(new Date(item.tanggal))}
+                          {formatterTime.format(new Date(item?.tanggal))}
                         </td>
                         <td
                           rowSpan={
-                            item.namaAkunTransaksiDalamJenisTransaksi.nama ===
-                            "Pendapatan DP"
+                            item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                            "Pendapatan DP Meubel"
+                              ? 9
+                              : item?.namaAkunTransaksiDalamJenisTransaksi
+                                  .nama === "Pendapatan Meubel"
+                              ? 5
+                              : item?.namaAkunTransaksiDalamJenisTransaksi
+                                  .nama === "Pendapatan DP"
                               ? 4
                               : 2
                           }
                           className="border-2 border-neutral-500 px-4 py-1 text-left">
-                          {item.jenis_transaksi.nama}
+                          {item?.jenis_transaksi.nama}
                         </td>
                         <td
                           rowSpan={
-                            item.namaAkunTransaksiDalamJenisTransaksi.nama ===
-                            "Pendapatan DP"
+                            item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                            "Pendapatan DP Meubel"
+                              ? 9
+                              : item?.namaAkunTransaksiDalamJenisTransaksi
+                                  .nama === "Pendapatan Meubel"
+                              ? 5
+                              : item?.namaAkunTransaksiDalamJenisTransaksi
+                                  .nama === "Pendapatan DP"
                               ? 4
                               : 2
                           }
                           className="border-2 border-neutral-500 px-4 py-1 text-left">
-                          {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                          {item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
                           "Pendapatan DP"
                             ? "Pendapatan"
-                            : item.namaAkunTransaksiDalamJenisTransaksi.nama}
+                            : item?.namaAkunTransaksiDalamJenisTransaksi.nama}
                         </td>
                         <td
                           rowSpan={
-                            item.namaAkunTransaksiDalamJenisTransaksi.nama ===
-                            "Pendapatan DP"
+                            item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                            "Pendapatan DP Meubel"
+                              ? 9
+                              : item?.namaAkunTransaksiDalamJenisTransaksi
+                                  .nama === "Pendapatan Meubel"
+                              ? 5
+                              : item?.namaAkunTransaksiDalamJenisTransaksi
+                                  .nama === "Pendapatan DP"
                               ? 4
                               : 2
                           }
                           className="border-2 border-neutral-500 px-4 py-1 text-left">
-                          {item.keterangan}
+                          {item?.keterangan}
                         </td>
                         <td
-                          rowSpan={2}
+                          rowSpan={
+                            item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                            "Pendapatan DP Meubel"
+                              ? 4
+                              : 2
+                          }
                           className="border-2 border-neutral-500 px-4 py-1 text-right">
-                          {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                          {item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
                           "Pendapatan DP"
-                            ? convertIDRCurrency(item.jumlah / 0.3)
-                            : convertIDRCurrency(item.jumlah)}
+                            ? convertIDRCurrency(item?.jumlah / 0.3)
+                            : convertIDRCurrency(item?.jumlah)}
                         </td>
                         <td
                           rowSpan={1}
@@ -404,24 +433,26 @@ export const Jurnal = () => {
                             item?.namaAkunTransaksiDalamJenisTransaksi
                               ?.akunTransaksi[0]?.namaAkunTransaksi?.nama
                           }
-                          {/* {console.log(
-                            item?.namaAkunTransaksiDalamJenisTransaksi
-                              ?.akunTransaksi[0]?.namaAkunTransaksi?.nama,
-                          )} */}
                         </td>
                         <td
                           rowSpan={1}
                           className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
-                          {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                          {item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
                           "Pendapatan DP"
-                            ? convertIDRCurrency(item.jumlah / 0.3)
+                            ? convertIDRCurrency(item?.jumlah / 0.3)
+                            : ""}
+                          {item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                          "Pendapatan DP Meubel"
+                            ? convertIDRCurrency(item?.jumlah / 0.3)
                             : ""}
                           {item?.namaAkunTransaksiDalamJenisTransaksi
                             ?.akunTransaksi[0]?.namaAkunTransaksi?.nama !==
                             undefined &&
-                          item.namaAkunTransaksiDalamJenisTransaksi.nama !==
-                            "Pendapatan DP"
-                            ? convertIDRCurrency(item.jumlah)
+                          item?.namaAkunTransaksiDalamJenisTransaksi.nama !==
+                            "Pendapatan DP" &&
+                          item?.namaAkunTransaksiDalamJenisTransaksi.nama !==
+                            "Pendapatan DP Meubel"
+                            ? convertIDRCurrency(item?.jumlah)
                             : ""}
                         </td>
                         <td
@@ -429,8 +460,14 @@ export const Jurnal = () => {
                           className="border-2 border-neutral-500 px-4 py-1 text-left align-bottom"></td>
                         <td
                           rowSpan={
-                            item.namaAkunTransaksiDalamJenisTransaksi.nama ===
-                            "Pendapatan DP"
+                            item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                            "Pendapatan DP Meubel"
+                              ? 9
+                              : item?.namaAkunTransaksiDalamJenisTransaksi
+                                  .nama === "Pendapatan Meubel"
+                              ? 5
+                              : item?.namaAkunTransaksiDalamJenisTransaksi
+                                  .nama === "Pendapatan DP"
                               ? 4
                               : 2
                           }
@@ -439,7 +476,7 @@ export const Jurnal = () => {
                             <Popover>
                               <PopoverTrigger asChild>
                                 <button
-                                  className="flex items-center gap-2 rounded-lg bg-amber-300 p-2 text-white"
+                                  className="flex flex-shrink-0 items-center gap-2 rounded-lg bg-amber-300 p-2 text-white"
                                   onClick={() => {
                                     setIdTransaksi(id);
                                   }}>
@@ -541,7 +578,7 @@ export const Jurnal = () => {
                               </PopoverContent>
                             </Popover>
                             <button
-                              className="flex items-center gap-2 rounded-lg bg-red-500 p-2 text-white"
+                              className="flex flex-shrink-0 items-center gap-2 rounded-lg bg-red-500 p-2 text-white"
                               onClick={() => {
                                 setIdTransaksi(id);
                                 deleteTransaksi();
@@ -556,7 +593,7 @@ export const Jurnal = () => {
                           rowSpan={1}
                           className="border-2 border-neutral-500 px-4 py-1 align-top">
                           {
-                            item.namaAkunTransaksiDalamJenisTransaksi
+                            item?.namaAkunTransaksiDalamJenisTransaksi
                               ?.akunTransaksi[1]?.namaAkunTransaksi?.nama
                           }
                         </td>
@@ -566,49 +603,273 @@ export const Jurnal = () => {
                         <td
                           rowSpan={1}
                           className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
-                          {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                          {item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
                           "Pendapatan DP"
-                            ? convertIDRCurrency(item.jumlah / 0.3)
+                            ? convertIDRCurrency(item?.jumlah / 0.3)
+                            : ""}
+                          {item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                          "Pendapatan DP Meubel"
+                            ? convertIDRCurrency(item?.jumlah / 0.3 / 1.125)
                             : ""}
                           {item?.namaAkunTransaksiDalamJenisTransaksi
                             ?.akunTransaksi[0]?.namaAkunTransaksi?.nama !==
                             undefined &&
-                          item.namaAkunTransaksiDalamJenisTransaksi.nama !==
-                            "Pendapatan DP"
-                            ? convertIDRCurrency(item.jumlah)
+                          item?.namaAkunTransaksiDalamJenisTransaksi.nama !==
+                            "Pendapatan DP" &&
+                          item?.namaAkunTransaksiDalamJenisTransaksi.nama !==
+                            "Pendapatan DP Meubel"
+                            ? convertIDRCurrency(item?.jumlah)
                             : ""}
                         </td>
                       </tr>
-                      {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                      {item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
                         "Pendapatan DP" && (
                         <>
                           <tr>
                             <td
                               rowSpan={2}
                               className="border-2 border-neutral-500 px-4 py-1 text-right align-middle">
-                              {convertIDRCurrency(item.jumlah)}
+                              {convertIDRCurrency(item?.jumlah)}
                             </td>
                             <td className="border-2 border-neutral-500 px-4 py-1 align-top">
                               {
-                                item.namaAkunTransaksiDalamJenisTransaksi
+                                item?.namaAkunTransaksiDalamJenisTransaksi
                                   ?.akunTransaksi[2]?.namaAkunTransaksi?.nama
                               }
                             </td>
                             <td className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
-                              {convertIDRCurrency(item.jumlah)}
+                              {convertIDRCurrency(item?.jumlah)}
                             </td>
                             <td className="border-2 border-neutral-500 px-4 py-1 text-right align-top"></td>
                           </tr>
                           <tr>
                             <td className="border-2 border-neutral-500 px-4 py-1 align-top">
                               {
-                                item.namaAkunTransaksiDalamJenisTransaksi
+                                item?.namaAkunTransaksiDalamJenisTransaksi
                                   ?.akunTransaksi[3]?.namaAkunTransaksi?.nama
                               }
                             </td>
                             <td className="border-2 border-neutral-500 px-4 py-1 text-right align-top"></td>
                             <td className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
-                              {convertIDRCurrency(item.jumlah)}
+                              {convertIDRCurrency(item?.jumlah)}
+                            </td>
+                          </tr>
+                        </>
+                      )}
+                      {item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                        "Pendapatan DP Meubel" && (
+                        <>
+                          <tr>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 align-top">
+                              {
+                                item?.namaAkunTransaksiDalamJenisTransaksi
+                                  ?.akunTransaksi[3]?.namaAkunTransaksi?.nama
+                              }
+                            </td>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 text-left"></td>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
+                              {convertIDRCurrency(
+                                (item?.jumlah / 0.3 / 1.125) * 0.11,
+                              )}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 align-top">
+                              {
+                                item?.namaAkunTransaksiDalamJenisTransaksi
+                                  ?.akunTransaksi[4]?.namaAkunTransaksi?.nama
+                              }
+                            </td>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 text-left"></td>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
+                              {convertIDRCurrency(
+                                (item?.jumlah / 0.3 / 1.125) * 0.015,
+                              )}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td
+                              rowSpan={5}
+                              className="border-2 border-neutral-500 px-4 py-1 text-right align-middle">
+                              {convertIDRCurrency(item?.jumlah)}
+                            </td>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 align-top">
+                              {
+                                item?.namaAkunTransaksiDalamJenisTransaksi
+                                  ?.akunTransaksi[5]?.namaAkunTransaksi?.nama
+                              }
+                            </td>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 text-right">
+                              {convertIDRCurrency(item?.jumlah)}
+                            </td>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 text-right align-top"></td>
+                          </tr>
+                          <tr>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 align-top">
+                              {
+                                item?.namaAkunTransaksiDalamJenisTransaksi
+                                  ?.akunTransaksi[6]?.namaAkunTransaksi?.nama
+                              }
+                            </td>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 text-left"></td>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
+                              {convertIDRCurrency(item?.jumlah)}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 align-top">
+                              {
+                                item?.namaAkunTransaksiDalamJenisTransaksi
+                                  ?.akunTransaksi[7]?.namaAkunTransaksi?.nama
+                              }
+                            </td>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 text-right">
+                              {convertIDRCurrency(
+                                (item?.jumlah / 0.3 / 1.125) * 0.11 * 0.3,
+                              )}
+                            </td>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 text-right align-top"></td>
+                          </tr>
+                          <tr>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 align-top">
+                              {
+                                item?.namaAkunTransaksiDalamJenisTransaksi
+                                  ?.akunTransaksi[8]?.namaAkunTransaksi?.nama
+                              }
+                            </td>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 text-right">
+                              {convertIDRCurrency(
+                                (item?.jumlah / 0.3 / 1.125) * 0.015 * 0.3,
+                              )}
+                            </td>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 text-right align-top"></td>
+                          </tr>
+                          <tr>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 align-top">
+                              {
+                                item?.namaAkunTransaksiDalamJenisTransaksi
+                                  ?.akunTransaksi[9]?.namaAkunTransaksi?.nama
+                              }
+                            </td>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 text-left"></td>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
+                              {convertIDRCurrency(
+                                (item?.jumlah / 0.3 / 1.125) * 0.11 * 0.3 +
+                                  (item?.jumlah / 0.3 / 1.125) * 0.015 * 0.3,
+                              )}
+                            </td>
+                          </tr>
+                        </>
+                      )}
+                      {item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                        "Pendapatan Meubel" && (
+                        <>
+                          <tr>
+                            <td
+                              rowSpan={3}
+                              className="border-2 border-neutral-500 px-4 py-1 text-right align-middle">
+                              {convertIDRCurrency(item?.jumlah)}
+                            </td>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 align-top">
+                              {
+                                item?.namaAkunTransaksiDalamJenisTransaksi
+                                  ?.akunTransaksi[2]?.namaAkunTransaksi?.nama
+                              }
+                            </td>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 text-right">
+                              {convertIDRCurrency(
+                                (item?.jumlah / 1.125) * 0.11,
+                              )}
+                            </td>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 text-right align-top"></td>
+                          </tr>
+                          <tr>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 align-top">
+                              {
+                                item?.namaAkunTransaksiDalamJenisTransaksi
+                                  ?.akunTransaksi[3]?.namaAkunTransaksi?.nama
+                              }
+                            </td>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 text-right">
+                              {convertIDRCurrency(
+                                (item?.jumlah / 1.125) * 0.015,
+                              )}
+                            </td>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 text-right align-top"></td>
+                          </tr>
+                          <tr>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 align-top">
+                              {
+                                item?.namaAkunTransaksiDalamJenisTransaksi
+                                  ?.akunTransaksi[4]?.namaAkunTransaksi?.nama
+                              }
+                            </td>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 text-left"></td>
+                            <td
+                              rowSpan={1}
+                              className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
+                              {convertIDRCurrency(
+                                (item?.jumlah / 1.125) * 0.11 +
+                                  (item?.jumlah / 1.125) * 0.015,
+                              )}
                             </td>
                           </tr>
                         </>
@@ -643,6 +904,7 @@ export const Jurnal = () => {
             ref={refJurnal}
             tanggalAwal={tanggalAwal}
             tanggalAkhir={tanggalAkhir}
+            jumlah={jumlah}
           />
         </div>
       </div>
@@ -655,6 +917,7 @@ const DokumenJurnal = forwardRef((props, ref) => {
 
   const tanggalAwal = props?.tanggalAwal;
   const tanggalAkhir = props?.tanggalAkhir;
+  const jumlah = props?.jumlah;
 
   const { refetch } = useQuery({
     queryKey: ["transaksi-cetak"],
@@ -671,8 +934,8 @@ const DokumenJurnal = forwardRef((props, ref) => {
       }
     },
     onSuccess: (data) => {
-      setTransaksiData(data.data.data.listTransaksi);
-      // console.log(data.data.data);
+      setTransaksiData(data?.data?.data?.listTransaksi);
+      // console.log(data?.data?.data);
     },
   });
 
@@ -737,62 +1000,91 @@ const DokumenJurnal = forwardRef((props, ref) => {
               transaksiData.map((item, index) => {
                 const { id } = item;
 
-                // console.log(item.tanggal);
-                // console.log(formatterTime.format(new Date(item.tanggal)));
+                // console.log(item?.tanggal);
+                // console.log(formatterTime.format(new Date(item?.tanggal)));
 
                 return (
                   <Fragment key={id}>
                     <tr>
                       <td
                         rowSpan={
-                          item.namaAkunTransaksiDalamJenisTransaksi.nama ===
-                          "Pendapatan DP"
+                          item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                          "Pendapatan DP Meubel"
+                            ? 9
+                            : item?.namaAkunTransaksiDalamJenisTransaksi
+                                .nama === "Pendapatan Meubel"
+                            ? 5
+                            : item?.namaAkunTransaksiDalamJenisTransaksi
+                                .nama === "Pendapatan DP"
                             ? 4
                             : 2
                         }
                         className="border-2 border-neutral-500 px-4 py-1 text-left">
-                        {formatterTime.format(new Date(item.tanggal))}
+                        {formatterTime.format(new Date(item?.tanggal))}
                       </td>
                       <td
                         rowSpan={
-                          item.namaAkunTransaksiDalamJenisTransaksi.nama ===
-                          "Pendapatan DP"
+                          item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                          "Pendapatan DP Meubel"
+                            ? 9
+                            : item?.namaAkunTransaksiDalamJenisTransaksi
+                                .nama === "Pendapatan Meubel"
+                            ? 5
+                            : item?.namaAkunTransaksiDalamJenisTransaksi
+                                .nama === "Pendapatan DP"
                             ? 4
                             : 2
                         }
                         className="border-2 border-neutral-500 px-4 py-1 text-left">
-                        {item.jenis_transaksi.nama}
+                        {item?.jenis_transaksi.nama}
                       </td>
                       <td
                         rowSpan={
-                          item.namaAkunTransaksiDalamJenisTransaksi.nama ===
-                          "Pendapatan DP"
+                          item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                          "Pendapatan DP Meubel"
+                            ? 9
+                            : item?.namaAkunTransaksiDalamJenisTransaksi
+                                .nama === "Pendapatan Meubel"
+                            ? 5
+                            : item?.namaAkunTransaksiDalamJenisTransaksi
+                                .nama === "Pendapatan DP"
                             ? 4
                             : 2
                         }
                         className="border-2 border-neutral-500 px-4 py-1 text-left">
-                        {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                        {item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
                         "Pendapatan DP"
                           ? "Pendapatan"
-                          : item.namaAkunTransaksiDalamJenisTransaksi.nama}
+                          : item?.namaAkunTransaksiDalamJenisTransaksi.nama}
                       </td>
                       <td
                         rowSpan={
-                          item.namaAkunTransaksiDalamJenisTransaksi.nama ===
-                          "Pendapatan DP"
+                          item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                          "Pendapatan DP Meubel"
+                            ? 9
+                            : item?.namaAkunTransaksiDalamJenisTransaksi
+                                .nama === "Pendapatan Meubel"
+                            ? 5
+                            : item?.namaAkunTransaksiDalamJenisTransaksi
+                                .nama === "Pendapatan DP"
                             ? 4
                             : 2
                         }
                         className="border-2 border-neutral-500 px-4 py-1 text-left">
-                        {item.keterangan}
+                        {item?.keterangan}
                       </td>
                       <td
-                        rowSpan={2}
+                        rowSpan={
+                          item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                          "Pendapatan DP Meubel"
+                            ? 4
+                            : 2
+                        }
                         className="border-2 border-neutral-500 px-4 py-1 text-right">
-                        {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                        {item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
                         "Pendapatan DP"
-                          ? convertIDRCurrency(item.jumlah / 0.3)
-                          : convertIDRCurrency(item.jumlah)}
+                          ? convertIDRCurrency(item?.jumlah / 0.3)
+                          : convertIDRCurrency(item?.jumlah)}
                       </td>
                       <td
                         rowSpan={1}
@@ -801,24 +1093,26 @@ const DokumenJurnal = forwardRef((props, ref) => {
                           item?.namaAkunTransaksiDalamJenisTransaksi
                             ?.akunTransaksi[0]?.namaAkunTransaksi?.nama
                         }
-                        {/* {console.log(
-                            item?.namaAkunTransaksiDalamJenisTransaksi
-                              ?.akunTransaksi[0]?.namaAkunTransaksi?.nama,
-                          )} */}
                       </td>
                       <td
                         rowSpan={1}
                         className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
-                        {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                        {item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
                         "Pendapatan DP"
-                          ? convertIDRCurrency(item.jumlah / 0.3)
+                          ? convertIDRCurrency(item?.jumlah / 0.3)
+                          : ""}
+                        {item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                        "Pendapatan DP Meubel"
+                          ? convertIDRCurrency(item?.jumlah / 0.3)
                           : ""}
                         {item?.namaAkunTransaksiDalamJenisTransaksi
                           ?.akunTransaksi[0]?.namaAkunTransaksi?.nama !==
                           undefined &&
-                        item.namaAkunTransaksiDalamJenisTransaksi.nama !==
-                          "Pendapatan DP"
-                          ? convertIDRCurrency(item.jumlah)
+                        item?.namaAkunTransaksiDalamJenisTransaksi.nama !==
+                          "Pendapatan DP" &&
+                        item?.namaAkunTransaksiDalamJenisTransaksi.nama !==
+                          "Pendapatan DP Meubel"
+                          ? convertIDRCurrency(item?.jumlah)
                           : ""}
                       </td>
                       <td
@@ -830,7 +1124,7 @@ const DokumenJurnal = forwardRef((props, ref) => {
                         rowSpan={1}
                         className="border-2 border-neutral-500 px-4 py-1 align-top">
                         {
-                          item.namaAkunTransaksiDalamJenisTransaksi
+                          item?.namaAkunTransaksiDalamJenisTransaksi
                             ?.akunTransaksi[1]?.namaAkunTransaksi?.nama
                         }
                       </td>
@@ -840,49 +1134,269 @@ const DokumenJurnal = forwardRef((props, ref) => {
                       <td
                         rowSpan={1}
                         className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
-                        {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                        {item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
                         "Pendapatan DP"
-                          ? convertIDRCurrency(item.jumlah / 0.3)
+                          ? convertIDRCurrency(item?.jumlah / 0.3)
+                          : ""}
+                        {item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                        "Pendapatan DP Meubel"
+                          ? convertIDRCurrency(item?.jumlah / 0.3 / 1.125)
                           : ""}
                         {item?.namaAkunTransaksiDalamJenisTransaksi
                           ?.akunTransaksi[0]?.namaAkunTransaksi?.nama !==
                           undefined &&
-                        item.namaAkunTransaksiDalamJenisTransaksi.nama !==
-                          "Pendapatan DP"
-                          ? convertIDRCurrency(item.jumlah)
+                        item?.namaAkunTransaksiDalamJenisTransaksi.nama !==
+                          "Pendapatan DP" &&
+                        item?.namaAkunTransaksiDalamJenisTransaksi.nama !==
+                          "Pendapatan DP Meubel"
+                          ? convertIDRCurrency(item?.jumlah)
                           : ""}
                       </td>
                     </tr>
-                    {item.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                    {item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
                       "Pendapatan DP" && (
                       <>
                         <tr>
                           <td
                             rowSpan={2}
                             className="border-2 border-neutral-500 px-4 py-1 text-right align-middle">
-                            {convertIDRCurrency(item.jumlah)}
+                            {convertIDRCurrency(item?.jumlah)}
                           </td>
                           <td className="border-2 border-neutral-500 px-4 py-1 align-top">
                             {
-                              item.namaAkunTransaksiDalamJenisTransaksi
+                              item?.namaAkunTransaksiDalamJenisTransaksi
                                 ?.akunTransaksi[2]?.namaAkunTransaksi?.nama
                             }
                           </td>
                           <td className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
-                            {convertIDRCurrency(item.jumlah)}
+                            {convertIDRCurrency(item?.jumlah)}
                           </td>
                           <td className="border-2 border-neutral-500 px-4 py-1 text-right align-top"></td>
                         </tr>
                         <tr>
                           <td className="border-2 border-neutral-500 px-4 py-1 align-top">
                             {
-                              item.namaAkunTransaksiDalamJenisTransaksi
+                              item?.namaAkunTransaksiDalamJenisTransaksi
                                 ?.akunTransaksi[3]?.namaAkunTransaksi?.nama
                             }
                           </td>
                           <td className="border-2 border-neutral-500 px-4 py-1 text-right align-top"></td>
                           <td className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
-                            {convertIDRCurrency(item.jumlah)}
+                            {convertIDRCurrency(item?.jumlah)}
+                          </td>
+                        </tr>
+                      </>
+                    )}
+                    {item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                      "Pendapatan DP Meubel" && (
+                      <>
+                        <tr>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 align-top">
+                            {
+                              item?.namaAkunTransaksiDalamJenisTransaksi
+                                ?.akunTransaksi[3]?.namaAkunTransaksi?.nama
+                            }
+                          </td>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 text-left"></td>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
+                            {convertIDRCurrency(
+                              (item?.jumlah / 0.3 / 1.125) * 0.11,
+                            )}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 align-top">
+                            {
+                              item?.namaAkunTransaksiDalamJenisTransaksi
+                                ?.akunTransaksi[4]?.namaAkunTransaksi?.nama
+                            }
+                          </td>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 text-left"></td>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
+                            {convertIDRCurrency(
+                              (item?.jumlah / 0.3 / 1.125) * 0.015,
+                            )}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            rowSpan={5}
+                            className="border-2 border-neutral-500 px-4 py-1 text-right align-middle">
+                            {convertIDRCurrency(item?.jumlah)}
+                          </td>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 align-top">
+                            {
+                              item?.namaAkunTransaksiDalamJenisTransaksi
+                                ?.akunTransaksi[5]?.namaAkunTransaksi?.nama
+                            }
+                          </td>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 text-right">
+                            {convertIDRCurrency(item?.jumlah)}
+                          </td>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 text-right align-top"></td>
+                        </tr>
+                        <tr>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 align-top">
+                            {
+                              item?.namaAkunTransaksiDalamJenisTransaksi
+                                ?.akunTransaksi[6]?.namaAkunTransaksi?.nama
+                            }
+                          </td>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 text-left"></td>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
+                            {convertIDRCurrency(item?.jumlah)}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 align-top">
+                            {
+                              item?.namaAkunTransaksiDalamJenisTransaksi
+                                ?.akunTransaksi[7]?.namaAkunTransaksi?.nama
+                            }
+                          </td>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 text-right">
+                            {convertIDRCurrency(
+                              (item?.jumlah / 0.3 / 1.125) * 0.11 * 0.3,
+                            )}
+                          </td>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 text-right align-top"></td>
+                        </tr>
+                        <tr>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 align-top">
+                            {
+                              item?.namaAkunTransaksiDalamJenisTransaksi
+                                ?.akunTransaksi[8]?.namaAkunTransaksi?.nama
+                            }
+                          </td>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 text-right">
+                            {convertIDRCurrency(
+                              (item?.jumlah / 0.3 / 1.125) * 0.015 * 0.3,
+                            )}
+                          </td>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 text-right align-top"></td>
+                        </tr>
+                        <tr>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 align-top">
+                            {
+                              item?.namaAkunTransaksiDalamJenisTransaksi
+                                ?.akunTransaksi[9]?.namaAkunTransaksi?.nama
+                            }
+                          </td>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 text-left"></td>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
+                            {convertIDRCurrency(
+                              (item?.jumlah / 0.3 / 1.125) * 0.11 * 0.3 +
+                                (item?.jumlah / 0.3 / 1.125) * 0.015 * 0.3,
+                            )}
+                          </td>
+                        </tr>
+                      </>
+                    )}
+                    {item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                      "Pendapatan Meubel" && (
+                      <>
+                        <tr>
+                          <td
+                            rowSpan={3}
+                            className="border-2 border-neutral-500 px-4 py-1 text-right align-middle">
+                            {convertIDRCurrency(item?.jumlah)}
+                          </td>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 align-top">
+                            {
+                              item?.namaAkunTransaksiDalamJenisTransaksi
+                                ?.akunTransaksi[2]?.namaAkunTransaksi?.nama
+                            }
+                          </td>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 text-right">
+                            {convertIDRCurrency((item?.jumlah / 1.125) * 0.11)}
+                          </td>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 text-right align-top"></td>
+                        </tr>
+                        <tr>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 align-top">
+                            {
+                              item?.namaAkunTransaksiDalamJenisTransaksi
+                                ?.akunTransaksi[3]?.namaAkunTransaksi?.nama
+                            }
+                          </td>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 text-right">
+                            {convertIDRCurrency((item?.jumlah / 1.125) * 0.015)}
+                          </td>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 text-right align-top"></td>
+                        </tr>
+                        <tr>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 align-top">
+                            {
+                              item?.namaAkunTransaksiDalamJenisTransaksi
+                                ?.akunTransaksi[4]?.namaAkunTransaksi?.nama
+                            }
+                          </td>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 text-left"></td>
+                          <td
+                            rowSpan={1}
+                            className="border-2 border-neutral-500 px-4 py-1 text-right align-top">
+                            {convertIDRCurrency(
+                              (item?.jumlah / 1.125) * 0.11 +
+                                (item?.jumlah / 1.125) * 0.015,
+                            )}
                           </td>
                         </tr>
                       </>
@@ -899,6 +1413,15 @@ const DokumenJurnal = forwardRef((props, ref) => {
                 </td>
               </tr>
             )}
+            <tr className="bg-amber-300">
+              <td colSpan={4} className="p-2 font-bold">
+                Total
+              </td>
+              <td className="p-2 text-right">{convertIDRCurrency(jumlah)}</td>
+              <td className="p-2 text-right"></td>
+              <td className="p-2 text-right">{convertIDRCurrency(jumlah)}</td>
+              <td className="p-2 text-right">{convertIDRCurrency(jumlah)}</td>
+            </tr>
           </tbody>
         </table>
       </div>
