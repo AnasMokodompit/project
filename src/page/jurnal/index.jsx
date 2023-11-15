@@ -422,7 +422,9 @@ export const Jurnal = () => {
                           }
                           className="border-2 border-neutral-500 px-4 py-1 text-right">
                           {item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
-                          "Pendapatan DP"
+                            "Pendapatan DP" ||
+                          item?.namaAkunTransaksiDalamJenisTransaksi.nama ===
+                            "Pendapatan DP Meubel"
                             ? convertIDRCurrency(item?.jumlah / 0.3)
                             : convertIDRCurrency(item?.jumlah)}
                         </td>
@@ -810,7 +812,10 @@ export const Jurnal = () => {
                             <td
                               rowSpan={3}
                               className="border-2 border-neutral-500 px-4 py-1 text-right align-middle">
-                              {convertIDRCurrency(item?.jumlah)}
+                              {convertIDRCurrency(
+                                (item?.jumlah / 1.125) * 0.11 +
+                                  (item?.jumlah / 1.125) * 0.015,
+                              )}
                             </td>
                             <td
                               rowSpan={1}
