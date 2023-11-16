@@ -167,15 +167,15 @@ const Akun = [
   },
   {
     namaAkunTransaksi: "Hutang DPP",
-    tipe: "Debit",
+    tipe: "Kredit",
   },
   {
     namaAkunTransaksi: "Hutang PPN",
-    tipe: "Debit",
+    tipe: "Kredit",
   },
   {
     namaAkunTransaksi: "Hutang PPh 22",
-    tipe: "Debit",
+    tipe: "Kredit",
   },
 ];
 

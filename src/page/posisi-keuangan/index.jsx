@@ -658,7 +658,7 @@ export const PosisiKeuangan = () => {
     // Total
     const saldoTotalAktivaLancar =
       saldoKas +
-      saldoPiutangUsaha +
+      // saldoPiutangUsaha +
       saldoPiutang +
       saldoPersediaanBarangJadi +
       saldoPersediaanBahanBaku +
@@ -858,7 +858,7 @@ export const PosisiKeuangan = () => {
                   </td>
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
-                <tr className="border-2 border-neutral-500">
+                {/* <tr className="border-2 border-neutral-500">
                   <td className="border-2 border-neutral-500 px-4 py-1 text-left align-middle">
                     Piutang Usaha
                   </td>
@@ -867,7 +867,7 @@ export const PosisiKeuangan = () => {
                     {convertIDRCurrency(saldoPiutangUsaha)}
                   </td>
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle"></td>
-                </tr>
+                </tr> */}
                 <tr className="border-2 border-neutral-500">
                   <td className="border-2 border-neutral-500 px-4 py-1 text-left align-middle">
                     Piutang
@@ -1364,7 +1364,7 @@ const DokumenPosisiKeuangan = forwardRef((props, ref) => {
     // Total
     const saldoTotalAktivaLancar =
       saldoKas +
-      saldoPiutangUsaha +
+      // saldoPiutangUsaha +
       saldoPiutang +
       saldoPersediaanBarangJadi +
       saldoPersediaanBahanBaku +
@@ -1439,7 +1439,7 @@ const DokumenPosisiKeuangan = forwardRef((props, ref) => {
                   </td>
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle"></td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <td className="border-2 border-neutral-500 px-4 py-1 text-left align-middle">
                     Piutang Usaha
                   </td>
@@ -1448,7 +1448,7 @@ const DokumenPosisiKeuangan = forwardRef((props, ref) => {
                     {convertIDRCurrency(saldoPiutangUsaha)}
                   </td>
                   <td className="w-2/12 border-2 border-neutral-500 px-4 py-1 text-right align-middle"></td>
-                </tr>
+                </tr> */}
                 <tr>
                   <td className="border-2 border-neutral-500 px-4 py-1 text-left align-middle">
                     Piutang
