@@ -330,3 +330,62 @@
 .contrainerPopUpBahanBaku .contentPopUpBahanBaku .button input:hover {
   background-color: rgb(145, 228, 20);
 }
+
+
+
+.pagenation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 7px;
+  /* border: 1px solid black; */
+}
+
+.pagenation span {
+  font-size: 14px;
+  color: var(--text-100);
+}
+
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page .before {
+  font-size: 17px;
+  text-align: center;
+  padding: 3px 5px;
+  border-radius: 5px;
+  color: var(--text-300);
+  background-color: rgb(183, 183, 183);
+  cursor: pointer;
+}
+
+.page .after {
+  font-size: 17px;
+  text-align: center;
+  padding: 3px 5px;
+  border-radius: 5px;
+  background-color: rgb(183, 183, 183);
+  color: var(--text-300);
+  cursor: pointer;
+}
+
+.page .number {
+  padding: 3px 10px;
+  border-radius: 4px;
+  background-color: rgba(92, 182, 137, 0.9);
+  color: var(--text-300);
+  cursor: pointer;
+  margin: 0 3px;
+}
+
+.page .number:hover {
+  background-color: rgba(92, 182, 137, 0.7);
+}
+
+.page .before:hover,
+.page .after:hover {
+  background-color: rgb(150, 148, 148);
+}

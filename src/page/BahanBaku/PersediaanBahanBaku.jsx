@@ -7,7 +7,9 @@ import { FaSearch } from "react-icons/fa";
 
 function PersediaanBahanBaku() {
   const { dataLogin } = useSelector((tes) => tes.userReducer);
-  const [show, setShow] = useState();
+  const [namaBahanBakuSearch, setNamaBahanBakuSearch] = useState("")
+  const [page, setPage] = useState(1)
+  const [show, setShow] = useState(5);
   const [popup, setPopup] = useState(false);
   const [dataPersediaanBahanBaku, setDataPersediaanBahanBaku] = useState([]);
   const [dataBahanBaku, setDataBahanBaku] = useState([]);
@@ -22,7 +24,7 @@ function PersediaanBahanBaku() {
   const hendleGetApiAllPersediaanBahanBaku = () => {
     console.log(dataLogin);
     axios
-      .get(`${process.env.REACT_APP_BASE_API}/persediaanBahanBaku`, {
+      .get(`${process.env.REACT_APP_BASE_API}/persediaanBahanBaku?page=${page}&row=${show}&search=${namaBahanBakuSearch}`, {
         headers: { Authorization: `Bearer ${dataLogin.dataLogin.token}` },
       })
       .then((res) => {
@@ -255,7 +257,7 @@ function PersediaanBahanBaku() {
 
   useEffect(() => {
     hendleGetApiAllPersediaanBahanBaku();
-  }, []);
+  }, [page, show, namaBahanBakuSearch]);
 
   return (
     <div className={style.container}>
@@ -276,7 +278,7 @@ function PersediaanBahanBaku() {
         <div className={style.buttonSearchAndRow}>
           <div className={style.entitas}>
             <span>Show</span>
-            <select name="" id="" onChange={(e) => setShow(e.target.value)}>
+            <select name="" id="" value={show} onChange={(e) => setShow(e.target.value)}>
               <option value={5}>5</option>
               <option value={10}>10</option>
               <option value={25}>25</option>
@@ -287,7 +289,7 @@ function PersediaanBahanBaku() {
           </div>
           <div className={style.navbarHome}>
             <div className={`${style.item} ${style.search}`}>
-              <input type="text" placeholder="Search Name" />
+              <input type="text" placeholder="Search Name Kubik" onChange={(e) => setNamaBahanBakuSearch(e.target.value)}/>
               <span className="material-symbols-outlined">search</span>
             </div>
           </div>
@@ -337,6 +339,18 @@ function PersediaanBahanBaku() {
                 })}
             </tbody>
           </table>
+        </div>
+        <div className={style.pagenation}>
+          <span>Showing of entries</span>
+          <div className={style.page}>
+            <span className={`${style.before} material-symbols-outlined`}onClick={() => page === 1 ? page : setPage(page - 1)}>
+              chevron_left
+            </span>
+            <span className={`${style.number}`}>{page}</span>
+            <span className={`${style.after} material-symbols-outlined`} onClick={() => dataPersediaanBahanBaku.length < show ? setPage(page) : setPage(page + 1)}>
+              chevron_right
+            </span>
+          </div>
         </div>
         {(popup == "Tambah" || popup == "Edit") && (
           <div className={style.contrainerPopUpBahanBaku}>

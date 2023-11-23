@@ -13,6 +13,7 @@ function ProductAdmin() {
   const [dataCategories, setDataCategories] = useState([]);
   const [popUpProduct, setPopUpProduct] = useState(false);
   const [show, setShow] = useState(10);
+  const [page, setPage] = useState(1)
   const [namaProdukSearch, setNamaProdukSearch] = useState("")
   const [KategoriProdukSearch, setKategoriProdukSearch] = useState()
   const [aksi, setAksi] = useState("");
@@ -43,7 +44,7 @@ function ProductAdmin() {
 
   const hendleGetAllProduct = async () => {
     await axios
-      .get(`${process.env.REACT_APP_BASE_API}/products?row=${show}&search=${namaProdukSearch}&category=${KategoriProdukSearch}`)
+      .get(`${process.env.REACT_APP_BASE_API}/products?row=${show}&page=${page}&search=${namaProdukSearch}&category=${KategoriProdukSearch}`)
       .then((res) => {
         setDataProduct(res.data.data);
         console.log(res.data.data);
@@ -441,7 +442,7 @@ function ProductAdmin() {
   useEffect(() => {
     hendleGetAllProduct();
     hendleGetAllCategory();
-  }, [show, namaProdukSearch, KategoriProdukSearch]);
+  }, [page, show, namaProdukSearch, KategoriProdukSearch]);
 
   return (
     <div className={style.container}>
@@ -530,6 +531,18 @@ function ProductAdmin() {
                 </div>
               );
             })}
+        </div>
+        <div className={style.pagenation}>
+          <span>Showing of entries</span>
+          <div className={style.page}>
+            <span className={`${style.before} material-symbols-outlined`}onClick={() => page === 1 ? page : setPage(page - 1)}>
+              chevron_left
+            </span>
+            <span className={`${style.number}`}>{page}</span>
+            <span className={`${style.after} material-symbols-outlined`} onClick={() => dataProduct.length < show ? setPage(page) : setPage(page + 1)}>
+              chevron_right
+            </span>
+          </div>
         </div>
         {popUpProduct === true && (
           <div className={style.contrainerPopUpProduct}>

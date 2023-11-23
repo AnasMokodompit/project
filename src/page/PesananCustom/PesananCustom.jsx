@@ -671,7 +671,7 @@ const handleSearchBahanBaku = (e) => {
                             <div className="col-span-1 self-center">
                               <img
                                 className="h-32 w-24 rounded-lg object-cover"
-                                src={data.product_images[0].url_image}
+                                src={data.product_images[0]?.url_image}
                                 alt="Gambar Produk"
                               />
                             </div>

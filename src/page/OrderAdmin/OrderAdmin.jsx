@@ -42,6 +42,9 @@ function OrderAdmin() {
 
   const [statusPesanan, setStatusPesanan] = useState();
   const [tanggalPengerjaan, setTanggalPengerjaan] = useState();
+  const [page, setPage] = useState(1)
+  const [show, setShow] = useState(8)
+  const [namaOrdersSearch, setNamaOrdersSearch] = useState("")
   const [messageErrorPersediaanBahanBaku, setMessageErrorPersediaanBahanBaku] =
     useState([]);
   const [dataNamaProdukPembaruanStatus, setDataNamaProdukPembaruanStatus] =
@@ -53,7 +56,7 @@ function OrderAdmin() {
     // const decode = jwt(dataLogin.dataLogin.token)
 
     axios
-      .get(`${process.env.REACT_APP_BASE_API}/orders`)
+      .get(`${process.env.REACT_APP_BASE_API}/orders?isDelete=false&page=${page}&row=${show}&search=${namaOrdersSearch}`)
       .then((res) => {
         console.log(res.data.data);
         setDataOrder(res.data.data);
@@ -277,6 +280,21 @@ function OrderAdmin() {
       });
   };
 
+  const hendleDeleteOrder = (idOrder) => {
+    axios
+    .patch(`${process.env.REACT_APP_BASE_API}/orders/${idOrder}`, {
+      isDelete: true,
+    })
+    .then((res) => {
+      console.log(res.data.data);
+      hendleGetAllOrder()
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  }
+
   const menuRef = useRef(null);
   const buttonRef = useRef();
 
@@ -296,13 +314,21 @@ function OrderAdmin() {
     setDataCheckBoxStatusPesanan([]);
   };
 
+  const optionsTime = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "Asia/Makassar",
+  };
+  const formatterTime = new Intl.DateTimeFormat("id-ID", optionsTime);
+
   useEffect(() => {
     hendleGetAllOrder();
     // document.addEventListener("click", handleClickOutside, false);
     // return () => {
     //     document.removeEventListener("click", handleClickOutside, false);
     // };
-  }, []);
+  }, [, page, show, namaOrdersSearch]);
 
   return (
     <>
@@ -313,7 +339,7 @@ function OrderAdmin() {
             <div className={style.buttonSearchAndRow}>
               <div className={style.entitas}>
                 <span>Show</span>
-                <select name="" id="">
+                <select name="" id="" value={show} onChange={(e) => setShow(e.target.value)}>
                   <option value={5}>5</option>
                   <option value={10}>10</option>
                   <option value={25}>25</option>
@@ -324,7 +350,7 @@ function OrderAdmin() {
               </div>
               <div className={style.navbarHome}>
                 <div className={`${style.item} ${style.search}`}>
-                  <input type="text" placeholder="Search Name" />
+                  <input type="text" placeholder="Search Name" onChange={(e) => setNamaOrdersSearch(e.target.value)}/>
                   <span className="material-symbols-outlined">search</span>
                 </div>
               </div>
@@ -333,6 +359,7 @@ function OrderAdmin() {
               <thead>
                 <tr>
                   <th>No</th>
+                  <th>Tanggal</th>
                   <th>Nama Pemesan</th>
                   {/* <th>Nama Produk</th> */}
                   <th>Alamat</th>
@@ -349,6 +376,7 @@ function OrderAdmin() {
                     return (
                       <tr key={key}>
                         <td>{(key += 1)}</td>
+                        <td>{formatterTime.format(new Date(data.created_at))}</td>
                         <td>{data.nama_pemesan}</td>
                         {/* <td>{data.products.name}</td> */}
                         <td>{data.alamat}</td>
@@ -495,7 +523,6 @@ function OrderAdmin() {
                               </DialogContent>
                             </Dialog>
                           )}
-                          {/* <span className={`material-symbols-outlined ${style.iconOptions}`} onClick={() => hendleDeleteOrder(data.id)}>delete</span> */}
                           <span
                             ref={buttonRef}
                             className={`material-symbols-outlined ${style.iconOptions}`}
@@ -504,6 +531,9 @@ function OrderAdmin() {
                             }>
                             visibility
                           </span>
+                          {data.jumlah === 0 && (
+                            <span className={`material-symbols-outlined ${style.iconOptions}`} onClick={() => hendleDeleteOrder(data.id)}>delete</span>
+                          )}
                         </td>
                       </tr>
                     );
@@ -513,11 +543,11 @@ function OrderAdmin() {
             <div className={style.pagenation}>
               <span>Showing of entries</span>
               <div className={style.page}>
-                <span className={`${style.before} material-symbols-outlined`}>
+                <span className={`${style.before} material-symbols-outlined`}onClick={() => page === 1 ? page : setPage(page - 1)}>
                   chevron_left
                 </span>
-                <span className={`${style.number}`}>1</span>
-                <span className={`${style.after} material-symbols-outlined`}>
+                <span className={`${style.number}`}>{page}</span>
+                <span className={`${style.after} material-symbols-outlined`} onClick={() => dataOrder.length < show ? setPage(page) : setPage(page + 1)}>
                   chevron_right
                 </span>
               </div>
