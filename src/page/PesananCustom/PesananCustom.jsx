@@ -6,6 +6,7 @@ import Plus from "../../Asset/icons/untitled-ui-icons/line/components/Plus";
 import { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+// import img from "../../../public/logo.png"
 
 function PesananCustom() {
   const { dataLogin } = useSelector((tes) => tes.userReducer);
@@ -671,7 +672,7 @@ const handleSearchBahanBaku = (e) => {
                             <div className="col-span-1 self-center">
                               <img
                                 className="h-32 w-24 rounded-lg object-cover"
-                                src={data.product_images[0]?.url_image}
+                                src={data.product_images[0]?.url_image == undefined ? "/profile_null.png" : data.product_images[0]?.url_image}
                                 alt="Gambar Produk"
                               />
                             </div>

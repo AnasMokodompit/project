@@ -595,7 +595,7 @@ function OrderAdmin() {
                                         }}>
                                         Kategori :{" "}
                                       </span>
-                                      {data?.products.categories.name}
+                                      {data?.products?.categories?.name}
                                     </span>
                                   </span>
                                   {data.jumlah_meter && (
