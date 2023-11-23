@@ -18,7 +18,7 @@ import {
   FormLabel,
   FormField,
 } from "../../componet/form";
-import { Input } from "../../componet/input";
+import { Input, CurrencyInput } from "../../componet/input";
 import {
   Popover,
   PopoverContent,
@@ -74,6 +74,8 @@ export const SaldoAwal = () => {
   const [jumlahDebit, setJumlahDebit] = useState();
   const [jumlahKredit, setJumlahKredit] = useState();
   const [saldoAwalID, setSaldoAwalID] = useState();
+
+  const [isOpenPopover, setIsOpenPopover] = useState(false);
 
   console.log(saldoAwalData);
 
@@ -136,9 +138,10 @@ export const SaldoAwal = () => {
       );
     },
     onSuccess: (data) => {
-      console.log(data);
       refetch();
       setSaldoAwalID();
+      setIsOpenPopover(false);
+      formUpdate.reset();
     },
   });
 
@@ -246,9 +249,11 @@ export const SaldoAwal = () => {
                                       name="saldo"
                                       render={({ field }) => (
                                         <FormItem>
-                                          <FormLabel>Saldo Awal</FormLabel>
+                                          <FormLabel className="font-archivo">
+                                            Saldo Awal
+                                          </FormLabel>
                                           <FormControl>
-                                            <div className="relative">
+                                            {/* <div className="relative">
                                               <p className="absolute bottom-0 left-3 top-0 m-auto flex items-center font-archivo text-sm">
                                                 Rp.
                                               </p>
@@ -257,7 +262,11 @@ export const SaldoAwal = () => {
                                                 onKeyDown={restrictAlphabet}
                                                 className="px-10 pr-3 text-right"
                                               />
-                                            </div>
+                                            </div> */}
+                                            <CurrencyInput
+                                              className="text-right"
+                                              {...field}
+                                            />
                                           </FormControl>
                                         </FormItem>
                                       )}

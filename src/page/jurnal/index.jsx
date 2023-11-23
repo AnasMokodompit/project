@@ -16,7 +16,7 @@ import { cn } from "../../utils/cn";
 
 import { Button } from "../../componet/button";
 import { Calendar } from "../../componet/calendar";
-import { Input } from "../../componet/input";
+import { Input, CurrencyInput } from "../../componet/input";
 import {
   Form,
   FormControl,
@@ -553,7 +553,7 @@ export const Jurnal = () => {
                                       <FormItem>
                                         <FormLabel>Jumlah</FormLabel>
                                         <FormControl>
-                                          <div className="relative">
+                                          {/* <div className="relative">
                                             <Input
                                               className="z-20 w-full border-2 border-neutral-500 text-right font-archivo"
                                               {...field}
@@ -564,7 +564,11 @@ export const Jurnal = () => {
                                                 Rp.
                                               </p>
                                             </div>
-                                          </div>
+                                          </div> */}
+                                          <CurrencyInput
+                                            className="text-right"
+                                            {...field}
+                                          />
                                         </FormControl>
                                       </FormItem>
                                     )}

@@ -29,7 +29,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../../componet/form";
-import { Input } from "../../componet/input";
+import { Input, CurrencyInput } from "../../componet/input";
 import {
   Popover,
   PopoverContent,
@@ -53,6 +53,8 @@ export const Transaksi = () => {
   const [jumlahValue, setJumlahValue] = useState();
   const [isBiayaBahanBaku, setIsBiayaBahanBaku] = useState(false);
   const [bahanBakuData, setBahanBakuData] = useState();
+
+  const [numericValue, setNumericValue] = useState(0);
 
   // console.log(isBiayaBahanBaku);
 
@@ -611,7 +613,7 @@ export const Transaksi = () => {
                   </FormItem>
                 )}
               />
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="jumlah"
                 render={({ field }) => (
@@ -621,20 +623,27 @@ export const Transaksi = () => {
                       <div className="relative">
                         <Input
                           className="z-20 w-full border-2 border-neutral-500 p-3  text-right"
-                          {...field}
-                          // value={jumlahValue}
-                          // onChange={(event) => {
-                          //   form.setValue("jumlah", event.target.value);
-
-                          //   const value = event.target.value;
-
-                          //   // setJumlahValue(formattedValue);
-                          // }}
                           onKeyDown={restrictAlphabet}
+                          {...field}
                         />
                         <div className="absolute left-4 top-1/2 m-auto flex -translate-y-1/2 items-center">
                           <p className="text-sm">Rp.</p>
                         </div>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              /> */}
+              <FormField
+                control={form.control}
+                name="jumlah"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Jumlah</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <CurrencyInput className="p-3 text-right" {...field} />
                       </div>
                     </FormControl>
                     <FormMessage />
@@ -648,6 +657,10 @@ export const Transaksi = () => {
               </Button>
             </form>
           </Form>
+          {/* <CurrencyInput
+            value={numericValue}
+            onChange={(value) => setNumericValue(() => value)}
+          /> */}
         </div>
       </div>
     </div>
