@@ -11,6 +11,15 @@ import { Button } from "../../componet/button";
 import { Calendar } from "../../componet/calendar";
 import { Command, CommandGroup, CommandItem } from "../../componet/command";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../../componet/dialog";
+import {
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -25,6 +34,7 @@ import Minus from "../../Asset/icons/untitled-ui-icons/line/components/Minus";
 import Refresh from "../../Asset/icons/untitled-ui-icons/line/components/RefreshCw04";
 
 export const PosisiKeuangan = () => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [openTahunPeriode, setOpenTahunPeriode] = useState(false);
   const [tahunPeriode, setTahunPeriode] = useState();
   const [tahun, setTahun] = useState([]);
@@ -47,7 +57,8 @@ export const PosisiKeuangan = () => {
       );
     },
     onSuccess: () => {
-      alert("Buku Tahun Ini Selesai");
+      setIsDialogOpen(false);
+      // alert("Buku Tahun Ini Selesai");
     },
     onError: (error) => {
       console.error(error);
@@ -137,8 +148,9 @@ export const PosisiKeuangan = () => {
     hendleGetAllTanggalTutupBuku();
   }, [tahunPeriode, tanggalAwal, tanggalAkhir]);
 
+  console.log(labaRugiData);
+
   if (!!posisiKeuanganData && !!labaRugiData) {
-    //// Laba Rugi ////
     const saldoPendapatan = labaRugiData[0]?.akun[0]?.saldo;
     const saldoAwalPersediaanBahanBaku = labaRugiData[1]?.akun[0]?.saldo;
     const saldoAwalPersediaanBarangJadi = labaRugiData[1]?.akun[1]?.saldo;
@@ -353,13 +365,37 @@ export const PosisiKeuangan = () => {
                 <Printer />
               </button>
 
-              <button
-                onClick={() =>
-                  handleTutupBuku({ modalPemilik: saldoModalPemilik })
-                }
-                className="w-30 flex h-10 flex-shrink-0 items-center justify-center rounded-lg border-2 border-neutral-500 bg-amber-300 p-2">
-                Tutup Buku
-              </button>
+              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DialogTrigger>
+                  <button className="w-30 flex h-10 flex-shrink-0 items-center justify-center rounded-lg border-2 border-neutral-500 bg-amber-300 p-2">
+                    Tutup Buku
+                  </button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader className="font-archivo text-xl font-bold">
+                    Apakah anda yakin?
+                  </DialogHeader>
+                  <DialogDescription>
+                    Apakah Anda yakin ingin melanjutkan proses penutupan buku?
+                    Pastikan bahwa Anda telah melakukan semua verifikasi yang
+                    diperlukan sebelumnya.
+                  </DialogDescription>
+                  <div className="flex justify-end gap-2">
+                    <button
+                      onClick={() => setIsDialogOpen(false)}
+                      className="flex flex-shrink-0 items-center justify-center rounded-lg border-2 bg-red-500 p-2.5 text-white transition-colors hover:bg-red-700">
+                      Batal
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleTutupBuku({ modalPemilik: saldoModalPemilik })
+                      }
+                      className="flex flex-shrink-0 items-center justify-center rounded-lg border-2  bg-amber-300 p-2.5 transition-colors hover:bg-amber-400">
+                      Konfirmasi
+                    </button>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </div>
             <div className="flex items-center gap-2">
               <button
