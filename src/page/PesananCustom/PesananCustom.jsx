@@ -514,7 +514,7 @@ const handleSearchBahanBaku = (e) => {
                   >
                 </input>
             </div>
-            {dataBahanBakuProduk.length !== 0 && (
+            {(dataBahanBakuProduk.length !== 0 || hargaProduct) && (
             <div className={style.item}>
                 <label htmlFor="" className={style.judul}>Keperluan Bahan Baku</label>
                   <span className={style.buttonAddBahanBakuProduk} onClick={() => `${setFormKeparluanBahanBaku(true)} ${setAksiBahanBakuProduk("AddBahanBakuProduk")}`}>Buat</span>
