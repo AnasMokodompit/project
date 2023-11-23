@@ -167,11 +167,11 @@ function PesananSelesai() {
                       }`
                     }>
                     <img
-                      src={data.products.product_images[0].url_image}
+                      src={data?.products?.product_images[0]?.url_image}
                       alt=""
                     />
                     <span>{data.products.name}</span>
-                    <span>{data.products.categories.name}</span>
+                    <span>{data?.products?.categories?.name}</span>
                     {data.jumlah_meter && (
                       <span>{data.jumlah_meter} Meter Jalan</span>
                     )}
