@@ -85,7 +85,7 @@ export const PengadaanMeubel = () => {
   const [emailPembeli, setEmailPembeli] = useState("");
   const [alamatPembeli, setAlamatPembeli] = useState("");
 
-  const [isMeter, setIsMeter] = useState();
+  const [isMeter, setIsMeter] = useState(false);
 
   const [IDBahanBaku, setIDBahanBaku] = useState();
   const [IDKategori, setIDKategori] = useState();
@@ -271,7 +271,7 @@ export const PengadaanMeubel = () => {
     setGambarProduk([]);
     setIDKategori();
     setNamaKategori("");
-    setIsMeter();
+    setIsMeter(false);
   };
 
   const decreaseKuantitas = (index) => {
@@ -367,7 +367,7 @@ export const PengadaanMeubel = () => {
   // console.log(satuanBahanBaku);
   // console.log(jumlahBahanBaku);
   // console.log(bahanBakuProduk);
-  // console.log(pesananPengadaanMeubel);
+  console.log(pesananPengadaanMeubel);
   // console.log(dataProduk);
 
   return (
