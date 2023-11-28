@@ -8,6 +8,9 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 // import img from "../../../public/logo.png"
 
+import { Input, CurrencyInput, NumericInput } from "../../componet/input";
+
+
 function PesananCustom() {
   const { dataLogin } = useSelector((tes) => tes.userReducer);
   const [dataProduct, setDataProduct] = useState([]);
@@ -444,9 +447,39 @@ const handleSearchBahanBaku = (e) => {
         .catch((err) => {
           console.log(err);
         });
+
+        
   }
 
+  const renderCurrency = (value) => {
+    let number = Number(value);
+    // let number = 5;
+    
+    console.log(number.toLocaleString("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      maximumFractionDigits: 0,
+      minimumFractionDigits: 0,
+    }))
+
+
+    return number?.toLocaleString("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      maximumFractionDigits: 0,
+      minimumFractionDigits: 0,
+    });
+  };
+  
+  const handleChange = (event) => {
+    const result = event.target.value.replace(/\D/g, "");
+    console.log(result) 
+    setHargaProduct(Number(result));
+  };
+  
+  
   return (
+    console.log(hargaProduct),
     <div className={style.container}>
       <div className="flex w-full flex-col gap-8 p-4 font-archivo">
         <div>
@@ -506,15 +539,15 @@ const handleSearchBahanBaku = (e) => {
             </div>
             <div className={style.itemContentOrderCustom}>
               <label htmlFor="">Harga</label>
-              <input
+              <CurrencyInput
                   type="number"
-                  id={style.input}
+                  id="harga_produk"
                   value={hargaProduct}
-                  onChange={(e) => setHargaProduct(Number(e.target.value))}
-                  >
-                </input>
+                  onChange={setHargaProduct}
+                  className="text-right"
+                />
             </div>
-            {(dataBahanBakuProduk.length !== 0 || hargaProduct) && (
+            {(dataBahanBakuProduk.length !== 0 || !!hargaProduct) && (
             <div className={style.item}>
                 <label htmlFor="" className={style.judul}>Keperluan Bahan Baku</label>
                   <span className={style.buttonAddBahanBakuProduk} onClick={() => `${setFormKeparluanBahanBaku(true)} ${setAksiBahanBakuProduk("AddBahanBakuProduk")}`}>Buat</span>
@@ -839,5 +872,33 @@ const handleSearchBahanBaku = (e) => {
     </div>
   );
 }
+
+
+var rupiah = document.getElementById("rupiah");
+console.log(rupiah)
+// rupiah.addEventListener("keyup", function(e) {
+//   // tambahkan 'Rp.' pada saat form di ketik
+//   // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+//   rupiah.value = formatRupiah(this.value, "Rp. ");
+// });
+
+// /* Fungsi formatRupiah */
+// function formatRupiah(angka, prefix) {
+//   var number_string = angka.replace(/[^,\d]/g, "").toString(),
+//     split = number_string.split(","),
+//     sisa = split[0].length % 3,
+//     rupiah = split[0].substr(0, sisa),
+//     ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+//   // tambahkan titik jika yang di input sudah menjadi angka ribuan
+//   if (ribuan) {
+//     let separator = sisa ? "." : "";
+//     rupiah += separator + ribuan.join(".");
+//   }
+
+//   rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+//   return prefix == undefined ? rupiah : rupiah ? "Rp. " + rupiah : "";
+// }
+
 
 export default PesananCustom;
